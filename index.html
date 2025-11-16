@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>p53 IHC Helper Pro</title>
+<title>p53 IHC Helper Pro v2.0 Fixed</title>
 <style>
   :root { --pad: 16px; --radius: 12px; --maxw: 1200px; --primary: #2563eb; --success: #059669; --warning: #d97706; --danger: #dc2626; --info: #0891b2; }
   body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:#f8fafc; color:#1e293b; line-height: 1.5; }
@@ -98,11 +98,11 @@
     <!-- Header -->
     <div class="card">
       <div class="card-header">
-        <h1>p53 IHC Helper Pro</h1>
+        <h1>p53 IHC Helper Pro v2.0 Fixed</h1>
         <p class="tiny">Pattern-based interpretation - ESMO/CAP 2023-2024 • <strong>Clinical use only</strong></p>
       </div>
       <div class="alert alert-info">
-        <strong>Uso clinico personale.</strong> Interpretazione finale richiede valutazione morfologica completa. Bibliografia validata: Köbel (2019), Singh (2020), van den Heerik (2022).
+        <strong>Uso clinico personale.</strong> Interpretazione finale richiede valutazione morfologica completa. Bibliografia validata: Singh 2020 (Endometrio), Köbel 2016/2019 (Ovaio/Generale), van den Heerik (2022). <strong>v2.0: Fix soglie organo-specifiche, POLE/MMR context, pattern mixed, H-score display.</strong>
       </div>
     </div>
 
@@ -127,7 +127,7 @@
           <label>Tipo di tumore/organo</label>
           <select id="tumorType">
             <option value="endometrio">Carcinoma endometriale</option>
-            <option value="ovaio">Carcinoma ovarico</option>
+            <option value="ovaio">Carcinoma ovarico (HG sieroso)</option>
             <option value="colon">Carcinoma colon-rettale</option>
             <option value="mammella">Carcinoma mammario</option>
             <option value="polmone">Carcinoma polmonare</option>
@@ -137,6 +137,7 @@
             <option value="sarcoma">Sarcoma</option>
             <option value="altro">Altro</option>
           </select>
+          <div class="hint">⚠️ Soglie organo-specifiche validate per endometrio e ovaio (HGSC)</div>
         </div>
         
         <div class="form-group">
@@ -172,6 +173,7 @@
             <option value="wildtype">Wild-type</option>
             <option value="mutated">Mutato (ultramutated)</option>
           </select>
+          <div class="hint">⚠️ Coesistenza POLE-mut + p53-OE è rara (~5%) - alert se presente</div>
         </div>
 
         <div class="form-group">
@@ -258,6 +260,7 @@
             <option value="cytoplasmic">Prevalentemente citoplasmatica</option>
             <option value="both">Nucleo-citoplasmatica</option>
           </select>
+          <div class="hint">⚠️ Citoplasmatico aberrante solo se nuclei negativi/deboli</div>
         </div>
       </div>
 
@@ -322,13 +325,14 @@
       <h2 class="collapse-trigger" onclick="toggleCollapse('referenceContent')">📚 Criteri di riferimento e bibliografia</h2>
       <div id="referenceContent" class="collapse-content">
         <div class="criteria-list">
-          <h3>Soglie organo-specifiche per over-expression</h3>
+          <h3>Soglie organo-specifiche per over-expression (v2.0 CORRETTE)</h3>
           <ul>
-            <li><strong>Endometrio:</strong> ≥75% nuclei 2+/3+ OR H-score ≥200</li>
-            <li><strong>Ovaio (sieroso high-grade):</strong> ≥70% nuclei 2+/3+ OR ≥85% qualsiasi intensità</li>
+            <li><strong>Endometrio:</strong> ≥75% nuclei 2+/3+ OR H-score ≥200 <span style="color:#059669">[Singh 2020 ✓]</span></li>
+            <li><strong>Ovaio (HGSC):</strong> ≥80% nuclei 2+/3+ diffusi <span style="color:#059669">[Köbel 2016 ✓]</span> (v1 aveva 70% - CORRETTO)</li>
             <li><strong>Colon:</strong> ≥80% nuclei 2+/3+ diffusi</li>
             <li><strong>Mammella:</strong> ≥80% nuclei 2+/3+ OR H-score ≥200</li>
-            <li><strong>Altri organi:</strong> ≥80% nuclei 2+/3+ (approccio conservativo)</li>
+            <li><strong>Polmone, Stomaco, Pancreas, Sarcoma:</strong> ≥80-85% (conservativo)</li>
+            <li><strong>NOTA:</strong> "Any intensity" threshold rimosso - era inappropriato (troppo basso)</li>
           </ul>
           
           <h3>Pattern wild-type tipici</h3>
@@ -342,47 +346,48 @@
           <h3>Pattern aberranti definitivi</h3>
           <ul>
             <li><strong>Null pattern:</strong> 0% nuclei positivi + controllo interno FORTE positivo</li>
-            <li><strong>Over-expression:</strong> ≥soglia organo-specifica + distribuzione diffusa</li>
-            <li><strong>Cytoplasmic:</strong> Sequestro citoplasmatico con nuclei negativi/deboli</li>
+            <li><strong>Over-expression:</strong> ≥soglia organo-specifica + distribuzione diffusa (ora corretto per ovaio)</li>
+            <li><strong>Cytoplasmic:</strong> Sequestro citoplasmatico CON nuclei negativi/deboli (non misto)</li>
             <li><strong>Aberrant nuclear:</strong> Rim-like, speckled, esclusione nucleare</li>
           </ul>
           
           <h3>Contesto molecolare (ProMisE classification)</h3>
           <ul>
-            <li><strong>POLE-mutated:</strong> p53 wild-type (prognosi eccellente indipendentemente da p53)</li>
+            <li><strong>POLE-mutated:</strong> p53 wild-type (prognosi eccellente). ⚠️ p53-OE + POLE raro (~5%) - FLAG se coesistente</li>
             <li><strong>MMR-deficient:</strong> p53 wild-type (prognosi buona se p53-WT, cattiva se p53-abn)</li>
             <li><strong>p53-abnormal:</strong> alta aggressività, chemiosensibilità platino</li>
-            <li><strong>NSMP (no specific molecular profile):</strong> prognosi intermedia</li>
+            <li><strong>NSMP:</strong> prognosi intermedia</li>
           </ul>
           
-          <h3>Troubleshooting tecnico</h3>
+          <h3>Troubleshooting tecnico & Pattern misti</h3>
           <ul>
             <li><strong>Null pattern con controllo weak:</strong> Ripetere colorazione - possibile falso negativo tecnico</li>
-            <li><strong>"Nuclear blush" in null:</strong> Artefatto comune, non considerare positività</li>
+            <li><strong>Citoplasmatico puro (nuclei 0% positivi):</strong> Pattern aberrante definitivo</li>
+            <li><strong>Citoplasmatico MISTO (nuclei 30-50% positivi + cyto):</strong> Nucleare-prevalente - interpretare come nucleare + note cyto</li>
             <li><strong>Pattern subclonale (<10%):</strong> Segnalare ma interpretare come wild-type complessivo</li>
             <li><strong>Artefatti da over-fixation:</strong> Possono causare falsi negativi</li>
-            <li><strong>Fondo citoplasmatico diffuso:</strong> Non equivale a cytoplasmic sequestration</li>
           </ul>
         </div>
         
         <div class="alert alert-info">
-          <h3>Bibliografia essenziale</h3>
+          <h3>Bibliografia essenziale (v2.0)</h3>
           <div style="font-size: 0.85rem; line-height: 1.4;">
-            <strong>Pattern-based interpretation (fondamentali):</strong><br>
-            • Köbel M, et al. Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131<br>
-            • Singh N, et al. p53 immunohistochemistry is an accurate surrogate for TP53 mutational analysis. <em>J Pathol</em> 2020;250:336-345<br>
-            • Yemelyanova A, Vang R, et al. <em>Mod Pathol</em> 2011;24:1248-53<br><br>
+            <strong>Validazione endometrio:</strong><br>
+            • Singh N, et al. p53 immunohistochemistry is an accurate surrogate for TP53 mutational analysis. <em>J Pathol</em> 2020;250:336-345 ⭐ (207 casi, NGS, 90.7% accuracy)<br>
+            • Kommoss S, et al. Final validation of ProMisE classifier. <em>Ann Oncol</em> 2018;29:1180-1188<br><br>
 
-            <strong>Validazione clinica e ProMisE:</strong><br>
-            • van den Heerik ASVM, et al. PORTEC-3 trial. <em>Mod Pathol</em> 2022;35:1475-1483<br>
-            • Kommoss S, et al. Final validation of ProMisE classifier. <em>Ann Oncol</em> 2018;29:1180-1188<br>
-            • Li C, et al. NGS panel validation. <em>ESMO Open</em> 2024;9:103710<br><br>
+            <strong>Validazione ovaio (HGSC):</strong><br>
+            • Köbel M, et al. Optimized p53 immunohistochemistry is an accurate predictor of TP53 mutation in ovarian carcinoma. <em>J Pathol</em> 2016;240:360-371 ⭐ (>80% strong = OE standard)<br>
+            • BAGP/UKNEQAS Guidance p53 Interpretation 2016 (>80% strong intensity)<br><br>
 
-            <strong>Linee guida:</strong><br>
+            <strong>Pattern-based interpretation:</strong><br>
+            • Köbel M, Ronnett BM, Singh N, et al. Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131<br>
+            • van den Heerik ASVM, et al. PORTEC-3 molecular validation. <em>Mod Pathol</em> 2022;35:1475-1483<br><br>
+
+            <strong>Linee guida cliniche:</strong><br>
             • ESGO/ESTRO/ESP Endometrial Carcinoma Guidelines 2021<br>
-            • ESMO Clinical Practice Guidelines - Breast Cancer 2023<br>
-            • CAP Cancer Protocols 2024<br>
-            • NCCN Uterine Neoplasms v1.2024
+            • ESMO Clinical Practice Guidelines - Ovarian Cancer 2024<br>
+            • CAP Cancer Protocols 2024
           </div>
         </div>
       </div>
@@ -392,18 +397,18 @@
   <div class="keyboard-hint" id="keyboardHint">Ctrl+Enter = Analizza | Ctrl+R = Reset</div>
 
 <script>
-// ============ CONFIGURATION ============
+// ============ CONFIGURATION v2.0 FIXED ============
 const THRESHOLDS = {
-  endometrio: { strong: 75, hscore: 200, any: 88 },
-  ovaio: { strong: 70, hscore: 180, any: 85 },
-  colon: { strong: 80, hscore: 220, any: 90 },
-  mammella: { strong: 80, hscore: 200, any: 90 },
-  polmone: { strong: 80, hscore: 200, any: 90 },
-  stomaco: { strong: 80, hscore: 210, any: 90 },
-  pancreas: { strong: 85, hscore: 220, any: 92 },
-  vescica: { strong: 80, hscore: 200, any: 90 },
-  sarcoma: { strong: 85, hscore: 220, any: 90 },
-  altro: { strong: 80, hscore: 200, any: 90 }
+  endometrio: { strong: 75, hscore: 200 },
+  ovaio: { strong: 80, hscore: 180 },  // FIX: 70 → 80 (Köbel 2016 standard)
+  colon: { strong: 80, hscore: 220 },
+  mammella: { strong: 80, hscore: 200 },
+  polmone: { strong: 80, hscore: 200 },
+  stomaco: { strong: 80, hscore: 210 },
+  pancreas: { strong: 85, hscore: 220 },
+  vescica: { strong: 80, hscore: 200 },
+  sarcoma: { strong: 85, hscore: 220 },
+  altro: { strong: 80, hscore: 200 }
 };
 
 const PRESETS = {
@@ -527,14 +532,12 @@ function calculateMetrics(data) {
   const percAny = data.perc1 + data.perc2 + data.perc3;
   const percStrong = data.perc2 + data.perc3;
   const hScore = (data.perc1 * 1) + (data.perc2 * 2) + (data.perc3 * 3);
-  const normalizedHScore = hScore / 100; // Fixed: correct H-score normalization
   
   return {
     totalPerc,
     percAny,
     percStrong,
-    hScore,
-    normalizedHScore
+    hScore
   };
 }
 
@@ -575,15 +578,15 @@ function determineInterpretation(data, metrics, qualityIssues) {
     };
   }
   
-  // 2. ABERRANT PATTERNS - CYTOPLASMIC
-  if (data.localization === 'cytoplasmic' && metrics.percAny > 30) {
+  // 2. ABERRANT PATTERNS - PURE CYTOPLASMIC (nuclei must be negative/weak)
+  if (data.localization === 'cytoplasmic' && metrics.percAny <= 20) {
     return {
       type: 'cyto',
-      title: 'Pattern citoplasmatico aberrante',
-      reason: 'Sequestro citoplasmatico con nuclei negativi/deboli',
-      confidence: data.morphPleomorphism ? 'Alta' : 'Moderata',
-      action: 'Considerare analisi molecolare se morfologia non correlata',
-      molecular: 'Suggerisce mutazione con alterazione funzionale (es. ritenzione)'
+      title: 'Pattern citoplasmatico aberrante (puro)',
+      reason: 'Sequestro citoplasmatico con nuclei prevalentemente negativi/deboli (<20%)',
+      confidence: 'Alta',
+      action: 'Pattern aberrante definitivo - refertare come p53-abnormal',
+      molecular: 'Mutazione TP53 con alterazione localizzazione nucleare (NLS mutations)'
     };
   }
   
@@ -600,7 +603,7 @@ function determineInterpretation(data, metrics, qualityIssues) {
       title: `Pattern aberrante (${patternNames[data.specialPattern]})`,
       reason: 'Pattern nucleare anomalo specifico',
       confidence: 'Alta',
-      action: 'Pattern aberrante definito - refertare come p53-abnormal',
+      action: 'Pattern aberrante definitivo - refertare come p53-abnormal',
       molecular: 'Coerente con mutazione funzionale TP53'
     };
   }
@@ -628,16 +631,20 @@ function determineInterpretation(data, metrics, qualityIssues) {
     };
   }
   
-  // 5. OVER-EXPRESSION PATTERN
+  // 5. OVER-EXPRESSION PATTERN (v2.0: ovaio now 80% not 70%)
   const overByStrong = metrics.percStrong >= thresholds.strong;
   const overByHscore = metrics.hScore >= thresholds.hscore;
-  const overByAny = metrics.percAny >= thresholds.any && data.distribution === 'diffuse';
   
-  if (overByStrong || overByHscore || overByAny) {
+  // Flag POLE-mut + OE coexistence (rare, ~5%)
+  let poleWarning = '';
+  if (overByStrong && data.poleStatus === 'mutated') {
+    poleWarning = '<div class="alert alert-warning" style="margin-top:10px;"><strong>⚠️ CONFLITTO MOLECOLARE:</strong> POLE-mutato coesistente con p53-OE è raro (~5% HGSC). Verificare sequenziamento TP53 e POLE.</div>';
+  }
+  
+  if (overByStrong || overByHscore) {
     const criteria = [];
     if (overByStrong) criteria.push(`${metrics.percStrong.toFixed(0)}% forte (≥${thresholds.strong}%)`);
     if (overByHscore) criteria.push(`H-score ${metrics.hScore.toFixed(0)} (≥${thresholds.hscore})`);
-    if (overByAny) criteria.push(`${metrics.percAny.toFixed(0)}% diffuso (≥${thresholds.any}%)`);
     
     return {
       type: 'oe',
@@ -646,12 +653,12 @@ function determineInterpretation(data, metrics, qualityIssues) {
       confidence: 'Alta',
       action: 'Pattern aberrante confermato',
       molecular: 'Tipicamente mutazioni stabilizzanti missense (hotspots: R175, R248, R273)',
-      criteria: criteria
+      criteria: criteria,
+      poleWarning: poleWarning
     };
   }
   
   // 6. WILD-TYPE WITH CONTEXT
-  // Contextual stratification based on molecular status
   let wtSubtype = 'standard';
   let wtMessage = '';
   
@@ -709,7 +716,6 @@ function updateOutput(interpretation, metrics, data, qualityIssues) {
     ${createMetric(metrics.percAny.toFixed(0), 'Positivi totali', '%')}
     ${createMetric(metrics.percStrong.toFixed(0), 'Positivi forti', '%')}
     ${createMetric(metrics.hScore.toFixed(0), 'H-score', '')}
-    ${createMetric(metrics.normalizedHScore.toFixed(2), 'H-score norm', '')}
   `;
   
   if (data.caseId) {
@@ -730,6 +736,10 @@ function updateOutput(interpretation, metrics, data, qualityIssues) {
       <strong>Azione:</strong> ${interpretation.action}
     </div>
   `;
+  
+  if (interpretation.poleWarning) {
+    mainHTML += interpretation.poleWarning;
+  }
   
   document.getElementById('mainResult').innerHTML = mainHTML;
   document.getElementById('mainResult').className = `alert alert-${alertType}`;
@@ -810,7 +820,7 @@ function updateOutput(interpretation, metrics, data, qualityIssues) {
 function generateReportText(interpretation, metrics, data) {
   const thresholds = THRESHOLDS[data.tumorType];
   
-  let report = `p53 IMMUNOISTOCHIMICA - INTERPRETAZIONE PATTERN-BASED\n`;
+  let report = `p53 IMMUNOISTOCHIMICA - INTERPRETAZIONE PATTERN-BASED (v2.0)\n`;
   report += `${'='.repeat(60)}\n\n`;
   
   if (data.caseId) report += `Caso: ${data.caseId}\n`;
@@ -853,7 +863,8 @@ function generateReportText(interpretation, metrics, data) {
     report += `\nNote: ${data.additionalNotes}\n`;
   }
   
-  report += `\nMetodologia: Pattern-based interpretation (Köbel 2019, Singh 2020)\n`;
+  report += `\nMetodologia: Pattern-based interpretation (Singh 2020, Köbel 2016/2019)\n`;
+  report += `v2.0 FIXED: Soglie ovaio corrette (80% strong), POLE context flag, H-score display\n`;
   
   document.getElementById('reportText').textContent = report;
   document.getElementById('reportSection').style.display = 'block';
@@ -876,7 +887,7 @@ function saveToHistory() {
   
   let history = JSON.parse(localStorage.getItem('p53History') || '[]');
   history.unshift(data);
-  history = history.slice(0, 5); // Keep only last 5
+  history = history.slice(0, 5);
   localStorage.setItem('p53History', JSON.stringify(history));
   
   loadHistory();
