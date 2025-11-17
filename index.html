@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>p53 IHC Helper Pro v2.0 Fixed</title>
+<title>Calcolatore p53 v1.0</title>
 <style>
-  :root { --pad: 16px; --radius: 12px; --maxw: 1200px; --primary: #2563eb; --success: #059669; --warning: #d97706; --danger: #dc2626; --info: #0891b2; }
+  :root { --pad: 16px; --radius: 12px; --maxw: 1200px; --primary: #1e40af; --success: #059669; --warning: #d97706; --danger: #dc2626; --info: #0891b2; }
   body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:#f8fafc; color:#1e293b; line-height: 1.5; }
   .wrap { max-width: var(--maxw); margin: 20px auto 60px; padding: 0 var(--pad); }
   .card { background:#fff; border-radius: var(--radius); padding: var(--pad); box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 20px; border: 1px solid #e2e8f0; }
@@ -17,8 +17,8 @@
   .form-group { margin-bottom: 16px; }
   label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 6px; color: #374151; }
   input[type="number"], input[type="text"], select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; transition: border-color 0.2s; box-sizing: border-box; }
-  input[type="number"]:focus, input[type="text"]:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-  input[type="checkbox"] { width: auto; margin-right: 8px; }
+  input[type="number"]:focus, input[type="text"]:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,64,175,0.1); }
+  input[type="checkbox"], input[type="radio"] { width: auto; margin-right: 8px; }
   
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
@@ -28,7 +28,7 @@
   .hint.important { color: var(--warning); font-weight: 500; }
   
   .btn { display: inline-block; padding: 12px 20px; border-radius: 8px; border: 0; background: var(--primary); color: #fff; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; margin-right: 8px; margin-bottom: 8px; }
-  .btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .btn:hover { background: #1e3a8a; transform: translateY(-1px); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   .btn-secondary { background: #6b7280; }
   .btn-secondary:hover { background: #4b5563; }
@@ -36,11 +36,19 @@
   .btn-success { background: var(--success); }
   .btn-success:hover { background: #047857; }
   
+  .mode-toggle { display: flex; gap: 8px; margin: 12px 0; }
+  .mode-btn { padding: 10px 16px; border: 2px solid #d1d5db; background: #fff; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+  .mode-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .mode-btn:hover { border-color: var(--primary); }
+  
   .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
   .badge-wt { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
   .badge-oe { background: #fed7aa; color: #9a3412; border: 1px solid #fdba74; }
   .badge-null { background: #fecaca; color: #991b1b; border: 1px solid #fca5a5; }
-  .badge-cyto { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+  .badge-nodys { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+  .badge-lgd { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+  .badge-hgd { background: #fed7aa; color: #9a3412; border: 1px solid #fdba74; }
+  .badge-cancer { background: #fecaca; color: #991b1b; border: 1px solid #fca5a5; }
   .badge-ni { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
   
   .alert { padding: 12px 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid; }
@@ -49,39 +57,23 @@
   .alert-danger { background: #fef2f2; border-color: var(--danger); color: #b91c1c; }
   .alert-info { background: #f0f9ff; border-color: var(--info); color: #0c4a6e; }
   
-  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
   .metric { background: #f8fafc; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0; }
-  .metric-value { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+  .metric-value { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
   .metric-label { font-size: 0.85rem; color: #6b7280; margin-top: 4px; }
-  
-  .collapse-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .collapse-content.show { max-height: 2000px; }
-  .collapse-trigger { cursor: pointer; user-select: none; color: var(--primary); }
-  .collapse-trigger:hover { text-decoration: underline; }
-  
-  .criteria-list { background: #f8fafc; padding: 12px; border-radius: 8px; margin: 8px 0; }
-  .criteria-list ul { margin: 8px 0; padding-left: 20px; }
-  .criteria-list li { margin: 4px 0; font-size: 0.9rem; }
   
   .output-section { display: none; }
   .output-section.show { display: block; }
   
-  .preset-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .form-section { display: none; }
+  .form-section.active { display: block; }
   
-  .morph-checklist label { display: flex; align-items: center; margin: 8px 0; font-weight: 400; }
+  .checklist label { display: flex; align-items: center; margin: 8px 0; font-weight: 400; }
   
-  .report-output { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px; font-family: 'Courier New', monospace; font-size: 0.9rem; white-space: pre-wrap; margin: 12px 0; max-height: 300px; overflow-y: auto; }
+  .report-output { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 16px; font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-wrap; margin: 12px 0; max-height: 350px; overflow-y: auto; }
   
   .copy-btn { background: var(--success); }
   .copy-btn:hover { background: #047857; }
-  
-  .history-item { background: #f8fafc; padding: 10px; margin: 6px 0; border-radius: 6px; border-left: 3px solid var(--primary); cursor: pointer; transition: all 0.2s; }
-  .history-item:hover { background: #e0e7ff; transform: translateX(4px); }
-  .history-item-header { font-weight: 600; font-size: 0.9rem; }
-  .history-item-detail { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
-  
-  .keyboard-hint { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; display: none; }
-  .keyboard-hint.show { display: block; }
   
   .tiny { font-size: 0.8rem; color: #6b7280; }
   .strong { font-weight: 600; }
@@ -89,7 +81,7 @@
   @media (max-width: 768px) {
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .wrap { padding: 0 12px; }
-    .keyboard-hint { display: none !important; }
+    .mode-toggle { flex-direction: column; }
   }
 </style>
 </head>
@@ -98,201 +90,610 @@
     <!-- Header -->
     <div class="card">
       <div class="card-header">
-        <h1>p53 IHC Helper Pro v2.0 Fixed</h1>
-        <p class="tiny">Pattern-based interpretation - ESMO/CAP 2023-2024 • <strong>Clinical use only</strong></p>
+        <h1>Calcolatore p53 v1.0</h1>
+        <p class="tiny">p53 IHC (Neoplastico) + Displasia Gastrica & Colonica (Preneoplastico) • WHO 2022 • <strong>Research & diagnostic support only</strong></p>
       </div>
       <div class="alert alert-info">
-        <strong>Uso clinico personale.</strong> Interpretazione finale richiede valutazione morfologica completa. Bibliografia validata: Singh 2020 (Endometrio), Köbel 2016/2019 (Ovaio/Generale), van den Heerik (2022). <strong>v2.0: Fix soglie organo-specifiche, POLE/MMR context, pattern mixed, H-score display.</strong>
+        <strong>Uso diagnostico supportivo.</strong> Valutazione finale richiede correlazione clinico-patologica completa. <strong>p53 IHC:</strong> Singh 2020, Köbel 2016/2019. <strong>Displasia gastrica:</strong> WHO 2022, Rugge MAPS 2016. <strong>Displasia colonica:</strong> WHO/SCENIC 2019. <strong>v1.0: Unified tool p53 IHC + displasia gastrica + displasia colonica con organ-specific parameters, shared infrastructure.</strong>
       </div>
     </div>
 
-    <!-- Quick Presets -->
+    <!-- Mode Selection -->
     <div class="card">
-      <h2>⚡ Quick Entry</h2>
-      <div class="preset-buttons">
-        <button class="btn btn-small btn-secondary" onclick="loadPreset('classic_oe')">Classic OE</button>
-        <button class="btn btn-small btn-secondary" onclick="loadPreset('null')">Null</button>
-        <button class="btn btn-small btn-secondary" onclick="loadPreset('mosaic_wt')">Mosaic WT</button>
-        <button class="btn btn-small btn-secondary" onclick="loadPreset('cyto')">Cytoplasmic</button>
+      <h2>Seleziona modalità</h2>
+      <div class="mode-toggle">
+        <button class="mode-btn active" onclick="setMode('p53')">🧬 p53 IHC (Neoplastico)</button>
+        <button class="mode-btn" onclick="setMode('gastric')">🔬 Displasia Gastrica (Preneoplastico)</button>
+        <button class="mode-btn" onclick="setMode('colonic')">🔍 Displasia Colonica (Preneoplastico)</button>
       </div>
-      <div class="hint">Preset per pattern comuni - personalizza dopo il caricamento</div>
+      <div class="hint">Cambia modalità per il flusso diagnostico adatto</div>
     </div>
 
-    <!-- Main Input Form -->
-    <div class="card">
-      <h2>Parametri di valutazione</h2>
-      
-      <div class="grid-2">
-        <div class="form-group">
-          <label>Tipo di tumore/organo</label>
-          <select id="tumorType">
-            <option value="endometrio">Carcinoma endometriale</option>
-            <option value="ovaio">Carcinoma ovarico (HG sieroso)</option>
-            <option value="colon">Carcinoma colon-rettale</option>
-            <option value="mammella">Carcinoma mammario</option>
-            <option value="polmone">Carcinoma polmonare</option>
-            <option value="stomaco">Carcinoma gastrico</option>
-            <option value="pancreas">Carcinoma pancreatico</option>
-            <option value="vescica">Carcinoma uroteliale</option>
-            <option value="sarcoma">Sarcoma</option>
-            <option value="altro">Altro</option>
-          </select>
-          <div class="hint">⚠️ Soglie organo-specifiche validate per endometrio e ovaio (HGSC)</div>
+    <!-- P53 SECTION -->
+    <div id="p53-section" class="form-section active">
+      <!-- P53 Quick Presets -->
+      <div class="card">
+        <h2>⚡ Quick Entry</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('p53_classic_oe')">Classic OE</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('p53_null')">Null</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('p53_mosaic_wt')">Mosaic WT</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('p53_cyto')">Cytoplasmic</button>
         </div>
+      </div>
+
+      <!-- P53 Input Form -->
+      <div class="card">
+        <h2>p53 IHC - Parametri di valutazione</h2>
         
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Tipo di tumore/organo</label>
+            <select id="p53-tumorType">
+              <option value="endometrio">Carcinoma endometriale</option>
+              <option value="ovaio">Carcinoma ovarico (HG sieroso)</option>
+              <option value="colon">Carcinoma colon-rettale</option>
+              <option value="mammella">Carcinoma mammario</option>
+              <option value="polmone">Carcinoma polmonare</option>
+              <option value="stomaco">Carcinoma gastrico</option>
+              <option value="pancreas">Carcinoma pancreatico</option>
+              <option value="vescica">Carcinoma uroteliale</option>
+              <option value="sarcoma">Sarcoma</option>
+              <option value="altro">Altro</option>
+            </select>
+            <div class="hint">⚠️ Soglie organo-specifiche validate per endometrio e ovaio</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Tipo di campione</label>
+            <select id="p53-specimenType">
+              <option value="biopsia">Biopsia</option>
+              <option value="resezione">Resezione chirurgica</option>
+              <option value="citologia">Campione citologico</option>
+            </select>
+          </div>
+        </div>
+
         <div class="form-group">
-          <label>Tipo di campione</label>
-          <select id="specimenType">
-            <option value="biopsia">Biopsia</option>
-            <option value="resezione">Resezione chirurgica</option>
-            <option value="citologia">Campione citologico</option>
+          <label>ID caso (opzionale)</label>
+          <input type="text" id="p53-caseId" placeholder="Es: EN24-12345" />
+        </div>
+
+        <h3>Contesto molecolare</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>MMR status</label>
+            <select id="p53-mmrStatus">
+              <option value="unknown">Non noto</option>
+              <option value="proficient">Proficient</option>
+              <option value="deficient">Deficient</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>POLE status</label>
+            <select id="p53-poleStatus">
+              <option value="unknown">Non noto</option>
+              <option value="wildtype">Wild-type</option>
+              <option value="mutated">Mutato</option>
+            </select>
+            <div class="hint">⚠️ POLE-mut + p53-OE raro (~5%)</div>
+          </div>
+
+          <div class="form-group">
+            <label>Grado istologico</label>
+            <select id="p53-grade">
+              <option value="unknown">Non specificato</option>
+              <option value="low">Low-grade</option>
+              <option value="high">High-grade</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Controlli tecnici</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>Controllo interno</label>
+            <select id="p53-internalControl">
+              <option value="none">Assente</option>
+              <option value="present">Presente</option>
+              <option value="endothelium">Endotelio vascolare</option>
+              <option value="stromal">Cellule stromali</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Intensità controllo</label>
+            <select id="p53-controlIntensity">
+              <option value="none">N/A</option>
+              <option value="weak">Debole</option>
+              <option value="moderate">Moderata</option>
+              <option value="strong">Forte</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Qualità tecnica</label>
+            <select id="p53-technicalQuality">
+              <option value="optimal">Ottimale</option>
+              <option value="acceptable">Accettabile</option>
+              <option value="suboptimal">Subottimale</option>
+              <option value="poor">Inaccettabile</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Quantificazione (% nuclei tumorali)</h3>
+        <div class="grid-4">
+          <div class="form-group">
+            <label>Negativi (0)</label>
+            <input type="number" id="p53-perc0" min="0" max="100" step="5" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Deboli (1+)</label>
+            <input type="number" id="p53-perc1" min="0" max="100" step="5" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Moderati (2+)</label>
+            <input type="number" id="p53-perc2" min="0" max="100" step="5" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Forti (3+)</label>
+            <input type="number" id="p53-perc3" min="0" max="100" step="5" value="0" />
+          </div>
+        </div>
+
+        <h3>Pattern</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Distribuzione</label>
+            <select id="p53-distribution">
+              <option value="mosaic">Eterogenea/mosaico</option>
+              <option value="diffuse">Diffusa/uniforme</option>
+              <option value="focal">Focale</option>
+              <option value="zonal">Zonale</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Localizzazione subcellulare</label>
+            <select id="p53-localization">
+              <option value="nuclear">Nucleare</option>
+              <option value="cytoplasmic">Citoplasmatica</option>
+              <option value="both">Nucleo-citoplasmatica</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Pattern aberrante specifico</label>
+          <select id="p53-specialPattern">
+            <option value="none">Nessuno</option>
+            <option value="rim">Rim-like periferico</option>
+            <option value="speckled">Speckled punteggiato</option>
+            <option value="excluded">Esclusione nucleare</option>
           </select>
         </div>
+
+        <div class="form-group">
+          <label>Note libere</label>
+          <textarea id="p53-additionalNotes" rows="2" placeholder="Artefatti, eterogeneità regionale..."></textarea>
+        </div>
+
+        <button class="btn" onclick="analyzeP53()">🔬 Analizza p53 (Ctrl+Enter)</button>
+        <button class="btn btn-secondary" onclick="resetForm('p53')">Reset</button>
       </div>
-
-      <div class="form-group">
-        <label>ID caso (opzionale)</label>
-        <input type="text" id="caseId" placeholder="Es: EN24-12345" />
-      </div>
-
-      <h3>Contesto molecolare</h3>
-      <div class="grid-3">
-        <div class="form-group">
-          <label>MMR status (se noto)</label>
-          <select id="mmrStatus">
-            <option value="unknown">Non noto</option>
-            <option value="proficient">Proficient (MMR-P)</option>
-            <option value="deficient">Deficient (MMR-D)</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>POLE status (se noto)</label>
-          <select id="poleStatus">
-            <option value="unknown">Non noto</option>
-            <option value="wildtype">Wild-type</option>
-            <option value="mutated">Mutato (ultramutated)</option>
-          </select>
-          <div class="hint">⚠️ Coesistenza POLE-mut + p53-OE è rara (~5%) - alert se presente</div>
-        </div>
-
-        <div class="form-group">
-          <label>Grado istologico</label>
-          <select id="grade">
-            <option value="unknown">Non specificato</option>
-            <option value="low">Low-grade</option>
-            <option value="high">High-grade</option>
-          </select>
-        </div>
-      </div>
-
-      <h3>Controlli tecnici</h3>
-      <div class="grid-3">
-        <div class="form-group">
-          <label>Controllo interno</label>
-          <select id="internalControl">
-            <option value="none">Assente</option>
-            <option value="present">Presente (vari tipi)</option>
-            <option value="endothelium">Endotelio vascolare</option>
-            <option value="stromal">Cellule stromali</option>
-            <option value="lymphocytes">Linfociti</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Intensità controllo interno</label>
-          <select id="controlIntensity">
-            <option value="none">N/A</option>
-            <option value="weak">Debole (1+)</option>
-            <option value="moderate">Moderata (2+)</option>
-            <option value="strong">Forte (3+)</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Qualità tecnica</label>
-          <select id="technicalQuality">
-            <option value="optimal">Ottimale</option>
-            <option value="acceptable">Accettabile</option>
-            <option value="suboptimal">Subottimale</option>
-            <option value="poor">Inaccettabile</option>
-          </select>
-        </div>
-      </div>
-
-      <h3>Quantificazione (% nuclei tumorali)</h3>
-      <div class="grid-4">
-        <div class="form-group">
-          <label>Negativi (0)</label>
-          <input type="number" id="perc0" min="0" max="100" step="5" value="0" />
-        </div>
-        <div class="form-group">
-          <label>Deboli (1+)</label>
-          <input type="number" id="perc1" min="0" max="100" step="5" value="0" />
-        </div>
-        <div class="form-group">
-          <label>Moderati (2+)</label>
-          <input type="number" id="perc2" min="0" max="100" step="5" value="0" />
-        </div>
-        <div class="form-group">
-          <label>Forti (3+)</label>
-          <input type="number" id="perc3" min="0" max="100" step="5" value="0" />
-        </div>
-      </div>
-      <div class="hint" id="percSum">Somma: 0% - Usa multipli di 5 per rapidità</div>
-
-      <h3>Pattern</h3>
-      <div class="grid-2">
-        <div class="form-group">
-          <label>Distribuzione</label>
-          <select id="distribution">
-            <option value="mosaic">Eterogenea/mosaico (tipico WT)</option>
-            <option value="diffuse">Diffusa/uniforme</option>
-            <option value="focal">Focale</option>
-            <option value="zonal">Zonale/gradiente</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Localizzazione subcellulare</label>
-          <select id="localization">
-            <option value="nuclear">Nucleare</option>
-            <option value="cytoplasmic">Prevalentemente citoplasmatica</option>
-            <option value="both">Nucleo-citoplasmatica</option>
-          </select>
-          <div class="hint">⚠️ Citoplasmatico aberrante solo se nuclei negativi/deboli</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Pattern aberrante specifico</label>
-        <select id="specialPattern">
-          <option value="none">Nessuno</option>
-          <option value="rim">Pattern "rim-like" periferico</option>
-          <option value="speckled">Pattern "speckled" punteggiato</option>
-          <option value="excluded">Esclusione nucleare</option>
-        </select>
-      </div>
-
-      <h3>Checklist morfologica correlativa</h3>
-      <div class="morph-checklist">
-        <label><input type="checkbox" id="morphPleomorphism" /> Marcato pleomorfismo nucleare</label>
-        <label><input type="checkbox" id="morphTILs" /> TILs aumentati (>10/HPF)</label>
-        <label><input type="checkbox" id="morphNecrosis" /> Necrosi tumorale estesa</label>
-        <label><input type="checkbox" id="morphSerous" /> Architettura sierosa/high-grade</label>
-      </div>
-
-      <div class="form-group">
-        <label>Note libere</label>
-        <textarea id="additionalNotes" rows="2" placeholder="Artefatti, eterogeneità regionale, dubbi..."></textarea>
-      </div>
-
-      <button class="btn" id="calculateBtn">🔬 Analizza (Ctrl+Enter)</button>
-      <button class="btn btn-secondary" id="resetBtn">Reset</button>
-      <button class="btn btn-secondary" id="saveHistoryBtn">💾 Salva in cronologia</button>
     </div>
 
-    <!-- Output Section -->
+    <!-- GASTRIC SECTION -->
+    <div id="gastric-section" class="form-section">
+      <!-- Gastric Quick Presets -->
+      <div class="card">
+        <h2>⚡ Quick Entry</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('gastric_nodys')">No Dysplasia</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('gastric_lgd')">LGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('gastric_hgd')">HGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('gastric_cancer')">Carcinoma</button>
+        </div>
+      </div>
+
+      <!-- Gastric Input Form -->
+      <div class="card">
+        <h2>Displasia Gastrica - Parametri di valutazione</h2>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Localizzazione</label>
+            <select id="gastric-location">
+              <option value="antrum">Antro</option>
+              <option value="body">Corpo</option>
+              <option value="fundus">Fondo</option>
+              <option value="cardia">Cardia</option>
+              <option value="multifocal">Multifocale</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Tipo campione</label>
+            <select id="gastric-specimenType">
+              <option value="biopsia">Biopsia endoscopica</option>
+              <option value="resezione">Pezzo chirurgico</option>
+              <option value="multifocal">Biopsie multifocali</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ID caso (opzionale)</label>
+          <input type="text" id="gastric-caseId" placeholder="Es: GAST24-5678" />
+        </div>
+
+        <h3>Contesto clinico</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>H. pylori status</label>
+            <select id="gastric-hpyloriStatus">
+              <option value="unknown">Non noto</option>
+              <option value="positive">Positivo</option>
+              <option value="negative">Negativo</option>
+              <option value="eradicated">Eradicato</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Metaplasia intestinale</label>
+            <select id="gastric-imStatus">
+              <option value="none">Assente</option>
+              <option value="present">Presente</option>
+              <option value="incomplete">Incompleta</option>
+              <option value="extensive">Estesa</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Atrofia gastrica</label>
+            <select id="gastric-atrophiaStatus">
+              <option value="none">Assente</option>
+              <option value="mild">Lieve</option>
+              <option value="moderate">Moderata</option>
+              <option value="severe">Severa</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Morfologia nucleare</h3>
+        <div class="checklist">
+          <label><input type="checkbox" id="gastric-morphPleomorphism" /> Pleomorfismo marcato</label>
+          <label><input type="checkbox" id="gastric-morphCrowding" /> Affollamento nucleare</label>
+          <label><input type="checkbox" id="gastric-morphHyperchromasia" /> Ipercromatismo marcato</label>
+          <label><input type="checkbox" id="gastric-morphIrregular" /> Contorni nucleari irregolari</label>
+          <label><input type="checkbox" id="gastric-morphProminent" /> Nucleoli prominenti</label>
+          <label><input type="checkbox" id="gastric-morphMitoses" /> Mitosi >5/10HPF</label>
+        </div>
+
+        <h3>Architettura ghiandolare</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Pattern architetturale</label>
+            <select id="gastric-architecture">
+              <option value="intact">Integro</option>
+              <option value="basaldisruption">Disrupzione basale (focale)</option>
+              <option value="cribriform">Cribriformo</option>
+              <option value="glandular">Infiltrante</option>
+            </select>
+            <div class="hint">⚠️ Disrupzione basale = HGD/carcinoma</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Stratificazione</label>
+            <select id="gastric-stratification">
+              <option value="normal">Normale</option>
+              <option value="partial">Parziale</option>
+              <option value="complete">Completa</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Immunofenotipo</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>p53 pattern (se disponibile)</label>
+            <select id="gastric-p53Pattern">
+              <option value="unknown">Non eseguito</option>
+              <option value="wildtype">Wild-type</option>
+              <option value="overexpression">Over-expression</option>
+              <option value="null">Null</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Ki67 livello</label>
+            <select id="gastric-ki67Level">
+              <option value="unknown">Non quantificato</option>
+              <option value="low">Basso (<10%)</option>
+              <option value="moderate">Moderato (10-30%)</option>
+              <option value="high">Alto (>30%)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Estensione e profondità</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>Numero foci</label>
+            <select id="gastric-extensionNumber">
+              <option value="single">Singolo</option>
+              <option value="few">Pochi (2-5)</option>
+              <option value="multiple">Multipli (>5)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Profondità invasiva</label>
+            <select id="gastric-invasionDepth">
+              <option value="superficial">Superficiale</option>
+              <option value="mid">Mucosa media</option>
+              <option value="basal">Basale</option>
+              <option value="submucosa">Sottomucosa</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Reazione stromale</label>
+            <select id="gastric-stromalReaction">
+              <option value="none">Assente</option>
+              <option value="desmoplasia">Moderata</option>
+              <option value="marked">Marcata</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Note cliniche</label>
+          <textarea id="gastric-additionalNotes" rows="2" placeholder="Correlazione endoscopica, lesione visibile..."></textarea>
+        </div>
+
+        <button class="btn" onclick="analyzeGastric()">🔬 Analizza displasia (Ctrl+Enter)</button>
+        <button class="btn btn-secondary" onclick="resetForm('gastric')">Reset</button>
+      </div>
+    </div>
+
+    <!-- COLONIC SECTION -->
+    <div id="colonic-section" class="form-section">
+      <!-- Colonic Quick Presets -->
+      <div class="card">
+        <h2>⚡ Quick Entry</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('colonic_nodys')">Negative</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('colonic_ind')">Indefinite</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('colonic_lgd')">LGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('colonic_hgd')">HGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('colonic_cancer')">Carcinoma</button>
+        </div>
+      </div>
+
+      <!-- Colonic Input Form -->
+      <div class="card">
+        <h2>Displasia Colonica - Parametri di valutazione</h2>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Localizzazione segmento</label>
+            <select id="colonic-location">
+              <option value="cecum">Cieco</option>
+              <option value="asc">Colon ascendente</option>
+              <option value="transverse">Colon trasverso</option>
+              <option value="desc">Colon discendente</option>
+              <option value="sigmoid">Sigma</option>
+              <option value="rectum">Retto</option>
+              <option value="multifocal">Multifocale</option>
+            </select>
+            <div class="hint">IBD-associated: distribuzione segmentaria rilevante</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Tipo campione</label>
+            <select id="colonic-specimenType">
+              <option value="biopsia">Biopsia endoscopica</option>
+              <option value="polipectomy">Polipectomia</option>
+              <option value="resezione">Pezzo chirurgico</option>
+              <option value="multifocal">Biopsie multifocali</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ID caso (opzionale)</label>
+          <input type="text" id="colonic-caseId" placeholder="Es: COLON24-9012" />
+        </div>
+
+        <h3>Contesto clinico</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>IBD status</label>
+            <select id="colonic-ibdStatus">
+              <option value="no">No IBD</option>
+              <option value="uc">Rettocolite ulcerosa</option>
+              <option value="crohn">Morbo di Crohn</option>
+              <option value="ibd-unspecified">IBD non classificato</option>
+            </select>
+            <div class="hint">IBD = rischio aumentato per displasia</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Durata IBD (se presente)</label>
+            <select id="colonic-ibdDuration">
+              <option value="no">N/A</option>
+              <option value="lt5">< 5 anni</option>
+              <option value="5to10">5-10 anni</option>
+              <option value="gt10">> 10 anni</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Attività infiammatoria (IBD)</label>
+            <select id="colonic-inflammationActivity">
+              <option value="no">No IBD / N/A</option>
+              <option value="quiescent">Quiescente</option>
+              <option value="mild">Lieve</option>
+              <option value="moderate">Moderata</option>
+              <option value="severe">Severa</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Morfologia nucleare</h3>
+        <div class="checklist">
+          <label><input type="checkbox" id="colonic-morphPleomorphism" /> Pleomorfismo nucleare</label>
+          <label><input type="checkbox" id="colonic-morphCrowding" /> Affollamento (N/C ratio ↑)</label>
+          <label><input type="checkbox" id="colonic-morphHyperchromasia" /> Ipercromatismo marcato</label>
+          <label><input type="checkbox" id="colonic-morphIrregular" /> Contorni nucleari irregolari</label>
+          <label><input type="checkbox" id="colonic-morphProminent" /> Nucleoli prominenti</label>
+          <label><input type="checkbox" id="colonic-morphMitoses" /> Mitosi atipiche/aumentate</label>
+        </div>
+
+        <h3>Architettura ghiandolare</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Pattern architetturale</label>
+            <select id="colonic-architecture">
+              <option value="normal">Normale (cripte ordinate)</option>
+              <option value="distorted">Distorto (crowding cripte)</option>
+              <option value="basaldisruption">Disrupzione basale focale</option>
+              <option value="cribriform">Cribriformo/micropapille</option>
+              <option value="glandular">Infiltrante ghiandolare</option>
+            </select>
+            <div class="hint">⚠️ Disrupzione basale/cribriformo = HGD/carcinoma</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Stratificazione citoplasmatica</label>
+            <select id="colonic-stratification">
+              <option value="normal">Normale (polarità preservata)</option>
+              <option value="partial">Parziale (focale perdita)</option>
+              <option value="complete">Completa (disorganizzazione)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Infiammazione e contesto</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Infiltrato infiammatorio associato</label>
+            <select id="colonic-inflammation">
+              <option value="none">Assente</option>
+              <option value="mild">Lieve</option>
+              <option value="moderate">Moderato</option>
+              <option value="marked">Marcato (IBD attiva)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Polipoid/sessile growth</label>
+            <select id="colonic-polipoidGrowth">
+              <option value="flat">Flat (non polipide)</option>
+              <option value="sessile">Sessile</option>
+              <option value="pedunculated">Peduncolato</option>
+              <option value="polipoid">Polipide irregular</option>
+            </select>
+            <div class="hint">Morfologia endoscopica rilevante per grading</div>
+          </div>
+        </div>
+
+        <h3>Immunofenotipo (se disponibile)</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>p53 pattern</label>
+            <select id="colonic-p53Pattern">
+              <option value="unknown">Non eseguito</option>
+              <option value="wildtype">Wild-type (mosaico)</option>
+              <option value="overexpression">Over-expression (>80%)</option>
+              <option value="null">Null</option>
+            </select>
+            <div class="hint">p53-OE/null in colite frequente (30-50% HGD)</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Ki67 proliferazione</label>
+            <select id="colonic-ki67Level">
+              <option value="unknown">Non quantificato</option>
+              <option value="normal">Normale (basale)</option>
+              <option value="increased">Aumentata (estesa nei 2/3)</option>
+              <option value="high">Alta (diffusa, >50%)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Estensione della lesione</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>Numero foci displastici</label>
+            <select id="colonic-extensionNumber">
+              <option value="single">Singolo focus</option>
+              <option value="few">Pochi (2-5 cripte)</option>
+              <option value="multiple">Multipli (>5 cripte)</option>
+              <option value="extensive">Estesa (>50% della mucosa)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Profondità massima</label>
+            <select id="colonic-invasionDepth">
+              <option value="superficial">Superficiale (solo mucosa superiore)</option>
+              <option value="mid">Mucosa media</option>
+              <option value="basal">Basale (vicinanza muscolo)</option>
+              <option value="muscularis">Muscolo mucoso (microinvasione)</option>
+              <option value="submucosa">Sottomucosa (invasione confermata)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Reazione desmoplastica</label>
+            <select id="colonic-desmoplasia">
+              <option value="none">Assente (non invasivo)</option>
+              <option value="mild">Lieve</option>
+              <option value="moderate">Moderata</option>
+              <option value="marked">Marcata (invasione probabile)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Qualità e contesto endoscopico</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Qualità orientamento tissutale</label>
+            <select id="colonic-orientation">
+              <option value="optimal">Ottimale</option>
+              <option value="acceptable">Accettabile</option>
+              <option value="suboptimal">Subottimale (tangenzialità)</option>
+              <option value="poor">Scarsa</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Margini polipectomia (se applicabile)</label>
+            <select id="colonic-margins">
+              <option value="na">N/A (non polipectomia)</option>
+              <option value="clear">Negativi (>2mm)</option>
+              <option value="close">Compromessi (<2mm)</option>
+              <option value="positive">Positivi (invasione al margine)</option>
+            </select>
+            <div class="hint">⚠️ Margini positivi = rischio residua/ricorrenza</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Note cliniche</label>
+          <textarea id="colonic-additionalNotes" rows="2" placeholder="Aspetto endoscopico, ulcerazione, lesione visibile, surveillance pregressa..."></textarea>
+        </div>
+
+        <button class="btn" onclick="analyzeColonic()">🔬 Analizza displasia (Ctrl+Enter)</button>
+        <button class="btn btn-secondary" onclick="resetForm('colonic')">Reset</button>
+      </div>
+    </div>
+
+    <!-- Output Section (shared) -->
     <div class="card output-section" id="outputSection">
       <h2>Risultato interpretativo</h2>
       
@@ -310,97 +711,15 @@
         <button class="btn copy-btn" id="copyReportBtn">📋 Copia testo</button>
       </div>
     </div>
-
-    <!-- History Section -->
-    <div class="card">
-      <h2 class="collapse-trigger" onclick="toggleCollapse('historyContent')">📋 Cronologia recente (ultimi 5 casi)</h2>
-      <div id="historyContent" class="collapse-content">
-        <div id="historyList"></div>
-        <button class="btn btn-secondary btn-small" onclick="clearHistory()">Cancella cronologia</button>
-      </div>
-    </div>
-
-    <!-- Reference Section -->
-    <div class="card">
-      <h2 class="collapse-trigger" onclick="toggleCollapse('referenceContent')">📚 Criteri di riferimento e bibliografia</h2>
-      <div id="referenceContent" class="collapse-content">
-        <div class="criteria-list">
-          <h3>Soglie organo-specifiche per over-expression (v2.0 CORRETTE)</h3>
-          <ul>
-            <li><strong>Endometrio:</strong> ≥75% nuclei 2+/3+ OR H-score ≥200 <span style="color:#059669">[Singh 2020 ✓]</span></li>
-            <li><strong>Ovaio (HGSC):</strong> ≥80% nuclei 2+/3+ diffusi <span style="color:#059669">[Köbel 2016 ✓]</span> (v1 aveva 70% - CORRETTO)</li>
-            <li><strong>Colon:</strong> ≥80% nuclei 2+/3+ diffusi</li>
-            <li><strong>Mammella:</strong> ≥80% nuclei 2+/3+ OR H-score ≥200</li>
-            <li><strong>Polmone, Stomaco, Pancreas, Sarcoma:</strong> ≥80-85% (conservativo)</li>
-            <li><strong>NOTA:</strong> "Any intensity" threshold rimosso - era inappropriato (troppo basso)</li>
-          </ul>
-          
-          <h3>Pattern wild-type tipici</h3>
-          <ul>
-            <li>Distribuzione <strong>eterogenea</strong> a mosaico (hallmark del WT)</li>
-            <li>Intensità variabile da cellula a cellula</li>
-            <li>Gradiente evidente in aree diverse</li>
-            <li>MAI uniformemente forte in >80% cellule</li>
-          </ul>
-          
-          <h3>Pattern aberranti definitivi</h3>
-          <ul>
-            <li><strong>Null pattern:</strong> 0% nuclei positivi + controllo interno FORTE positivo</li>
-            <li><strong>Over-expression:</strong> ≥soglia organo-specifica + distribuzione diffusa (ora corretto per ovaio)</li>
-            <li><strong>Cytoplasmic:</strong> Sequestro citoplasmatico CON nuclei negativi/deboli (non misto)</li>
-            <li><strong>Aberrant nuclear:</strong> Rim-like, speckled, esclusione nucleare</li>
-          </ul>
-          
-          <h3>Contesto molecolare (ProMisE classification)</h3>
-          <ul>
-            <li><strong>POLE-mutated:</strong> p53 wild-type (prognosi eccellente). ⚠️ p53-OE + POLE raro (~5%) - FLAG se coesistente</li>
-            <li><strong>MMR-deficient:</strong> p53 wild-type (prognosi buona se p53-WT, cattiva se p53-abn)</li>
-            <li><strong>p53-abnormal:</strong> alta aggressività, chemiosensibilità platino</li>
-            <li><strong>NSMP:</strong> prognosi intermedia</li>
-          </ul>
-          
-          <h3>Troubleshooting tecnico & Pattern misti</h3>
-          <ul>
-            <li><strong>Null pattern con controllo weak:</strong> Ripetere colorazione - possibile falso negativo tecnico</li>
-            <li><strong>Citoplasmatico puro (nuclei 0% positivi):</strong> Pattern aberrante definitivo</li>
-            <li><strong>Citoplasmatico MISTO (nuclei 30-50% positivi + cyto):</strong> Nucleare-prevalente - interpretare come nucleare + note cyto</li>
-            <li><strong>Pattern subclonale (<10%):</strong> Segnalare ma interpretare come wild-type complessivo</li>
-            <li><strong>Artefatti da over-fixation:</strong> Possono causare falsi negativi</li>
-          </ul>
-        </div>
-        
-        <div class="alert alert-info">
-          <h3>Bibliografia essenziale (v2.0)</h3>
-          <div style="font-size: 0.85rem; line-height: 1.4;">
-            <strong>Validazione endometrio:</strong><br>
-            • Singh N, et al. p53 immunohistochemistry is an accurate surrogate for TP53 mutational analysis. <em>J Pathol</em> 2020;250:336-345 ⭐ (207 casi, NGS, 90.7% accuracy)<br>
-            • Kommoss S, et al. Final validation of ProMisE classifier. <em>Ann Oncol</em> 2018;29:1180-1188<br><br>
-
-            <strong>Validazione ovaio (HGSC):</strong><br>
-            • Köbel M, et al. Optimized p53 immunohistochemistry is an accurate predictor of TP53 mutation in ovarian carcinoma. <em>J Pathol</em> 2016;240:360-371 ⭐ (>80% strong = OE standard)<br>
-            • BAGP/UKNEQAS Guidance p53 Interpretation 2016 (>80% strong intensity)<br><br>
-
-            <strong>Pattern-based interpretation:</strong><br>
-            • Köbel M, Ronnett BM, Singh N, et al. Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131<br>
-            • van den Heerik ASVM, et al. PORTEC-3 molecular validation. <em>Mod Pathol</em> 2022;35:1475-1483<br><br>
-
-            <strong>Linee guida cliniche:</strong><br>
-            • ESGO/ESTRO/ESP Endometrial Carcinoma Guidelines 2021<br>
-            • ESMO Clinical Practice Guidelines - Ovarian Cancer 2024<br>
-            • CAP Cancer Protocols 2024
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <div class="keyboard-hint" id="keyboardHint">Ctrl+Enter = Analizza | Ctrl+R = Reset</div>
-
 <script>
-// ============ CONFIGURATION v2.0 FIXED ============
-const THRESHOLDS = {
+// ============ GLOBALS ============
+let currentMode = 'p53';
+
+const P53_THRESHOLDS = {
   endometrio: { strong: 75, hscore: 200 },
-  ovaio: { strong: 80, hscore: 180 },  // FIX: 70 → 80 (Köbel 2016 standard)
+  ovaio: { strong: 80, hscore: 180 },
   colon: { strong: 80, hscore: 220 },
   mammella: { strong: 80, hscore: 200 },
   polmone: { strong: 80, hscore: 200 },
@@ -412,557 +731,271 @@ const THRESHOLDS = {
 };
 
 const PRESETS = {
-  classic_oe: { perc0: 5, perc1: 5, perc2: 20, perc3: 70, distribution: 'diffuse', localization: 'nuclear', specialPattern: 'none' },
-  null: { perc0: 100, perc1: 0, perc2: 0, perc3: 0, distribution: 'diffuse', localization: 'nuclear', specialPattern: 'none', controlIntensity: 'strong' },
-  mosaic_wt: { perc0: 40, perc1: 30, perc2: 25, perc3: 5, distribution: 'mosaic', localization: 'nuclear', specialPattern: 'none' },
-  cyto: { perc0: 30, perc1: 50, perc2: 15, perc3: 5, distribution: 'diffuse', localization: 'cytoplasmic', specialPattern: 'none' }
+  p53_classic_oe: { 'p53-perc0': 5, 'p53-perc1': 5, 'p53-perc2': 20, 'p53-perc3': 70, 'p53-distribution': 'diffuse', 'p53-localization': 'nuclear' },
+  p53_null: { 'p53-perc0': 100, 'p53-perc1': 0, 'p53-perc2': 0, 'p53-perc3': 0, 'p53-distribution': 'diffuse', 'p53-controlIntensity': 'strong' },
+  p53_mosaic_wt: { 'p53-perc0': 40, 'p53-perc1': 30, 'p53-perc2': 25, 'p53-perc3': 5, 'p53-distribution': 'mosaic' },
+  p53_cyto: { 'p53-perc0': 30, 'p53-perc1': 50, 'p53-perc2': 15, 'p53-perc3': 5, 'p53-localization': 'cytoplasmic' },
+  gastric_nodys: { 'gastric-morphPleomorphism': false, 'gastric-morphCrowding': false, 'gastric-architecture': 'intact', 'gastric-stratification': 'normal', 'gastric-ki67Level': 'low' },
+  gastric_lgd: { 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': false, 'gastric-architecture': 'intact', 'gastric-stratification': 'partial', 'gastric-ki67Level': 'moderate' },
+  gastric_hgd: { 'gastric-morphPleomorphism': true, 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': true, 'gastric-morphIrregular': true, 'gastric-morphMitoses': true, 'gastric-architecture': 'cribriform', 'gastric-stratification': 'complete', 'gastric-ki67Level': 'high' },
+  gastric_cancer: { 'gastric-morphPleomorphism': true, 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': true, 'gastric-morphMitoses': true, 'gastric-architecture': 'glandular', 'gastric-invasionDepth': 'submucosa', 'gastric-ki67Level': 'high' },
+  colonic_nodys: { 'colonic-morphPleomorphism': false, 'colonic-morphCrowding': false, 'colonic-architecture': 'normal', 'colonic-stratification': 'normal', 'colonic-ki67Level': 'normal', 'colonic-p53Pattern': 'wildtype' },
+  colonic_ind: { 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': false, 'colonic-architecture': 'distorted', 'colonic-stratification': 'partial', 'colonic-ki67Level': 'increased', 'colonic-inflammation': 'moderate' },
+  colonic_lgd: { 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': false, 'colonic-morphMitoses': false, 'colonic-architecture': 'distorted', 'colonic-stratification': 'partial', 'colonic-ki67Level': 'increased', 'colonic-p53Pattern': 'wildtype' },
+  colonic_hgd: { 'colonic-morphPleomorphism': true, 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': true, 'colonic-morphIrregular': true, 'colonic-morphMitoses': true, 'colonic-architecture': 'cribriform', 'colonic-stratification': 'complete', 'colonic-ki67Level': 'high', 'colonic-p53Pattern': 'overexpression', 'colonic-desmoplasia': 'moderate' },
+  colonic_cancer: { 'colonic-morphPleomorphism': true, 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': true, 'colonic-morphMitoses': true, 'colonic-architecture': 'glandular', 'colonic-invasionDepth': 'submucosa', 'colonic-desmoplasia': 'marked', 'colonic-ki67Level': 'high' }
 };
 
-// ============ UTILITY FUNCTIONS ============
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, isNaN(value) ? 0 : value));
+// ============ MODE CONTROL ============
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('p53-section').classList.remove('active');
+  document.getElementById('gastric-section').classList.remove('active');
+  document.getElementById(mode + '-section').classList.add('active');
+  document.getElementById('outputSection').classList.remove('show');
 }
 
-function toggleCollapse(id) {
-  document.getElementById(id).classList.toggle('show');
-}
-
-function createBadge(text, type) {
-  return `<span class="badge badge-${type}">${text}</span>`;
-}
-
-function createMetric(value, label, unit = '') {
-  return `
-    <div class="metric">
-      <div class="metric-value">${value}${unit}</div>
-      <div class="metric-label">${label}</div>
-    </div>
-  `;
-}
-
-// ============ PRESET LOADING ============
 function loadPreset(presetName) {
   const preset = PRESETS[presetName];
   if (!preset) return;
-  
-  document.getElementById('perc0').value = preset.perc0;
-  document.getElementById('perc1').value = preset.perc1;
-  document.getElementById('perc2').value = preset.perc2;
-  document.getElementById('perc3').value = preset.perc3;
-  document.getElementById('distribution').value = preset.distribution;
-  document.getElementById('localization').value = preset.localization;
-  document.getElementById('specialPattern').value = preset.specialPattern;
-  
-  if (preset.controlIntensity) {
-    document.getElementById('controlIntensity').value = preset.controlIntensity;
-  }
-  
-  updatePercSum();
-}
-
-// ============ PERCENTAGE SUM MONITOR ============
-function updatePercSum() {
-  const sum = ['perc0', 'perc1', 'perc2', 'perc3'].reduce((total, id) => {
-    return total + (parseFloat(document.getElementById(id).value) || 0);
-  }, 0);
-  
-  const percSumEl = document.getElementById('percSum');
-  const inputs = ['perc0', 'perc1', 'perc2', 'perc3'];
-  
-  if (Math.abs(sum - 100) <= 5) {
-    percSumEl.textContent = `Somma: ${sum.toFixed(0)}% ✓`;
-    percSumEl.className = 'hint';
-    inputs.forEach(id => document.getElementById(id).style.borderColor = '#059669');
-  } else if (Math.abs(sum - 100) <= 15) {
-    percSumEl.textContent = `Somma: ${sum.toFixed(0)}% ⚠️`;
-    percSumEl.className = 'hint important';
-    inputs.forEach(id => document.getElementById(id).style.borderColor = '#d97706');
-  } else {
-    percSumEl.textContent = `Somma: ${sum.toFixed(0)}% ❌ (deve essere ~100%)`;
-    percSumEl.className = 'hint important';
-    inputs.forEach(id => document.getElementById(id).style.borderColor = '#dc2626');
+  for (const [key, value] of Object.entries(preset)) {
+    const elem = document.getElementById(key);
+    if (elem) {
+      if (elem.type === 'checkbox') elem.checked = value;
+      else elem.value = value;
+    }
   }
 }
 
-// ============ MAIN CALCULATION ============
-function calculateInterpretation() {
-  // Collect form data
+function resetForm(mode) {
+  const prefix = mode === 'p53' ? 'p53-' : 'gastric-';
+  document.querySelectorAll(`[id^="${prefix}"]`).forEach(elem => {
+    if (elem.type === 'checkbox') elem.checked = false;
+    else if (elem.type === 'text' || elem.tagName === 'TEXTAREA') elem.value = '';
+    else if (elem.tagName === 'SELECT') elem.selectedIndex = 0;
+  });
+  document.getElementById('outputSection').classList.remove('show');
+}
+
+// ============ P53 ANALYSIS ============
+function analyzeP53() {
   const data = {
-    tumorType: document.getElementById('tumorType').value,
-    specimenType: document.getElementById('specimenType').value,
-    caseId: document.getElementById('caseId').value,
-    mmrStatus: document.getElementById('mmrStatus').value,
-    poleStatus: document.getElementById('poleStatus').value,
-    grade: document.getElementById('grade').value,
-    internalControl: document.getElementById('internalControl').value,
-    controlIntensity: document.getElementById('controlIntensity').value,
-    technicalQuality: document.getElementById('technicalQuality').value,
-    perc0: clamp(parseFloat(document.getElementById('perc0').value), 0, 100),
-    perc1: clamp(parseFloat(document.getElementById('perc1').value), 0, 100),
-    perc2: clamp(parseFloat(document.getElementById('perc2').value), 0, 100),
-    perc3: clamp(parseFloat(document.getElementById('perc3').value), 0, 100),
-    distribution: document.getElementById('distribution').value,
-    localization: document.getElementById('localization').value,
-    specialPattern: document.getElementById('specialPattern').value,
-    morphPleomorphism: document.getElementById('morphPleomorphism').checked,
-    morphTILs: document.getElementById('morphTILs').checked,
-    morphNecrosis: document.getElementById('morphNecrosis').checked,
-    morphSerous: document.getElementById('morphSerous').checked,
-    additionalNotes: document.getElementById('additionalNotes').value
+    tumorType: document.getElementById('p53-tumorType').value,
+    caseId: document.getElementById('p53-caseId').value,
+    perc0: parseFloat(document.getElementById('p53-perc0').value) || 0,
+    perc1: parseFloat(document.getElementById('p53-perc1').value) || 0,
+    perc2: parseFloat(document.getElementById('p53-perc2').value) || 0,
+    perc3: parseFloat(document.getElementById('p53-perc3').value) || 0,
+    distribution: document.getElementById('p53-distribution').value,
+    localization: document.getElementById('p53-localization').value,
+    specialPattern: document.getElementById('p53-specialPattern').value,
+    p53Pattern: document.getElementById('p53-poleStatus').value,
+    mmrStatus: document.getElementById('p53-mmrStatus').value,
+    poleStatus: document.getElementById('p53-poleStatus').value,
+    controlIntensity: document.getElementById('p53-controlIntensity').value,
+    technicalQuality: document.getElementById('p53-technicalQuality').value,
+    additionalNotes: document.getElementById('p53-additionalNotes').value
   };
-  
-  // Calculate metrics
-  const metrics = calculateMetrics(data);
-  
+
+  const thresholds = P53_THRESHOLDS[data.tumorType];
+  const hScore = (data.perc1 * 1) + (data.perc2 * 2) + (data.perc3 * 3);
+  const percStrong = data.perc2 + data.perc3;
+  const percAny = data.perc1 + data.perc2 + data.perc3;
+
+  let grade, title, reason, action;
+
+  if (data.technicalQuality === 'poor') {
+    grade = 'ni'; title = 'Non interpretabile'; reason = 'Qualità tecnica inaccettabile'; action = 'RIPETERE COLORAZIONE';
+  } else if (percAny === 0 && data.controlIntensity === 'strong') {
+    grade = 'null'; title = 'Pattern null'; reason = 'Assenza nuclei positivi + controllo forte'; action = 'Pattern aberrante confermato';
+  } else if (data.localization === 'cytoplasmic' && percAny <= 20) {
+    grade = 'cyto'; title = 'Pattern citoplasmatico aberrante'; reason = 'Sequestro citoplasmatico con nuclei negativi'; action = 'Pattern aberrante';
+  } else if (percStrong >= thresholds.strong || hScore >= thresholds.hscore) {
+    grade = 'oe'; title = 'Pattern over-expression'; reason = `${percStrong.toFixed(0)}% forte / H-score ${hScore.toFixed(0)}`; action = 'Pattern aberrante';
+  } else {
+    grade = 'wt'; title = 'Wild-type'; reason = 'Nessun criterio over-expression'; action = 'Nessun testing molecolare necessario';
+  }
+
+  updateOutput(grade, title, reason, action, { perc0: data.perc0, perc1: data.perc1, perc2: data.perc2, perc3: data.perc3, hScore: hScore, caseId: data.caseId });
+  generateP53Report(grade, title, reason, data, hScore);
+}
+
+// ============ GASTRIC ANALYSIS ============
+function analyzeGastric() {
+  const data = {
+    caseId: document.getElementById('gastric-caseId').value,
+    location: document.getElementById('gastric-location').value,
+    morphPleomorphism: document.getElementById('gastric-morphPleomorphism').checked,
+    morphCrowding: document.getElementById('gastric-morphCrowding').checked,
+    morphHyperchromasia: document.getElementById('gastric-morphHyperchromasia').checked,
+    morphIrregular: document.getElementById('gastric-morphIrregular').checked,
+    morphMitoses: document.getElementById('gastric-morphMitoses').checked,
+    architecture: document.getElementById('gastric-architecture').value,
+    stratification: document.getElementById('gastric-stratification').value,
+    invasionDepth: document.getElementById('gastric-invasionDepth').value,
+    stromalReaction: document.getElementById('gastric-stromalReaction').value,
+    additionalNotes: document.getElementById('gastric-additionalNotes').value
+  };
+
+  const morphCount = [data.morphPleomorphism, data.morphCrowding, data.morphHyperchromasia, data.morphIrregular, data.morphMitoses].filter(c => c).length;
+  const hasBasalDisruption = ['basaldisruption', 'cribriform', 'glandular'].includes(data.architecture);
+
+  let grade, title, reason, action;
+
+  if (data.invasionDepth === 'submucosa') {
+    grade = 'cancer'; title = 'CARCINOMA ADENOCARCINOMA GASTRICO'; reason = 'Invasione sottomucosa confermata'; action = 'URGENTE: staging, chirurgia, oncologia';
+  } else if (morphCount >= 3 && hasBasalDisruption && data.architecture !== 'intact') {
+    grade = 'hgd'; title = 'DISPLASIA AD ALTO GRADO (HGD)'; reason = 'Morfologia HGD + disrupzione basale'; action = 'ESD o chirurgia + follow-up endoscopico';
+  } else if (data.morphCrowding && data.architecture === 'intact' && !hasBasalDisruption) {
+    grade = 'lgd'; title = 'DISPLASIA A BASSO GRADO (LGD)'; reason = 'Atipia lieve + architettura integra'; action = 'Ripetere biopsia in 2-3 mesi, surveillance';
+  } else {
+    grade = 'nodys'; title = 'NON DISPLASIA'; reason = 'Architettura integra, morfologia benigna'; action = 'Surveillance secondo MAPS risk stratification';
+  }
+
+  updateOutput(grade, title, reason, action, { morphCount: morphCount, caseId: data.caseId, location: data.location });
+  generateGastricReport(grade, title, reason, data, morphCount);
+}
+
+// ============ COLONIC ANALYSIS ============
+function analyzeColonic() {
+  const data = {
+    caseId: document.getElementById('colonic-caseId').value,
+    location: document.getElementById('colonic-location').value,
+    ibdStatus: document.getElementById('colonic-ibdStatus').value,
+    morphPleomorphism: document.getElementById('colonic-morphPleomorphism').checked,
+    morphCrowding: document.getElementById('colonic-morphCrowding').checked,
+    morphHyperchromasia: document.getElementById('colonic-morphHyperchromasia').checked,
+    morphIrregular: document.getElementById('colonic-morphIrregular').checked,
+    morphMitoses: document.getElementById('colonic-morphMitoses').checked,
+    architecture: document.getElementById('colonic-architecture').value,
+    stratification: document.getElementById('colonic-stratification').value,
+    invasionDepth: document.getElementById('colonic-invasionDepth').value,
+    desmoplasia: document.getElementById('colonic-desmoplasia').value,
+    margins: document.getElementById('colonic-margins').value,
+    additionalNotes: document.getElementById('colonic-additionalNotes').value
+  };
+
+  const morphCount = [data.morphPleomorphism, data.morphCrowding, data.morphHyperchromasia, data.morphIrregular, data.morphMitoses].filter(c => c).length;
+  const hasArchDisruption = ['basaldisruption', 'cribriform', 'glandular'].includes(data.architecture);
+
+  let grade, title, reason, action, risk;
+
   // Quality control
-  const qualityIssues = performQualityControl(data, metrics);
+  if (document.getElementById('colonic-orientation').value === 'poor') {
+    grade = 'ni'; title = 'Non interpretabile'; reason = 'Qualità tissutale insufficiente'; action = 'RIPETERE BIOPSIA'; risk = 'N/A';
+  }
+  // CARCINOMA
+  else if (data.invasionDepth === 'submucosa' || (data.invasionDepth === 'muscularis' && data.desmoplasia === 'marked')) {
+    grade = 'cancer'; title = 'CARCINOMA ADENOCARCINOMA COLON'; reason = 'Invasione sottomucosa o muscolaris confermata'; 
+    action = 'URGENTE: staging TNM, oncologia, follow-up post-operatorio'; risk = 'Molto alto';
+  }
+  // HGD (strict criteria: morph ≥3 + arch disruption)
+  else if (morphCount >= 3 && hasArchDisruption) {
+    grade = 'hgd'; title = 'DISPLASIA AD ALTO GRADO (HGD)'; 
+    reason = `Morfologia HGD (${morphCount}/5 criteri) + disrupzione basale/cribriformo`;
+    if (data.ibdStatus !== 'no') {
+      action = 'IBD-HGD: polipectomia/resezione se possibile; se non resecabile → considerare colectomia. Surveillance stretta post-intervento.';
+    } else {
+      action = 'Sporadic HGD: polipectomia completa + margini negativi; resezione se margini positivi.';
+    }
+    risk = 'Alto (30-50% progressione annuale se non trattato)';
+  }
+  // IND (Indefinite for dysplasia) - morphologicamente intermedio
+  else if (morphCount >= 2 && morphCount < 3 && (data.ibdStatus !== 'no' || data.architecture === 'distorted')) {
+    grade = 'ind'; title = 'INDEFINITA PER DISPLASIA'; 
+    reason = `Atipia borderline (${morphCount}/5 criteri) + architettura distorta, senza criteri HGD chiari`;
+    if (data.ibdStatus !== 'no') {
+      action = 'IBD: ripetere biopsia in 2-3 mesi; correlazione endoscopica; considera p53/Ki67 se dubbio persiste.';
+    } else {
+      action = 'Non-IBD: ripetere biopsia per conferma; se confermato → resezione; follow-up.';
+    }
+    risk = 'Intermedio (1-5% progressione annuale, dipende IBD duration)';
+  }
+  // LGD (basso grado: crowding + architettura distorta ma NO disrupzione basale)
+  else if ((data.morphCrowding || morphCount >= 1) && data.architecture !== 'normal' && !hasArchDisruption && data.stratification !== 'complete') {
+    grade = 'lgd'; title = 'DISPLASIA A BASSO GRADO (LGD)'; 
+    reason = `Atipia lieve (${morphCount}/5 criteri) + distorsione architetturale senza disrupzione basale`;
+    if (data.ibdStatus !== 'no') {
+      action = 'IBD-LGD: surveillance endoscopica ogni 6-12 mesi con biopsie random; conferma istologica consigliata. Considerare p53.';
+    } else {
+      action = 'Sporadic LGD: polipectomia se in polipo (margini), altrimenti sorveglianza ravvicinata.';
+    }
+    risk = 'Basso (1-2% progressione annuale)';
+  }
+  // NEGATIVE
+  else {
+    grade = 'nodys'; title = 'NEGATIVO PER DISPLASIA'; 
+    reason = 'Architettura normale, citologia benigna';
+    if (data.ibdStatus !== 'no') {
+      action = 'IBD surveillance: endoscopia con biopsie random ogni 1-2 anni (dipende durata IBD e infiammazione attuale).';
+    } else {
+      action = 'Sporadic: surveillance colonscopia standard (10 anni se polipo <10mm, 3-5 anni se precedente).';
+    }
+    risk = 'Basso';
+  }
+
+  updateOutput(grade, title, reason, action, { morphCount: morphCount, caseId: data.caseId, location: data.location });
+  generateColonicReport(grade, title, reason, data, morphCount, risk);
+}
+
+// ============ SHARED OUTPUT ============
+function updateOutput(grade, title, reason, action, metrics) {
+  let metricsHTML = '';
+  if (metrics.caseId) metricsHTML += `<div class="metric"><div class="metric-value">${metrics.caseId}</div><div class="metric-label">ID caso</div></div>`;
+  if (metrics.hScore !== undefined) metricsHTML += `<div class="metric"><div class="metric-value">${metrics.hScore.toFixed(0)}</div><div class="metric-label">H-score</div></div>`;
+  if (metrics.morphCount !== undefined) metricsHTML += `<div class="metric"><div class="metric-value">${metrics.morphCount}/5</div><div class="metric-label">Criteri morfologici</div></div>`;
   
-  // Determine interpretation
-  const interpretation = determineInterpretation(data, metrics, qualityIssues);
+  document.getElementById('metricsSection').innerHTML = metricsHTML;
+
+  const alertType = grade === 'ni' || grade === 'cancer' ? 'danger' : grade === 'oe' || grade === 'hgd' ? 'warning' : 'success';
   
-  // Update UI
-  updateOutput(interpretation, metrics, data, qualityIssues);
+  let mainHTML = `<span class="badge badge-${grade}">${title}</span><div style="margin-top: 12px;"><strong>Motivazione:</strong> ${reason}<br><strong>Azione:</strong> ${action}</div>`;
+  
+  document.getElementById('mainResult').innerHTML = mainHTML;
+  document.getElementById('mainResult').className = `alert alert-${alertType}`;
+  
+  document.getElementById('detailedAnalysis').innerHTML = `<h3>Analisi dettagliata</h3><p>${reason}</p>`;
+  document.getElementById('recommendations').innerHTML = `<h3>Raccomandazioni</h3><div class="alert alert-${alertType}">${action}</div>`;
   
   document.getElementById('outputSection').classList.add('show');
   document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function calculateMetrics(data) {
-  const totalPerc = data.perc0 + data.perc1 + data.perc2 + data.perc3;
-  const percAny = data.perc1 + data.perc2 + data.perc3;
-  const percStrong = data.perc2 + data.perc3;
-  const hScore = (data.perc1 * 1) + (data.perc2 * 2) + (data.perc3 * 3);
-  
-  return {
-    totalPerc,
-    percAny,
-    percStrong,
-    hScore
-  };
-}
-
-function performQualityControl(data, metrics) {
-  const issues = [];
-  
-  if (data.internalControl === 'none') {
-    issues.push('Controllo interno assente - validità non garantita');
-  }
-  
-  if (data.controlIntensity === 'none' || data.controlIntensity === 'weak') {
-    issues.push('Controllo interno non forte - rischio falso negativo per null pattern');
-  }
-  
-  if (data.technicalQuality === 'poor') {
-    issues.push('Qualità tecnica inaccettabile');
-  }
-  
-  if (Math.abs(metrics.totalPerc - 100) > 10) {
-    issues.push(`Percentuali non sommano a 100% (totale: ${metrics.totalPerc.toFixed(0)}%)`);
-  }
-  
-  return issues;
-}
-
-function determineInterpretation(data, metrics, qualityIssues) {
-  const thresholds = THRESHOLDS[data.tumorType];
-  
-  // 1. QUALITY CONTROL FAILURES
-  if (qualityIssues.length > 0 && data.technicalQuality === 'poor') {
-    return {
-      type: 'ni',
-      title: 'Non interpretabile',
-      reason: 'Problemi critici di qualità tecnica',
-      confidence: 'N/A',
-      action: 'Ripetere colorazione con controlli appropriati',
-      molecular: 'N/A'
-    };
-  }
-  
-  // 2. ABERRANT PATTERNS - PURE CYTOPLASMIC (nuclei must be negative/weak)
-  if (data.localization === 'cytoplasmic' && metrics.percAny <= 20) {
-    return {
-      type: 'cyto',
-      title: 'Pattern citoplasmatico aberrante (puro)',
-      reason: 'Sequestro citoplasmatico con nuclei prevalentemente negativi/deboli (<20%)',
-      confidence: 'Alta',
-      action: 'Pattern aberrante definitivo - refertare come p53-abnormal',
-      molecular: 'Mutazione TP53 con alterazione localizzazione nucleare (NLS mutations)'
-    };
-  }
-  
-  // 3. ABERRANT PATTERNS - SPECIAL NUCLEAR
-  if (data.specialPattern !== 'none') {
-    const patternNames = {
-      rim: 'rim-like periferico',
-      speckled: 'speckled punteggiato',
-      excluded: 'esclusione nucleare'
-    };
-    
-    return {
-      type: 'cyto',
-      title: `Pattern aberrante (${patternNames[data.specialPattern]})`,
-      reason: 'Pattern nucleare anomalo specifico',
-      confidence: 'Alta',
-      action: 'Pattern aberrante definitivo - refertare come p53-abnormal',
-      molecular: 'Coerente con mutazione funzionale TP53'
-    };
-  }
-  
-  // 4. NULL PATTERN
-  if (metrics.percAny === 0) {
-    if (data.controlIntensity !== 'strong') {
-      return {
-        type: 'ni',
-        title: 'Possibile null pattern - VALIDITÀ INCERTA',
-        reason: 'Assenza nuclei positivi ma controllo interno non forte',
-        confidence: 'Bassa',
-        action: 'RIPETERE con controllo interno forte prima di refertare',
-        molecular: 'Non valutabile fino a conferma tecnica'
-      };
-    }
-    
-    return {
-      type: 'null',
-      title: 'Pattern null (complete loss)',
-      reason: 'Assenza completa di nuclei positivi + controllo interno forte',
-      confidence: 'Alta',
-      action: 'Pattern aberrante confermato',
-      molecular: 'Coerente con alleli inattivanti (nonsense, frameshift, delezioni)'
-    };
-  }
-  
-  // 5. OVER-EXPRESSION PATTERN (v2.0: ovaio now 80% not 70%)
-  const overByStrong = metrics.percStrong >= thresholds.strong;
-  const overByHscore = metrics.hScore >= thresholds.hscore;
-  
-  // Flag POLE-mut + OE coexistence (rare, ~5%)
-  let poleWarning = '';
-  if (overByStrong && data.poleStatus === 'mutated') {
-    poleWarning = '<div class="alert alert-warning" style="margin-top:10px;"><strong>⚠️ CONFLITTO MOLECOLARE:</strong> POLE-mutato coesistente con p53-OE è raro (~5% HGSC). Verificare sequenziamento TP53 e POLE.</div>';
-  }
-  
-  if (overByStrong || overByHscore) {
-    const criteria = [];
-    if (overByStrong) criteria.push(`${metrics.percStrong.toFixed(0)}% forte (≥${thresholds.strong}%)`);
-    if (overByHscore) criteria.push(`H-score ${metrics.hScore.toFixed(0)} (≥${thresholds.hscore})`);
-    
-    return {
-      type: 'oe',
-      title: 'Pattern over-expression',
-      reason: `Criteri soddisfatti: ${criteria.join(' | ')}`,
-      confidence: 'Alta',
-      action: 'Pattern aberrante confermato',
-      molecular: 'Tipicamente mutazioni stabilizzanti missense (hotspots: R175, R248, R273)',
-      criteria: criteria,
-      poleWarning: poleWarning
-    };
-  }
-  
-  // 6. WILD-TYPE WITH CONTEXT
-  let wtSubtype = 'standard';
-  let wtMessage = '';
-  
-  if (data.poleStatus === 'mutated') {
-    wtSubtype = 'pole';
-    wtMessage = 'POLE-mutated: prognosi eccellente indipendentemente da p53';
-  } else if (data.mmrStatus === 'deficient') {
-    wtSubtype = 'mmrd';
-    wtMessage = 'MMR-deficient: prognosi buona con p53-WT (peggiore se fosse p53-abn)';
-  } else if (data.grade === 'high' && data.morphPleomorphism) {
-    wtSubtype = 'highgrade';
-    wtMessage = 'High-grade con pleomorfismo: considerare molecular testing (rischio p53-abn copy-neutral)';
-  }
-  
-  // 7. MOSAIC WILD-TYPE (classic pattern)
-  if (data.distribution === 'mosaic' && metrics.percAny >= 20 && metrics.percAny <= 80) {
-    return {
-      type: 'wt',
-      title: 'Wild-type (pattern a mosaico tipico)',
-      reason: 'Distribuzione eterogenea caratteristica del wild-type',
-      confidence: 'Alta',
-      action: wtSubtype === 'standard' ? 'Nessun testing molecolare necessario' : 'Contestualizzare con status molecolare',
-      molecular: wtMessage || 'Funzione p53 normale',
-      subtype: wtSubtype
-    };
-  }
-  
-  // 8. WILD-TYPE - OTHER PATTERNS
-  if (metrics.percAny < 20) {
-    return {
-      type: 'wt',
-      title: 'Wild-type (positività molto bassa)',
-      reason: `Solo ${metrics.percAny.toFixed(0)}% nuclei positivi`,
-      confidence: 'Moderata',
-      action: 'Considerare sampling bias se biopsia, o artefatti tecnici',
-      molecular: wtMessage || 'Compatibile con funzione normale, ma cautela su sampling',
-      subtype: wtSubtype
-    };
-  }
-  
-  return {
-    type: 'wt',
-    title: 'Wild-type',
-    reason: 'Nessun criterio per over-expression o pattern aberrante soddisfatto',
-    confidence: qualityIssues.length > 0 ? 'Moderata' : 'Alta',
-    action: wtSubtype === 'standard' ? 'No further molecular testing needed' : 'Contestualizzare',
-    molecular: wtMessage || 'Funzione p53 normale',
-    subtype: wtSubtype
-  };
-}
-
-function updateOutput(interpretation, metrics, data, qualityIssues) {
-  // Update metrics display
-  let metricsHTML = `
-    ${createMetric(metrics.percAny.toFixed(0), 'Positivi totali', '%')}
-    ${createMetric(metrics.percStrong.toFixed(0), 'Positivi forti', '%')}
-    ${createMetric(metrics.hScore.toFixed(0), 'H-score', '')}
-  `;
-  
-  if (data.caseId) {
-    metricsHTML += `${createMetric(data.caseId, 'ID caso', '')}`;
-  }
-  
-  document.getElementById('metricsSection').innerHTML = metricsHTML;
-  
-  // Update main result
-  const alertType = interpretation.type === 'ni' ? 'danger' : 
-                   interpretation.type === 'oe' || interpretation.type === 'null' || interpretation.type === 'cyto' ? 'warning' : 'success';
-  
-  let mainHTML = `
-    ${createBadge(interpretation.title, interpretation.type)}
-    <div style="margin-top: 12px; font-size: 0.95rem; text-align: left;">
-      <strong>Motivazione:</strong> ${interpretation.reason}<br>
-      <strong>Confidenza:</strong> ${interpretation.confidence}<br>
-      <strong>Azione:</strong> ${interpretation.action}
-    </div>
-  `;
-  
-  if (interpretation.poleWarning) {
-    mainHTML += interpretation.poleWarning;
-  }
-  
-  document.getElementById('mainResult').innerHTML = mainHTML;
-  document.getElementById('mainResult').className = `alert alert-${alertType}`;
-  
-  // Detailed analysis
-  let detailHTML = '<h3>Analisi dettagliata</h3><div class="criteria-list">';
-  
-  detailHTML += `<p><strong>Organo:</strong> ${data.tumorType.charAt(0).toUpperCase() + data.tumorType.slice(1)} • <strong>Campione:</strong> ${data.specimenType}</p>`;
-  
-  if (data.mmrStatus !== 'unknown' || data.poleStatus !== 'unknown') {
-    detailHTML += `<p><strong>Contesto molecolare:</strong> `;
-    if (data.mmrStatus !== 'unknown') detailHTML += `MMR ${data.mmrStatus} `;
-    if (data.poleStatus !== 'unknown') detailHTML += `POLE ${data.poleStatus}`;
-    detailHTML += `</p>`;
-  }
-  
-  detailHTML += `<p><strong>Correlazione molecolare:</strong> ${interpretation.molecular}</p>`;
-  
-  if (qualityIssues.length > 0) {
-    detailHTML += `<div class="alert alert-warning" style="margin-top:10px;"><strong>⚠️ Limitazioni tecniche:</strong><ul>`;
-    qualityIssues.forEach(issue => detailHTML += `<li>${issue}</li>`);
-    detailHTML += `</ul></div>`;
-  }
-  
-  // Morphology correlation
-  const morphFlags = [];
-  if (data.morphPleomorphism) morphFlags.push('Pleomorfismo marcato');
-  if (data.morphTILs) morphFlags.push('TILs aumentati');
-  if (data.morphNecrosis) morphFlags.push('Necrosi estesa');
-  if (data.morphSerous) morphFlags.push('Architettura high-grade');
-  
-  if (morphFlags.length > 0) {
-    detailHTML += `<p><strong>Morfologia correlativa:</strong> ${morphFlags.join(', ')}</p>`;
-  }
-  
-  if (data.additionalNotes.trim()) {
-    detailHTML += `<p><strong>Note:</strong> ${data.additionalNotes}</p>`;
-  }
-  
-  detailHTML += '</div>';
-  document.getElementById('detailedAnalysis').innerHTML = detailHTML;
-  
-  // Recommendations
-  let recHTML = '<h3>Raccomandazioni cliniche</h3>';
-  
-  if (interpretation.type === 'ni') {
-    recHTML += `<div class="alert alert-danger"><strong>🔴 NON REFERTARE</strong><br>${interpretation.action}</div>`;
-  } else if (interpretation.type === 'oe' || interpretation.type === 'null' || interpretation.type === 'cyto') {
-    recHTML += `<div class="alert alert-warning"><strong>Pattern p53-aberrante confermato</strong><br>`;
-    recHTML += `Procedere con refertazione. `;
-    if (data.specimenType === 'biopsia') {
-      recHTML += `Su biopsia: pattern confermato ma considerare sampling per estensione.`;
-    }
-    recHTML += `</div>`;
-  } else {
-    // Wild-type specific recommendations
-    if (interpretation.subtype === 'pole') {
-      recHTML += `<div class="alert alert-success"><strong>✓ Wild-type in contesto POLE-mutated</strong><br>Prognosi eccellente. No molecular testing necessario.</div>`;
-    } else if (interpretation.subtype === 'mmrd') {
-      recHTML += `<div class="alert alert-info"><strong>Wild-type in contesto MMR-deficient</strong><br>Prognosi favorevole (vs p53-abn in MMRd). Follow-up standard.</div>`;
-    } else if (interpretation.subtype === 'highgrade') {
-      recHTML += `<div class="alert alert-warning"><strong>⚠️ Wild-type ma morfologia high-grade</strong><br>Considerare NGS per escludere p53 copy-neutral LOH o mutazioni non rilevabili con IHC.</div>`;
-    } else {
-      recHTML += `<div class="alert alert-success"><strong>✓ Pattern wild-type confermato</strong><br>`;
-      recHTML += interpretation.confidence === 'Alta' ? 
-        'Molecular testing non necessario salvo indicazioni cliniche specifiche.' :
-        'Pattern wild-type ma con limitazioni (vedi sopra). Molecular testing a discrezione clinica.';
-      recHTML += `</div>`;
-    }
-  }
-  
-  document.getElementById('recommendations').innerHTML = recHTML;
-  
-  // Generate report text
-  generateReportText(interpretation, metrics, data);
-}
-
-function generateReportText(interpretation, metrics, data) {
-  const thresholds = THRESHOLDS[data.tumorType];
-  
-  let report = `p53 IMMUNOISTOCHIMICA - INTERPRETAZIONE PATTERN-BASED (v2.0)\n`;
-  report += `${'='.repeat(60)}\n\n`;
-  
-  if (data.caseId) report += `Caso: ${data.caseId}\n`;
-  report += `Organo: ${data.tumorType}\n`;
-  report += `Tipo campione: ${data.specimenType}\n\n`;
-  
-  report += `QUANTIFICAZIONE:\n`;
-  report += `- Nuclei negativi (0): ${data.perc0}%\n`;
-  report += `- Nuclei deboli (1+): ${data.perc1}%\n`;
-  report += `- Nuclei moderati (2+): ${data.perc2}%\n`;
-  report += `- Nuclei forti (3+): ${data.perc3}%\n`;
-  report += `- H-score: ${metrics.hScore.toFixed(0)}\n`;
-  report += `- Distribuzione: ${data.distribution}\n\n`;
-  
-  report += `PATTERN: ${interpretation.title.toUpperCase()}\n\n`;
-  
-  report += `INTERPRETAZIONE:\n`;
-  report += `${interpretation.reason}\n`;
-  report += `Confidenza interpretativa: ${interpretation.confidence}\n\n`;
-  
-  if (interpretation.type === 'oe') {
-    report += `Criteri over-expression soddisfatti per ${data.tumorType}:\n`;
-    report += `Soglie: ≥${thresholds.strong}% forte, H-score ≥${thresholds.hscore}\n\n`;
-  }
-  
-  report += `CORRELAZIONE MOLECOLARE:\n${interpretation.molecular}\n\n`;
-  
-  report += `CONCLUSIONE:\n`;
-  if (interpretation.type === 'oe' || interpretation.type === 'null' || interpretation.type === 'cyto') {
-    report += `Pattern p53-ABERRANTE (equivalente a mutazione TP53).\n`;
-  } else if (interpretation.type === 'wt') {
-    report += `Pattern p53-WILD TYPE (funzione normale).\n`;
-  } else {
-    report += `Pattern NON INTERPRETABILE - ripetere test.\n`;
-  }
-  
-  report += `\n${interpretation.action}\n`;
-  
-  if (data.additionalNotes.trim()) {
-    report += `\nNote: ${data.additionalNotes}\n`;
-  }
-  
-  report += `\nMetodologia: Pattern-based interpretation (Singh 2020, Köbel 2016/2019)\n`;
-  report += `v2.0 FIXED: Soglie ovaio corrette (80% strong), POLE context flag, H-score display\n`;
+function generateP53Report(grade, title, reason, data, hScore) {
+  let report = `p53 INTERPRETAZIONE - PATTERN-BASED\n===================\n\n`;
+  report += `Caso: ${data.caseId || 'N/A'}\nOrgano: ${data.tumorType}\nGrado: ${title}\n`;
+  report += `Perc0: ${data.perc0}% | Perc1: ${data.perc1}% | Perc2: ${data.perc2}% | Perc3: ${data.perc3}%\n`;
+  report += `H-score: ${hScore.toFixed(0)}\n\nMotivazione: ${reason}\n\nNOTE: ${data.additionalNotes || 'Nessuna'}`;
   
   document.getElementById('reportText').textContent = report;
   document.getElementById('reportSection').style.display = 'block';
 }
 
-// ============ HISTORY MANAGEMENT ============
-function saveToHistory() {
-  const data = {
-    timestamp: new Date().toISOString(),
-    caseId: document.getElementById('caseId').value || 'Senza ID',
-    tumorType: document.getElementById('tumorType').value,
-    specimenType: document.getElementById('specimenType').value,
-    perc0: document.getElementById('perc0').value,
-    perc1: document.getElementById('perc1').value,
-    perc2: document.getElementById('perc2').value,
-    perc3: document.getElementById('perc3').value,
-    distribution: document.getElementById('distribution').value,
-    localization: document.getElementById('localization').value
-  };
+function generateGastricReport(grade, title, reason, data, morphCount) {
+  let report = `DISPLASIA GASTRICA - WHO 2022\n===================\n\n`;
+  report += `Caso: ${data.caseId || 'N/A'}\nLocalizzazione: ${data.location}\nGrado: ${title}\n`;
+  report += `Criteri morfologici: ${morphCount}/5\nArchitettura: ${data.architecture}\nStratificazione: ${data.stratification}\nProfondità: ${data.invasionDepth}\n`;
+  report += `\nMotivazione: ${reason}\n\nNOTE: ${data.additionalNotes || 'Nessuna'}`;
   
-  let history = JSON.parse(localStorage.getItem('p53History') || '[]');
-  history.unshift(data);
-  history = history.slice(0, 5);
-  localStorage.setItem('p53History', JSON.stringify(history));
-  
-  loadHistory();
-  alert('✓ Salvato in cronologia');
+  document.getElementById('reportText').textContent = report;
+  document.getElementById('reportSection').style.display = 'block';
 }
 
-function loadHistory() {
-  const history = JSON.parse(localStorage.getItem('p53History') || '[]');
-  const historyList = document.getElementById('historyList');
+function generateColonicReport(grade, title, reason, data, morphCount, risk) {
+  let report = `DISPLASIA COLONICA - WHO/SCENIC 2019\n===================\n\n`;
+  report += `Caso: ${data.caseId || 'N/A'}\nLocalizzazione: ${data.location}\nIBD status: ${data.ibdStatus}\nGrado: ${title}\n`;
+  report += `Criteri morfologici: ${morphCount}/5\nArchitettura: ${data.architecture}\nStratificazione: ${data.stratification}\nProfondità: ${data.invasionDepth}\n`;
+  report += `Desmoplasia: ${data.desmoplasia}\nMargini: ${data.margins}\n`;
+  report += `\nMotivazione: ${reason}\nRisk stratification: ${risk}\n\nNOTE: ${data.additionalNotes || 'Nessuna'}`;
   
-  if (history.length === 0) {
-    historyList.innerHTML = '<p class="hint">Nessun caso salvato</p>';
-    return;
-  }
-  
-  historyList.innerHTML = history.map((item, idx) => {
-    const date = new Date(item.timestamp);
-    return `
-      <div class="history-item" onclick="loadHistoryItem(${idx})">
-        <div class="history-item-header">${item.caseId} - ${item.tumorType}</div>
-        <div class="history-item-detail">${date.toLocaleDateString('it-IT')} ${date.toLocaleTimeString('it-IT', {hour: '2-digit', minute:'2-digit'})} | ${item.specimenType}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-function loadHistoryItem(index) {
-  const history = JSON.parse(localStorage.getItem('p53History') || '[]');
-  const item = history[index];
-  
-  if (!item) return;
-  
-  document.getElementById('caseId').value = item.caseId === 'Senza ID' ? '' : item.caseId;
-  document.getElementById('tumorType').value = item.tumorType;
-  document.getElementById('specimenType').value = item.specimenType;
-  document.getElementById('perc0').value = item.perc0;
-  document.getElementById('perc1').value = item.perc1;
-  document.getElementById('perc2').value = item.perc2;
-  document.getElementById('perc3').value = item.perc3;
-  document.getElementById('distribution').value = item.distribution;
-  document.getElementById('localization').value = item.localization;
-  
-  updatePercSum();
-  toggleCollapse('historyContent');
-}
-
-function clearHistory() {
-  if (confirm('Cancellare tutta la cronologia?')) {
-    localStorage.removeItem('p53History');
-    loadHistory();
-  }
+  document.getElementById('reportText').textContent = report;
+  document.getElementById('reportSection').style.display = 'block';
 }
 
 // ============ EVENT LISTENERS ============
-document.getElementById('calculateBtn').addEventListener('click', calculateInterpretation);
-
-document.getElementById('resetBtn').addEventListener('click', function() {
-  document.querySelectorAll('input, select, textarea').forEach(element => {
-    if (element.type === 'number') {
-      element.value = '0';
-    } else if (element.type === 'checkbox') {
-      element.checked = false;
-    } else if (element.tagName === 'SELECT') {
-      element.selectedIndex = 0;
-    } else {
-      element.value = '';
-    }
-  });
-  document.getElementById('outputSection').classList.remove('show');
-  updatePercSum();
-});
-
-document.getElementById('saveHistoryBtn').addEventListener('click', saveToHistory);
-
-document.getElementById('copyReportBtn').addEventListener('click', function() {
+document.getElementById('copyReportBtn')?.addEventListener('click', function() {
   const reportText = document.getElementById('reportText').textContent;
   navigator.clipboard.writeText(reportText).then(() => {
     const btn = document.getElementById('copyReportBtn');
@@ -972,30 +1005,13 @@ document.getElementById('copyReportBtn').addEventListener('click', function() {
   });
 });
 
-// Auto-update percentage sum
-['perc0', 'perc1', 'perc2', 'perc3'].forEach(id => {
-  document.getElementById(id).addEventListener('input', updatePercSum);
-});
-
-// Keyboard shortcuts
 document.addEventListener('keydown', function(e) {
   if (e.ctrlKey && e.key === 'Enter') {
     e.preventDefault();
-    calculateInterpretation();
-  } else if (e.ctrlKey && e.key === 'r') {
-    e.preventDefault();
-    document.getElementById('resetBtn').click();
+    if (currentMode === 'p53') analyzeP53();
+    else if (currentMode === 'gastric') analyzeGastric();
+    else if (currentMode === 'colonic') analyzeColonic();
   }
-});
-
-// Show keyboard hints on first load
-window.addEventListener('load', function() {
-  const hint = document.getElementById('keyboardHint');
-  hint.classList.add('show');
-  setTimeout(() => hint.classList.remove('show'), 3000);
-  
-  loadHistory();
-  updatePercSum();
 });
 </script>
 </body>
