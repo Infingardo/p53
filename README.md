@@ -1,17 +1,17 @@
 # Calcolatore p53 v1.0
 
-**Tool diagnostico unificato per p53 IHC pattern-based interpretation + displasia gastrica e colonica**
+**Tool diagnostico unificato per p53 pattern-based interpretation in carcinomi e displasie epiteliali**
 
 ---
 
 ## 📋 Indice
 
 1. [Cos'è](#cosè)
-2. [Modalità](#modalità)
-3. [Guida rapida](#guida-rapida)
-4. [p53 IHC - Criteri e interpretazione](#p53-ihc---criteri-e-interpretazione)
-5. [Displasia Gastrica - Criteri WHO 2022](#displasia-gastrica---criteri-who-2022)
-6. [Displasia Colonica - Criteri WHO/SCENIC 2019](#displasia-colonica---criteri-whoscenic-2019)
+2. [Struttura e navigazione](#struttura-e-navigazione)
+3. [Modalità](#modalità)
+4. [Guida rapida](#guida-rapida)
+5. [p53 nei Carcinomi - Criteri e interpretazione](#p53-nei-carcinomi---criteri-e-interpretazione)
+6. [p53 nella Displasia - Criteri WHO](#p53-nella-displasia---criteri-who)
 7. [Disclaimer e limitazioni](#disclaimer-e-limitazioni)
 8. [Bibliografia essenziale](#bibliografia-essenziale)
 
@@ -21,23 +21,84 @@
 
 **Calcolatore p53** è un tool interattivo per l'interpretazione diagnostica di:
 
-- **p53 IHC** (Immunoistochimica) in carcinomi (modalità neoplastica)
-- **Displasia gastrica** (preneoplastico) secondo WHO 2022
-- **Displasia colonica** (preneoplastico) secondo WHO/SCENIC 2019
+### 🧬 **p53 nei Carcinomi** (Neoplastico)
+- Carcinomi già diagnosticati (endometrio, ovaio, colon, mammella, polmone, stomaco, pancreas, sarcomi)
+- Pattern-based interpretation (wild-type, over-expression, null, aberranti)
+- Soglie organo-specifiche secondo Singh 2020, Köbel 2016/2019
+- Risk stratification molecolare (POLE, MMR, ProMisE classification)
 
-Il tool implementa **pattern-based interpretation** con:
-- Input strutturato (morfologia, architettura, immunofenotipo, contesto clinico)
+### 🔬 **p53 nella Displasia** (Preneoplastico)
+- **Displasia Gastrica** (WHO 2022) - normal/LGD/HGD/carcinoma
+- **Displasia Colonica** (WHO/SCENIC 2019) - negative/LGD/indefinite/HGD/carcinoma (IBD-specific)
+- **Displasia Esofagea** (Barrett's) - negative/indefinite/LGD/HGD/carcinoma
+- **Displasia Vescicale** (Uroteliale) - normal/LGD/HGD/carcinoma invasivo
+- **Displasia Laringea** - normal/LGD/HGD/carcinoma
+
+### 📚 **Guida Visuale p53** (Didattica)
+- Pattern-based education: come riconoscere wild-type vs over-expression vs null
+- Continuum istologico: da mucosa normale → metaplasia → displasia bassa → displasia alta → carcinoma
+- Errori comuni e workflow pratico al microscopio
+- Organ-specific considerations (gastrica vs colonica)
+
+**Uso dichiarato:** supporto diagnostico, didattica, research. **Non sostituisce la valutazione clinico-patologica completa.**
+
+---
+
+## Struttura e navigazione
+
+### Entry point: 📚 **Guida Visuale p53** (default)
+Consigliato per **chi usa il tool la prima volta** o **vuole imparare i pattern p53**
+
+### Poi scelta tra 2 branche:
+
+#### 🧬 **p53 nei Carcinomi**
+Form unico per valutare p53 in carcinomi già diagnosticati
+- Input: quantificazione nucleare (% per intensità), H-score, pattern, contesto molecolare (MMR/POLE)
+- Output: grading (WT/OE/null/cyto/NI), confidence, significato clinico
+- Parametri organ-specific (endometrio, ovaio, colon, mammella, etc.)
+
+#### 🔬 **p53 nella Displasia** → Menu organi:
+- **🔴 Displasia Gastrica** (WHO 2022)
+- **🟠 Displasia Colonica** (WHO/SCENIC 2019, IBD-aware)
+- **🟡 Displasia Esofagea** (Barrett's)
+- **🟢 Displasia Vescicale** (Uroteliale)
+- **🔵 Displasia Laringea**
+
+Ogni organo ha:
+- Quick presets (normal/LGD/HGD/carcinoma)
+- Form specifico (morfologia, architettura, immunofenotipo, contesto)
 - Grading automatico secondo standard internazionali
-- Risk stratification e raccomandazioni di management
-- Generazione di testo referto copiabile
-
-**Uso dichiarato:** supporto diagnostico e didattico. **Non sostituisce la valutazione clinico-patologica completa.**
+- Management recommendations organ-specific
+- Testo referto copiabile
 
 ---
 
 ## Modalità
 
-### 🧬 p53 IHC (Neoplastico)
+### 📚 **Guida Visuale p53** (Didattica)
+
+**Quando usare:**
+- Primo approccio a p53 pattern-based interpretation
+- Imparare la differenza tra wild-type (mosaico) vs over-expression (diffuso)
+- Capire il continuum normale → metaplasia → displasia → carcinoma
+- Evitare errori comuni
+
+**Contenuti:**
+- **Mucosa Normale:** p53 wild-type mosaico (<10%), nuclei piccoli basali
+- **Metaplasia Intestinale/IM:** wild-type, pre-cancerosa ma p53 ancora normale
+- **LGD (Low-Grade Dysplasia):** wild-type mosaico O lieve accumulo 30-50%, architettura integra
+- **HGD (High-Grade Dysplasia):** over-expression >60-80% uniforme, architettura cribriforme/infiltrante
+- **Carcinoma:** over-expression massivo >80% O null + invasione sottomucosa
+
+**Per organo:**
+- Gastrica: p53 pattern in continuum WHO 2022
+- Colonica: p53 pattern + confusione IBD infiammata vs displasia (⚠️ immunofenotipo aiuta ma attenzione al contesto)
+
+**Errori comuni:** cosa NON fare, quando ripetere, workflow pratico al microscopio
+
+---
+
+### 🧬 **p53 nei Carcinomi** (Neoplastico)
 
 **Quando usare:**
 - Carcinomi con diagnosi istologica già confermata
@@ -45,109 +106,104 @@ Il tool implementa **pattern-based interpretation** con:
 - Endometrio, ovaio (HGSC), colon, mammella, polmone, stomaco, pancreas, sarcomi
 
 **Parametri:**
-- Quantificazione nucleare (% a 4 livelli di intensità: 0, 1+, 2+, 3+)
+- Quantificazione nucleare (% a 4 livelli: 0, 1+, 2+, 3+)
 - H-score calcolato automaticamente
-- Pattern di distribuzione (mosaico, diffuso, focale, zonale)
+- Pattern distribuzione (mosaico, diffuso, focale, zonale)
 - Localizzazione subcellulare (nucleare, citoplasmatica, mista)
 - Pattern aberranti specifici (rim-like, speckled, esclusione nucleare)
 - Contesto molecolare (MMR, POLE, grado)
-- Controlli tecnici (interno, qualità)
+- Controlli tecnici
 
 **Output:**
 - **Grading:** Wild-type / Over-expression / Null / Citoplasmatico aberrante / Non interpretabile
 - **Confidence:** Alta / Moderata / Bassa
-- **Azione:** Pattern di riferimento (criteri confermati)
 - **Testo referto:** copiabile negli appunti
 
 ---
 
-### 🔬 Displasia Gastrica (Preneoplastico - WHO 2022)
+### 🔬 **p53 nella Displasia - Menu Organi**
 
-**Quando usare:**
-- Biopsie gastriche da endoscopia (routine screening o follow-up)
-- Valutazione del rischio neoplastico
-- Pazienti con gastrite cronica, metaplasia intestinale, atrofia
+Ogni organo ha parametri specifici e standard di riferimento:
 
-**Parametri:**
-- Contesto H. pylori, metaplasia intestinale, atrofia
-- Morfologia nucleare (6 criteri: pleomorfismo, crowding, ipercromatismo, contorni, nucleoli, mitosi)
-- Architettura ghiandolare (integra / disrupzione basale / cribriformo / infiltrante)
-- Stratificazione citoplasmatica
-- Immunofenotipo (p53, Ki67) se disponibile
-- Estensione e profondità della lesione
+#### 🔴 **Displasia Gastrica** (WHO 2022)
+- Contesto: H. pylori, metaplasia intestinale, atrofia
+- Morfologia: 6 criteri (pleomorfismo, crowding, ipercromatismo, contorni, nucleoli, mitosi)
+- **Architettura chiave:** integra (LGD) vs interruzione basale (HGD)
+- p53 + Ki67 se disponibili
+- **Grading:** Non displasia → LGD → HGD → Carcinoma
+- **Management:** LGD ripeti biopsia; HGD ESD/chirurgia; Carcinoma urgente
 
-**Output:**
-- **Grading WHO 2022:** Non displasia / LGD / HGD / Carcinoma / Non interpretabile
-- **Risk stratification:** Basso / Intermedio / Alto / Molto alto
-- **Management specifico:**
-  - LGD: ripetere biopsia in 2-3 mesi, surveillance
-  - HGD: ESD (endoscopic submucosal dissection) o chirurgia
-  - Carcinoma: urgente staging e oncologia
-- **Testo referto:** WHO 2022 validated
+#### 🟠 **Displasia Colonica** (WHO/SCENIC 2019)
+- Contesto: IBD status, durata, attività infiammatoria
+- Morfologia: 6 criteri
+- Architettura: normale/distorta/cribriforme/infiltrante
+- **⚠️ Confusione IBD:** infiammazione marcata può aumentare p53 per stress, NON mutazione TP53
+- p53 + Ki67
+- **Grading:** Negativo → LGD → Indefinite → HGD → Carcinoma
+- **Management IBD-specific:** HGD localizzata ESD vs multicentrica colectomia
+- **Management sporadic:** polipectomia completa + margini
 
----
+#### 🟡 **Displasia Esofagea** (Barrett's)
+- Contesto: tipo IM (specializzata = rischio), lunghezza segmento
+- Morfologia: 6 criteri
+- Architettura: cribriforme/infiltrante HGD
+- p53 + Ki67
+- **Grading:** Negativo → Indefinite → LGD → HGD → Carcinoma
+- **Management:** EMR se HGD, surveillance se LGD
 
-### 🔍 Displasia Colonica (Preneoplastico - WHO/SCENIC 2019)
+#### 🟢 **Displasia Vescicale** (Uroteliale)
+- Contesto: localizzazione, carcinoma concomitante
+- Morfologia: 5 criteri (nuclei)
+- Architettura: spessore uroteliale (normale/inspessito/displastico)
+- **⚠️ p53-OE frequente** in HGD urotelo (40-60%)
+- Profondità invasione (epiteliale/lamina propria/muscolare)
+- **Grading:** Normale → LGD → HGD → Carcinoma invasivo
+- **Management:** cTUR-BT se HGD, surveillance ristretta
 
-**Quando usare:**
-- Biopsie coloniche (polipectomia, screening, IBD surveillance)
-- Pazienti con e senza IBD (Crohn, rettocolite ulcerosa)
-- Risk stratification per progressione a carcinoma
-
-**Parametri:**
-- IBD status, durata e attività infiammatoria
-- Morfologia nucleare (6 criteri)
-- Architettura ghiandolare (normale / distorta / disrupzione basale / cribriformo / infiltrante)
-- Stratificazione citoplasmatica
-- Infiammazione associata e polipoid growth (endoscopico)
-- p53 e Ki67 se disponibili
-- Margini di polipectomia (negativo / compromesso / positivo)
-- Profondità e desmoplasia
-
-**Output:**
-- **Grading WHO/SCENIC 2019:** Negativo / LGD / Indefinite / HGD / Carcinoma / Non interpretabile
-- **Risk stratification IBD-specific:**
-  - Negativo: surveillance ogni 1-3 anni (dipende durata IBD)
-  - LGD/Indefinite: ripetere biopsia + surveillance ravvicinata
-  - HGD: polipectomia/ESD se possibile; colectomia se multicentrica
-- **Management diferenziato:** IBD-associated vs sporadic
-- **Testo referto:** WHO/SCENIC 2019 compliant
+#### 🔵 **Displasia Laringea**
+- Contesto: localizzazione laringe, smoking, HPV status
+- Morfologia: 5 criteri
+- Architettura: **maturation pattern** (criterio chiave HGD)
+- p53 localizzazione (basale vs full-thickness)
+- Profondità invasione
+- **Grading:** Normale → LGD → HGD → Carcinoma
+- **Management:** laser resection, surveillance ristretta
 
 ---
 
 ## Guida rapida
 
-### 1. Seleziona modalità
-Clicca uno dei tre pulsanti: **p53 IHC** / **Displasia Gastrica** / **Displasia Colonica**
+### 1. Apri il tool
+Vedi **Guida Visuale p53** di default
 
-### 2. Quick entry (opzionale)
-- Se conosci il pattern grossolano, usa i **preset button** (es. "Classic OE" per p53)
-- Il form si popola automaticamente con valori tipici
-- Personalizza i campi che ti servono
+### 2. Leggi la Guida (opzionale ma consigliato)
+- Impara i pattern wild-type vs over-expression
+- Scopri errori comuni
+- Capisci il workflow microscopico
 
-### 3. Compila il form
-- **Sezione dati:** ID caso, campione, localizzazione
-- **Contesto:** H. pylori, MMR/POLE, IBD status, ecc.
-- **Morfologia:** checkbox per criteri istologici
-- **Immunofenotipo:** se disponibile (p53, Ki67)
-- **Note libere:** osservazioni cliniche/endoscopiche
+### 3. Scegli la branca
+- **p53 nei Carcinomi** se è già carcinoma diagnosticato
+- **p53 nella Displasia** se valuti displasia preneoplastica
 
-### 4. Analizza
+### 4. Se Displasia → Scegli organo
+Clicca il bottone dell'organo (gastrico, colnico, ecc.)
+
+### 5. Compila il form
+- Quick entry (preset) oppure manuale
+- Morfologia, architettura, immunofenotipo, contesto
+
+### 6. Analizza
 Clicca **"🔬 Analizza"** oppure **Ctrl+Enter**
 
-### 5. Leggi il risultato
-- **Badge colore:** tipo di risposta (verde=wild-type, giallo=HGD, rosso=carcinoma)
-- **Motivazione:** perché quel grading
-- **Azione:** cosa fare dopo
-- **Risk stratification:** probabilità progressione
-- **Testo referto:** copiabile
-
-### 6. Copia testo referto
-Clicca **"📋 Copia testo"** per copiagli in clipboard
+### 7. Leggi il risultato
+- Badge colore (verde=WT, giallo=HGD, rosso=carcinoma)
+- Motivazione del grading
+- Management specifico per organo
+- Testo referto copiabile
 
 ---
 
-## p53 IHC - Criteri e interpretazione
+## p53 nei Carcinomi - Criteri e interpretazione
 
 ### Soglie organo-specifiche (v2.0 CORRETTE)
 
@@ -170,11 +226,11 @@ Clicca **"📋 Copia testo"** per copiagli in clipboard
 - **Distribuzione:** eterogenea a mosaico (hallmark)
 - **Intensità:** variabile (0%, 1+, 2+, 3+ mescolati)
 - **% Forte:** <soglia organo-specifica
-- **Contesto:** POLE-mutato (eccellente prognosi) / MMR-deficient (basso rischio se p53-WT)
+- **Contesto:** POLE-mutato → eccellente prognosi; MMR-deficient → basso rischio se p53-WT
 - **Azione:** no molecular testing necessario
 
 #### 🟡 Over-expression (Mutazione stabilizzante)
-- **Criteri soddisfatti:** ≥% soglia forte O H-score ≥soglia
+- **Criteri:** ≥% soglia forte O H-score ≥soglia
 - **Distribuzione:** diffusa/uniforme (contrasto con WT)
 - **Localizzazione:** nucleare prevalente
 - **p53 molecolare:** tipicamente missense hotspots (R175, R248, R273)
@@ -184,7 +240,7 @@ Clicca **"📋 Copia testo"** per copiagli in clipboard
 - **Criteri:** 0% nuclei positivi + controllo interno FORTE
 - **Molecolare:** mutazioni inattivanti (nonsense, frameshift, delezioni)
 - **Azione:** pattern aberrante definitivo
-- **⚠️ Attenzione:** se controllo interno weak → RIPETERE (possibile falso negativo tecnico)
+- **⚠️ Attenzione:** se controllo interno weak → RIPETERE
 
 #### 🟣 Citoplasmatico aberrante (Sequestro nucleare)
 - **Criteri:** sequestro citoplasmatico con nuclei negativi/deboli (<20%)
@@ -196,125 +252,50 @@ Clicca **"📋 Copia testo"** per copiagli in clipboard
 - **Cause:** qualità tecnica scarsa, controllo interno assente, artefatti gravi
 - **Azione:** RIPETERE con controlli appropriati
 
-### Contesto molecolare (ProMisE classification)
-
-| Stato | p53 pattern | MMR/POLE | Prognosi | Note |
-|-------|------------|----------|----------|------|
-| POLE-mutated | Wild-type | WT | Eccellente | ⚠️ Se p53-OE raro (~5%) |
-| MMR-deficient | Wild-type | Deficient | Buona (se p53-WT) | Cattiva se p53-abn |
-| p53-abnormal | OE/Null/Cyto | Any | Cattiva | Chemiosensibile platino |
-| NSMP | Wild-type | Proficient | Intermedia | No specifiche alterazioni |
-
 ---
 
-## Displasia Gastrica - Criteri WHO 2022
+## p53 nella Displasia - Criteri WHO
 
-### 🟢 Non displasia
-- Nuclei piccoli, basali, basso N/C ratio
+### 🟢 **Negativo/Normale**
+- Nuclei piccoli basali, basso N/C ratio
 - Architettura integra
-- Polarità nucleare preservata
-- Ki67 basale (<10%)
-- p53 wild-type
+- p53 <10% wild-type mosaico
+- Ki67 basale
 
-### 🔵 LGD (Low-Grade Dysplasia)
-**Almeno 1 criterio:**
-- Nuclei moderatamente aumentati (N/C 1:1-2:1) con crowding focale
-- Ipercromatismo lieve (non marcato)
-- **Architettura INTEGRA** (NO disrupzione basale)
+### 🔵 **LGD** (Low-Grade Dysplasia)
+- Nuclei moderatamente aumentati, crowding focale
+- **Architettura INTEGRA** (NO interruzione basale)
+- p53: wild-type mosaico O lieve accumulo 30-50% (MAI >80%)
 - Mitosi <5/10HPF
-- p53 wild-type o lieve accumulo
-- Ki67 10-30%, esteso nella base ma NON oltre 1/3
+- Stratificazione parziale
 
-**Azione:** ripetere biopsia in 2-3 mesi (confermamento). Se confermato: surveillance endoscopica ogni 6-12 mesi.
+**Azione:** Ripetere biopsia in 2-3 mesi (confermamento). Se confermato: surveillance endoscopica.
 
-### 🟡 HGD (High-Grade Dysplasia)
-**Almeno 2 criteri + DISRUPZIONE BASALE:**
-- Nuclei marcatamente aumentati (N/C >2:1), pleomorfi
-- Ipercromatismo marcato, contorni irregolari
-- **⚠️ DISRUPZIONE LAMININA BASALE** (criterio chiave WHO 2022):
-  - Pattern cribriformo
+### 🟠 **Indefinite** (Colonica - categoria intermedia)
+- Atipia borderline
+- Infiammazione attiva (IBD)
+- Confine difficile vs LGD/iperplasia reattiva
+
+**Azione:** Ripetere biopsia, correlazione endoscopica, p53/Ki67 se dubbio persiste.
+
+### 🟡 **HGD** (High-Grade Dysplasia)
+- Nuclei marcatamente aumentati, pleomorfi
+- **INTERRUZIONE BASALE** (criterio chiave WHO):
+  - Pattern cribriforme
   - Micropapille fuse
-  - Fusione ghiandolare focale
   - Foci infiltranti SENZA invasione profonda
-- Mitosi >5/10HPF incluse figure atipiche
-- p53 over-expression (>30%) o null
-- Ki67 >30% o esteso oltre 1/3 basilare
-- Perdita totale polarità
+- p53 over-expression >60-80% O pattern aberrante
+- Mitosi >5/10HPF
+- Perdita completa stratificazione
 
-**Azione:** **URGENTE**
-- ESD (Endoscopic Submucosal Dissection) se no invasione sottomucosa
-- Altrimenti gastrectomia parziale
-- Follow-up endoscopico 6-12 mesi post-intervento
-- Oncologia se carcinoma invasivo
+**Azione:** **URGENTE** - ESD, polipectomia, o chirurgia (dipende da organo e contesto). Follow-up ravvicinato.
 
-### 🔴 Carcinoma
-- HGD + invasione confermata (lamina propria profonda, sottomucosa, oltre)
+### 🔴 **Carcinoma**
+- HGD + invasione sottomucosa confermata
 - Reazione desmoplastica marcata
-- Necrosi tumorale focale
+- p53 massivamente positivo O null
 
 **Azione:** **URGENTE - STAGING - CHIRURGIA - ONCOLOGIA**
-
----
-
-## Displasia Colonica - Criteri WHO/SCENIC 2019
-
-### 🟢 Negativo per displasia
-- Architettura normale (cripte ordinate)
-- Citologia benigna
-- Polarità preservata
-
-**Surveillance:**
-- **IBD:** endoscopia ogni 1-2 anni (dipende durata, attività infiammatoria)
-- **Sporadic:** colonscopia standard (10 anni se polipo <10mm, 3-5 anni se precedente)
-
-### 🔵 LGD (Low-Grade Dysplasia)
-- Nuclei moderatamente aumentati, crowding focale
-- Architettura distorta ma NO disrupzione basale
-- Stratificazione parziale
-- Mitosi regolarmente situate
-- Ki67 esteso nei 2/3 inferiori
-- p53 wild-type
-
-**Azione:**
-- **IBD:** ripetere biopsia in 2-3 mesi, surveillance ogni 6-12 mesi, considerare p53
-- **Sporadic in polipo:** polipectomia completa + margini, altrimenti surveillance
-
-### 🟠 INDEFINITE per dysplasia
-**Categoria intermedia importante in IBD:**
-- Atipia borderline (2+ criteri morfologici)
-- Architettura distorta senza disrupzione basale chiara
-- Infiammazione attiva moderata-marcata (IBD)
-
-**Azione:**
-- **IBD:** ripetere biopsia in 2-3 mesi, correlazione endoscopica, p53/Ki67 se dubbio persiste
-- **Non-IBD:** ripetere biopsia, se confermato → resezione, follow-up
-
-### 🟡 HGD (High-Grade Dysplasia)
-**Almeno 2 criteri + DISRUPZIONE BASALE:**
-- Nuclei marcatamente aumentati, pleomorfi, ipercromatici
-- Contorni irregolari, nucleoli prominenti
-- **Disrupzione laminina basale:**
-  - Cribriformo/micropapille
-  - Pattern infiltrante (senza invasione mucosa profonda)
-- Mitosi atipiche >5/10HPF
-- Stratificazione completa (perdita polarità)
-- p53 over-expression o null
-- Ki67 >30% diffuso
-- Desmoplasia moderata
-
-**Azione:**
-- **IBD-HGD:** polipectomia/ESD se localizzato e resecabile; **COLECTOMIA se multicentrica**
-- **Sporadic-HGD:** polipectomia completa + margini negativi
-- Resezione se margini positivi
-- Surveillance post-intervento endoscopica 6-12 mesi
-- Oncologia se invasione confermata
-
-### 🔴 Carcinoma
-- HGD + invasione sottomucosa o muscolaris mucosae
-- Desmoplasia marcata
-- Reazione stromale definitiva
-
-**Azione:** **URGENTE - STAGING TNM - CHIRURGIA - ONCOLOGIA**
 
 ---
 
@@ -332,83 +313,65 @@ Clicca **"📋 Copia testo"** per copiagli in clipboard
    - Controlli tecnici insufficienti → ripetere sempre
    - Il tool segnala "non interpretabile" se qualità grave
 
-3. **p53 IHC è pattern-based, non molecolare**
+3. **p53 è pattern-based, non molecolare**
    - La positività/negatività IHC correla con mutazione TP53 ma non è diagnostica
    - NGS rimane standard per diagnosi molecolare definitiva
    - Eccezioni: null pattern + controllo forte = alta specificità
 
 4. **Displasia è soggettiva**
-   - Reproducibilità per HGD ~76-85%
-   - Reproducibilità per LGD ~50-60% (confine difficile)
+   - Reproducibilità HGD ~76-85%
+   - Reproducibilità LGD ~50-60% (confine difficile)
    - Ripetere biopsia in caso di dubbio clinico
 
 5. **IBD-associated dysplasia è ambigua**
    - Infiammazione attiva complica distinzione displasia/iperplasia reattiva
    - Categoria "Indefinite" esiste per questo
    - Correlazione endoscopica + biopsia ripetuta consigliata
-
-### 📊 Parametri non inclusi
-
-Il tool **non include:**
-- MSI/dMMR testing (deferisce a MMR status input)
-- BRAF, KRAS, POLE sequencing (solo contesto clinico)
-- EBV in situ hybridization
-- Profili genomici/transcriptomici
-- Grading Fuhrman (tumori renali)
-- Grade istologico con fattori di rischio compositi
-
-Per questi parametri: **consultare linee guida specifiche e/o molecular pathologist**
+   - **⚠️ p53 accumulo in IBD infiammata NON significa mutazione TP53**
 
 ---
 
 ## Bibliografia essenziale
 
-### p53 IHC Validation
+### p53 nei Carcinomi - Validation
 - **Singh N, et al.** p53 immunohistochemistry is an accurate surrogate for TP53 mutational analysis in endometrial carcinoma. *J Pathol* 2020;250:336-345 [⭐ 207 cases, 90.7% accuracy]
 - **Köbel M, et al.** Optimized p53 immunohistochemistry is an accurate predictor of TP53 mutation in ovarian carcinoma. *J Pathol* 2016;240:360-371 [⭐ HGSC standard, >80% strong]
 - **Köbel M, Ronnett BM, Singh N, et al.** Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas. *Int J Gynecol Pathol* 2019;38:S123-S131
 - **van den Heerik ASVM, et al.** PORTEC-3 molecular validation. *Mod Pathol* 2022;35:1475-1483
 
-### Gastric Dysplasia - WHO 2022
+### p53 nella Displasia - WHO 2022/2019
 - **Nagtegaal ID, Odze RD, Klimstra D, et al.** WHO Classification of Tumours of the Digestive System. 5th ed. 2019/2022
 - **Rugge M, et al.** MAPS Consensus on Early Gastric Neoplasia. *Gut* 2016;65:1133-1143
-- **Schlemper RJ, et al.** Consensus on the histopathology of gastric intestinal metaplasia-dysplasia continuum. *Gut* 2000;47:S1-S24
-- **Fassan M, et al.** Gastric dysplasia: Transition to carcinoma. *Dig Dis* 2016;34:306-312
+- **Schlemper RJ, et al.** Consensus on the histopathology of gastric intestinal metaplasia-displasia continuum. *Gut* 2000;47:S1-S24
+- **Fassan M, et al.** p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. *Mod Pathol* 2014
 
-### Colonic Dysplasia - WHO/SCENIC 2019
-- **Nagtegaal ID, et al.** WHO Classification of Tumours of the Digestive System. 5th ed. 2019/2022
-- **Loughrey MB, et al.** SCENIC International Consensus Classification of Gastrointestinal Neuroendocrine Neoplasms. *Histopathology* 2020;77:335-346
+### Colonic Dysplasia & IBD
 - **ASGE Standards of Practice Committee.** Screening and surveillance of premalignant conditions of the colon. *Gastrointest Endosc* 2006
 - **Eaden JA, et al.** Cancer risk in inflammatory bowel disease: estimation and limitations of current evidence. *Gut* 2002;50:85-86
 
 ### ProMisE Endometrial Classification
 - **Kommoss S, et al.** Final validation of the ProMisE molecular classifier. *Ann Oncol* 2018;29:1180-1188
-- **ESGO/ESTRO/ESP Endometrial Carcinoma Guidelines 2021**
-- **CAP Cancer Protocols 2024**
 
 ---
 
 ## Versione e changelog
 
 **v1.0** (November 2025)
-- ✅ p53 IHC pattern-based interpretation (Singh 2020, Köbel 2016/2019)
-  - Organ-specific thresholds (endometrio 75%, ovaio 80%, colon/mammella/polmone/stomaco 80%, pancreas/sarcoma 85%)
-  - Pattern wild-type, over-expression, null, cytoplasmic aberrant
+- ✅ **Guida Visuale p53** (didattica pattern-based, organ-specific)
+- ✅ **p53 nei Carcinomi** (Singh 2020, Köbel 2016/2019)
+  - Organ-specific thresholds
+  - Pattern: wild-type, over-expression, null, cytoplasmic aberrant
   - POLE/MMR context flags
-  - H-score display corrected (integer 0-300)
-- ✅ Gastric dysplasia (WHO 2022, Rugge MAPS 2016)
-  - Grading: negative/LGD/HGD/carcinoma
-  - Disrupzione basale criterio HGD chiave
-  - Risk stratification MAPS
-  - Management specifico
-- ✅ Colonic dysplasia (WHO/SCENIC 2019)
-  - Grading: negative/LGD/indefinite/HGD/carcinoma
-  - IBD-associated vs sporadic management
-  - Margini polipectomia
-  - Risk stratification IBD-specific
-- ✅ Unified codebase: 3 modalità, shared infrastructure
-- ✅ Quick presets per pattern comuni
-- ✅ Report generation copiabile
+  - H-score corrected (integer 0-300)
+- ✅ **p53 nella Displasia** (5 organi):
+  - 🔴 **Gastrica** (WHO 2022) - LGD/HGD distinzione per interruzione basale
+  - 🟠 **Colonica** (WHO/SCENIC 2019) - IBD management specifico, Indefinite category
+  - 🟡 **Esofagea** (Barrett's) - EMR management
+  - 🟢 **Vescicale** (Uroteliale) - cTUR-BT, p53-OE frequent in HGD
+  - 🔵 **Laringea** - maturation pattern criterio chiave
+- ✅ **Unified codebase:** 3 modalità (guida + carcinomi + displasie), quick presets
+- ✅ **Report generation** copiabile per ogni organo
+- ✅ **Navigazione intuitiva:** Guida → Carcinomi vs Displasia → Organi specifici
 
 ---
 

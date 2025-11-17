@@ -91,10 +91,10 @@
     <div class="card">
       <div class="card-header">
         <h1>Calcolatore p53 v1.0</h1>
-        <p class="tiny">p53 IHC (Neoplastico) + Displasia Gastrica & Colonica (Preneoplastico) • WHO 2022 • <strong>Research & diagnostic support only</strong></p>
+        <p class="tiny">p53 nei Carcinomi + p53 nella Displasia (Gastrica, Colonica, Esofagea, Vescicale, Laringea) • WHO 2022/2019 • <strong>Research & diagnostic support only</strong></p>
       </div>
       <div class="alert alert-info">
-        <strong>Uso diagnostico supportivo.</strong> Valutazione finale richiede correlazione clinico-patologica completa. <strong>p53 IHC:</strong> Singh 2020, Köbel 2016/2019. <strong>Displasia gastrica:</strong> WHO 2022, Rugge MAPS 2016. <strong>Displasia colonica:</strong> WHO/SCENIC 2019. <strong>v1.0: Unified tool p53 IHC + displasia gastrica + displasia colonica con organ-specific parameters, shared infrastructure.</strong>
+        <strong>Uso diagnostico supportivo.</strong> Valutazione finale richiede correlazione clinico-patologica completa. <strong>p53 nei Carcinomi:</strong> Singh 2020, Köbel 2016/2019. <strong>p53 nella Displasia:</strong> WHO 2022/2019, Rugge MAPS 2016. <strong>v1.0: p53 pattern-based interpretation in neoplasia and preneoplastic dysplasia (gastric, colonic, esophageal, bladder, laryngeal).</strong>
       </div>
     </div>
 
@@ -102,15 +102,67 @@
     <div class="card">
       <h2>Seleziona modalità</h2>
       <div class="mode-toggle">
-        <button class="mode-btn active" onclick="setMode('p53')">🧬 p53 IHC (Neoplastico)</button>
-        <button class="mode-btn" onclick="setMode('gastric')">🔬 Displasia Gastrica (Preneoplastico)</button>
-        <button class="mode-btn" onclick="setMode('colonic')">🔍 Displasia Colonica (Preneoplastico)</button>
+        <button class="mode-btn active" onclick="setMode('guide')">📚 Guida Visuale p53</button>
+        <button class="mode-btn" onclick="setMode('neoplasia')">🧬 p53 nei Carcinomi</button>
+        <button class="mode-btn" onclick="setMode('dysplasia-menu')">🔬 p53 nella Displasia</button>
       </div>
-      <div class="hint">Cambia modalità per il flusso diagnostico adatto</div>
+      <div class="hint">Inizia dalla Guida Visuale per imparare i pattern p53. Poi scegli Carcinomi o Displasia.</div>
+    </div>
+
+    <!-- DYSPLASIA MENU SECTION -->
+    <div id="dysplasia-menu-section" class="form-section">
+      <div class="card">
+        <h2>Seleziona l'organo per analizzare la displasia epiteliale</h2>
+        <p class="tiny">p53 patterns in preneoplastic epithelial dysplasia</p>
+      </div>
+
+      <div class="card">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0;">
+          <button class="btn" style="padding: 20px; font-size: 1rem;" onclick="setMode('gastric')">
+            <div style="font-size: 1.5rem;">🔴</div>
+            <strong>Displasia Gastrica</strong><br>
+            <span class="tiny">WHO 2022</span>
+          </button>
+          
+          <button class="btn" style="padding: 20px; font-size: 1rem;" onclick="setMode('colonic')">
+            <div style="font-size: 1.5rem;">🟠</div>
+            <strong>Displasia Colonica</strong><br>
+            <span class="tiny">WHO/SCENIC 2019</span>
+          </button>
+          
+          <button class="btn" style="padding: 20px; font-size: 1rem;" onclick="setMode('esophageal')">
+            <div style="font-size: 1.5rem;">🟡</div>
+            <strong>Displasia Esofagea</strong><br>
+            <span class="tiny">Barrett's</span>
+          </button>
+          
+          <button class="btn" style="padding: 20px; font-size: 1rem;" onclick="setMode('bladder')">
+            <div style="font-size: 1.5rem;">🟢</div>
+            <strong>Displasia Vescicale</strong><br>
+            <span class="tiny">Uroteliale</span>
+          </button>
+          
+          <button class="btn" style="padding: 20px; font-size: 1rem;" onclick="setMode('laryngeal')">
+            <div style="font-size: 1.5rem;">🔵</div>
+            <strong>Displasia Laringea</strong><br>
+            <span class="tiny">Larynx</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>💡 Consigli</h3>
+        <ul>
+          <li><strong>Nuovo a p53?</strong> Leggi prima la <strong>Guida Visuale</strong> per imparare i pattern</li>
+          <li><strong>Poi scegli l'organo</strong> che devi valutare (gastrico, colnico, ecc.)</li>
+          <li><strong>Compila il form</strong> con morfologia, architettura, immunofenotipo</li>
+          <li><strong>Clicca Analizza</strong> per grading automatico + raccomandazioni</li>
+        </ul>
+      </div>
     </div>
 
     <!-- P53 SECTION -->
-    <div id="p53-section" class="form-section active">
+    <div id="neoplasia-section" class="form-section">
       <!-- P53 Quick Presets -->
       <div class="card">
         <h2>⚡ Quick Entry</h2>
@@ -124,7 +176,7 @@
 
       <!-- P53 Input Form -->
       <div class="card">
-        <h2>p53 IHC - Parametri di valutazione</h2>
+        <h2>p53 nei Carcinomi - Parametri di valutazione</h2>
         
         <div class="grid-2">
           <div class="form-group">
@@ -378,11 +430,11 @@
             <label>Pattern architetturale</label>
             <select id="gastric-architecture">
               <option value="intact">Integro</option>
-              <option value="basaldisruption">Disrupzione basale (focale)</option>
-              <option value="cribriform">Cribriformo</option>
+              <option value="basaldisruption">interruzione basale (focale)</option>
+              <option value="cribriform">cribriforme</option>
               <option value="glandular">Infiltrante</option>
             </select>
-            <div class="hint">⚠️ Disrupzione basale = HGD/carcinoma</div>
+            <div class="hint">⚠️ interruzione basale = HGD/carcinoma</div>
           </div>
           
           <div class="form-group">
@@ -418,35 +470,15 @@
           </div>
         </div>
 
-        <h3>Estensione e profondità</h3>
-        <div class="grid-3">
-          <div class="form-group">
-            <label>Numero foci</label>
-            <select id="gastric-extensionNumber">
-              <option value="single">Singolo</option>
-              <option value="few">Pochi (2-5)</option>
-              <option value="multiple">Multipli (>5)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Profondità invasiva</label>
-            <select id="gastric-invasionDepth">
-              <option value="superficial">Superficiale</option>
-              <option value="mid">Mucosa media</option>
-              <option value="basal">Basale</option>
-              <option value="submucosa">Sottomucosa</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Reazione stromale</label>
-            <select id="gastric-stromalReaction">
-              <option value="none">Assente</option>
-              <option value="desmoplasia">Moderata</option>
-              <option value="marked">Marcata</option>
-            </select>
-          </div>
+        <h3>Estensione della lesione</h3>
+        <div class="form-group">
+          <label>Numero di foci displastici</label>
+          <select id="gastric-extensionNumber">
+            <option value="single">Singolo focus</option>
+            <option value="few">Pochi foci (2-5)</option>
+            <option value="multiple">Multipli (>5)</option>
+          </select>
+          <div class="hint">⚠️ Per definizione la displasia rimane intramucosa. Se invasione sottomucosa → carcinoma.</div>
         </div>
 
         <div class="form-group">
@@ -560,11 +592,11 @@
             <select id="colonic-architecture">
               <option value="normal">Normale (cripte ordinate)</option>
               <option value="distorted">Distorto (crowding cripte)</option>
-              <option value="basaldisruption">Disrupzione basale focale</option>
-              <option value="cribriform">Cribriformo/micropapille</option>
+              <option value="basaldisruption">interruzione basale focale</option>
+              <option value="cribriform">cribriforme/micropapille</option>
               <option value="glandular">Infiltrante ghiandolare</option>
             </select>
-            <div class="hint">⚠️ Disrupzione basale/cribriformo = HGD/carcinoma</div>
+            <div class="hint">⚠️ interruzione basale/cribriforme = HGD/carcinoma</div>
           </div>
           
           <div class="form-group">
@@ -693,7 +725,902 @@
       </div>
     </div>
 
-    <!-- Output Section (shared) -->
+    <!-- ESOPHAGEAL SECTION -->
+    <div id="esophageal-section" class="form-section">
+      <div class="card">
+        <h2>⚡ Quick Entry</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('esoph_nodys')">Negative</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('esoph_ind')">Indefinite</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('esoph_lgd')">LGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('esoph_hgd')">HGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('esoph_cancer')">Carcinoma</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Displasia Esofagea (Barrett's) - Parametri di valutazione</h2>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Tipo di metaplasia intestinale</label>
+            <select id="esoph-imType">
+              <option value="intestinal">Intestinale specializzata (con cellule caliciformi)</option>
+              <option value="gastric">Tipo gastrico</option>
+              <option value="mixed">Mista</option>
+            </select>
+            <div class="hint">Solo IM specializzata → rischio cancro aumentato</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Estensione segmento interessato</label>
+            <select id="esoph-barrettsLength">
+              <option value="short">Short segment (<3 cm)</option>
+              <option value="long">Long segment (≥3 cm)</option>
+            </select>
+            <div class="hint">Long segment = rischio aumentato</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ID caso (opzionale)</label>
+          <input type="text" id="esoph-caseId" placeholder="Es: ESOPH24-3456" />
+        </div>
+
+        <h3>Morfologia nucleare</h3>
+        <div class="checklist">
+          <label><input type="checkbox" id="esoph-morphPleomorphism" /> Pleomorfismo nucleare</label>
+          <label><input type="checkbox" id="esoph-morphCrowding" /> Affollamento nucleare</label>
+          <label><input type="checkbox" id="esoph-morphHyperchromasia" /> Ipercromatismo marcato</label>
+          <label><input type="checkbox" id="esoph-morphIrregular" /> Contorni nucleari irregolari</label>
+          <label><input type="checkbox" id="esoph-morphProminent" /> Nucleoli prominenti</label>
+          <label><input type="checkbox" id="esoph-morphMitoses" /> Mitosi atipiche/aumentate</label>
+        </div>
+
+        <h3>Architettura</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Pattern architetturale</label>
+            <select id="esoph-architecture">
+              <option value="normal">Normale (IM ordinata)</option>
+              <option value="distorted">Distorto (crowding cripte)</option>
+              <option value="cribriform">Cribriforme/micropapille</option>
+              <option value="infiltrating">Infiltrante</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Stratificazione citoplasmatica</label>
+            <select id="esoph-stratification">
+              <option value="normal">Normale</option>
+              <option value="partial">Parziale</option>
+              <option value="complete">Completa</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Immunofenotipo</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>p53 pattern</label>
+            <select id="esoph-p53Pattern">
+              <option value="unknown">Non eseguito</option>
+              <option value="wildtype">Wild-type</option>
+              <option value="overexpression">Over-expression</option>
+              <option value="null">Null</option>
+            </select>
+            <div class="hint">p53-OE in Barrett's = 10-15% dei casi, marker di rischio</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Ki67 proliferazione</label>
+            <select id="esoph-ki67Level">
+              <option value="unknown">Non quantificato</option>
+              <option value="normal">Normale (basale)</option>
+              <option value="increased">Aumentata</option>
+              <option value="high">Alta (diffusa)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Profondità</h3>
+        <div class="form-group">
+          <label>Invasione mucosa propria</label>
+          <select id="esoph-invasionDepth">
+            <option value="epithelial">Epiteliale (intramurale)</option>
+            <option value="lamina">Nella lamina propria (T1a)</option>
+            <option value="submucosa">Sottomucosa (T1b)</option>
+            <option value="muscularis">Muscolare (T2+)</option>
+          </select>
+          <div class="hint">Se sottomucosa o oltre → carcinoma, non displasia</div>
+        </div>
+
+        <div class="form-group">
+          <label>Note cliniche</label>
+          <textarea id="esoph-additionalNotes" rows="2" placeholder="Aspetto endoscopico, metaplasia di fondo..."></textarea>
+        </div>
+
+        <button class="btn" onclick="analyzeEsophageal()">🔬 Analizza (Ctrl+Enter)</button>
+        <button class="btn btn-secondary" onclick="resetForm('esoph')">Reset</button>
+      </div>
+    </div>
+
+    <!-- BLADDER SECTION -->
+    <div id="bladder-section" class="form-section">
+      <div class="card">
+        <h2>⚡ Quick Entry</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('blad_normal')">Normal</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('blad_lgd')">LGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('blad_hgd')">HGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('blad_cancer')">Carcinoma</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Displasia Uroteliale - Parametri di valutazione</h2>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Localizzazione vescicale</label>
+            <select id="blad-location">
+              <option value="dome">Cupola</option>
+              <option value="lateral">Parete laterale</option>
+              <option value="anterior">Parete anteriore</option>
+              <option value="trigone">Trigono</option>
+              <option value="multifocal">Multifocale</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Tipo campione</label>
+            <select id="blad-specimenType">
+              <option value="biopsia">Biopsia TUR-BT</option>
+              <option value="resection">Resezione endoscopica</option>
+              <option value="cystectomy">Cistoprostatectomia</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ID caso (opzionale)</label>
+          <input type="text" id="blad-caseId" placeholder="Es: BLAD24-7890" />
+        </div>
+
+        <h3>Contesto clinico</h3>
+        <div class="form-group">
+          <label>Carcinoma associato</label>
+          <select id="blad-associatedCancer">
+            <option value="no">No carcinoma associato</option>
+            <option value="concurrent">Carcinoma concomitante in altro sito</option>
+            <option value="upper-tract">Carcinoma vie urinarie superiori</option>
+          </select>
+          <div class="hint">⚠️ Displasia + carcinoma concomitante = rischio più alto</div>
+        </div>
+
+        <h3>Morfologia nucleare</h3>
+        <div class="checklist">
+          <label><input type="checkbox" id="blad-morphPleomorphism" /> Pleomorfismo nucleare</label>
+          <label><input type="checkbox" id="blad-morphCrowding" /> Affollamento (N/C ratio ↑)</label>
+          <label><input type="checkbox" id="blad-morphHyperchromasia" /> Ipercromatismo marcato</label>
+          <label><input type="checkbox" id="blad-morphIrregular" /> Contorni nucleari irregolari</label>
+          <label><input type="checkbox" id="blad-morphMitoses" /> Mitosi atipiche</label>
+        </div>
+
+        <h3>Architettura uroteliale</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Pattern architetturale</label>
+            <select id="blad-architecture">
+              <option value="normal">Normale (3-6 strati)</option>
+              <option value="thickened">Inspessito (>6 strati)</option>
+              <option value="disorganized">Disorganizzato</option>
+              <option value="invasive">Infiltrante</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Spessore uroteliale</label>
+            <select id="blad-thickness">
+              <option value="normal">Normale (3-6 strati)</option>
+              <option value="increased">Aumentato (>6 strati, no displasia)</option>
+              <option value="dysplastic">Displastico (accentuato + atipia)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>p53 IHC (quando disponibile)</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>p53 pattern</label>
+            <select id="blad-p53Pattern">
+              <option value="unknown">Non eseguito</option>
+              <option value="wildtype">Wild-type (mosaico)</option>
+              <option value="overexpression">Over-expression (>50%)</option>
+              <option value="null">Null</option>
+            </select>
+            <div class="hint">p53-OE in HGD urotelo frequente (40-60%)</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Ki67 proliferazione</label>
+            <select id="blad-ki67Level">
+              <option value="unknown">Non quantificato</option>
+              <option value="normal">Normale (superficiale)</option>
+              <option value="increased">Aumentata (tutto spessore)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Profondità invasione</h3>
+        <div class="form-group">
+          <label>Invasione lamina propria/muscolo</label>
+          <select id="blad-invasionDepth">
+            <option value="epithelial">Epiteliale (displasia, NON invasivo)</option>
+            <option value="lamina">Lamina propria (T1)</option>
+            <option value="muscularis">Muscolo (T2+)</option>
+          </select>
+          <div class="hint">Se invade lamina propria o oltre → carcinoma invasivo</div>
+        </div>
+
+        <div class="form-group">
+          <label>Note cliniche</label>
+          <textarea id="blad-additionalNotes" rows="2" placeholder="Cifosi, ulcerazione, aspetto endoscopico..."></textarea>
+        </div>
+
+        <button class="btn" onclick="analyzeBladder()">🔬 Analizza (Ctrl+Enter)</button>
+        <button class="btn btn-secondary" onclick="resetForm('blad')">Reset</button>
+      </div>
+    </div>
+
+    <!-- LARYNGEAL SECTION -->
+    <div id="laryngeal-section" class="form-section">
+      <div class="card">
+        <h2>⚡ Quick Entry</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('lary_normal')">Normal</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('lary_lgd')">LGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('lary_hgd')">HGD</button>
+          <button class="btn btn-small btn-secondary" onclick="loadPreset('lary_cancer')">Carcinoma</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Displasia Laringea - Parametri di valutazione</h2>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Localizzazione laringe</label>
+            <select id="lary-location">
+              <option value="vocal-cord">Corda vocale</option>
+              <option value="anterior-commissure">Commissura anteriore</option>
+              <option value="posterior-larynx">Laringe posteriore</option>
+              <option value="epiglottis">Epiglottide</option>
+              <option value="aryepiglottic">Ariepiglottica</option>
+              <option value="multifocal">Multifocale</option>
+            </select>
+            <div class="hint">Localizzazione rilevante per rischio e follow-up</div>
+          </div>
+          
+          <div class="form-group">
+            <label>Tipo campione</label>
+            <select id="lary-specimenType">
+              <option value="biopsia">Biopsia (microlaringoscopia)</option>
+              <option value="stripping">Stripping/microflap</option>
+              <option value="laser">Laser resection specimen</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ID caso (opzionale)</label>
+          <input type="text" id="lary-caseId" placeholder="Es: LARY24-2468" />
+        </div>
+
+        <h3>Contesto clinico</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Smoking history</label>
+            <select id="lary-smokingHistory">
+              <option value="no">No fumatore</option>
+              <option value="former">Ex-fumatore</option>
+              <option value="current">Fumatore attivo</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Infezione HPV (se nota)</label>
+            <select id="lary-hpvStatus">
+              <option value="unknown">Non noto</option>
+              <option value="negative">Negativo</option>
+              <option value="positive">Positivo</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Morfologia</h3>
+        <div class="checklist">
+          <label><input type="checkbox" id="lary-morphPleomorphism" /> Pleomorfismo nucleare</label>
+          <label><input type="checkbox" id="lary-morphCrowding" /> Affollamento nucleare</label>
+          <label><input type="checkbox" id="lary-morphHyperchromasia" /> Ipercromatismo marcato</label>
+          <label><input type="checkbox" id="lary-morphIrregular" /> Contorni nucleari irregolari</label>
+          <label><input type="checkbox" id="lary-morphMitoses" /> Mitosi atipiche</label>
+        </div>
+
+        <h3>Architettura epiteliale</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Spessore epiteliale</label>
+            <select id="lary-thickness">
+              <option value="normal">Normale</option>
+              <option value="acanthotic">Acantosico (inspessito, atipia lieve)</option>
+              <option value="dysplastic">Displastico (atipia marcata)</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Maturation pattern</label>
+            <select id="lary-maturation">
+              <option value="normal">Normale (maturazione preservata)</option>
+              <option value="abnormal">Anormale (perdita maturazione focale)</option>
+              <option value="complete">Completa perdita (displasia alta)</option>
+            </select>
+            <div class="hint">Perdita maturazione = criterio HGD</div>
+          </div>
+        </div>
+
+        <h3>p53 IHC (supportivo)</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>p53 pattern</label>
+            <select id="lary-p53Pattern">
+              <option value="unknown">Non eseguito</option>
+              <option value="wildtype">Wild-type</option>
+              <option value="overexpression">Over-expression</option>
+              <option value="null">Null</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>p53 localizzazione</label>
+            <select id="lary-p53Location">
+              <option value="na">N/A</option>
+              <option value="basal">Basale (LGD pattern)</option>
+              <option value="full-thickness">Full-thickness (HGD pattern)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3>Profondità invasione</h3>
+        <div class="form-group">
+          <label>Invasione lamina propria</label>
+          <select id="lary-invasionDepth">
+            <option value="epithelial">Epiteliale (intraepiteliale)</option>
+            <option value="superficial-lamina">Lamina propria superficiale</option>
+            <option value="deep-lamina">Lamina propria profonda (T1b)</option>
+            <option value="muscularis">Muscolaris propria (T2+)</option>
+          </select>
+          <div class="hint">Invasione lamina propria → carcinoma (T1), non displasia</div>
+        </div>
+
+        <div class="form-group">
+          <label>Note cliniche</label>
+          <textarea id="lary-additionalNotes" rows="2" placeholder="Aspetto endoscopico, lesione sessile/papillare, localizzazione precisa..."></textarea>
+        </div>
+
+        <button class="btn" onclick="analyzeLaryngeal()">🔬 Analizza (Ctrl+Enter)</button>
+        <button class="btn btn-secondary" onclick="resetForm('lary')">Reset</button>
+      </div>
+    </div>
+
+    <!-- GUIDE SECTION -->
+    <div id="guide-section" class="form-section">
+      <div class="card">
+        <h2>📚 Guida Visuale: p53 Patterns in Dysplasia</h2>
+        <p class="tiny">Didattica per riconoscere i pattern p53 dalla mucosa normale al carcinoma</p>
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <button class="btn btn-small" onclick="showGuidePart('gastric')" id="btn-gastric-guide">🔬 Displasia Gastrica</button>
+          <button class="btn btn-small btn-secondary" onclick="showGuidePart('colonic')" id="btn-colonic-guide">🔍 Displasia Colonica</button>
+        </div>
+      </div>
+
+      <!-- GASTRIC GUIDE -->
+      <div id="gastric-guide-part">
+
+      <!-- Normal mucosa -->
+      <div class="card">
+        <h3>🟢 MUCOSA NORMALE</h3>
+        <div style="background: #f0fdf4; padding: 12px; border-left: 4px solid #059669; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Negativo o wild-type (mosaico) nelle cellule più differenziate<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li>Nuclei <strong>piccoli, basali</strong> con basso N/C ratio</li>
+            <li>Se presente p53 positività: <strong>sparse, eterogenea, <20% dei nuclei</strong></li>
+            <li><strong>Localizzazione:</strong> nucleare, nuclei della base delle ghiandole</li>
+            <li><strong>Intensità:</strong> debole (1+) o assente</li>
+            <li><strong>Distribuzione:</strong> a mosaico irregolare (wild-type pattern)</li>
+          </ul>
+          <strong>⚠️ Cosa NON vedi:</strong> Nessuna positività diffusa, nessun nucleo fortemente colorato in tutta la ghiandola
+        </div>
+      </div>
+
+      <!-- Intestinal metaplasia -->
+      <div class="card">
+        <h3>🟡 METAPLASIA INTESTINALE (IM)</h3>
+        <div style="background: #fffbeb; padding: 12px; border-left: 4px solid #d97706; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Wild-type (mosaico) - simile a mucosa normale<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li>Sostituzione della mucosa gastrica con epitelio intestinale (colonnare, con cellule caliciformi)</li>
+            <li><strong>p53:</strong> wild-type pattern, nuclei positivi <20%, sparsi</li>
+            <li>Nuclei basali con basso N/C ratio</li>
+            <li><strong>Architettura:</strong> ancora ordinata, cripte normali</li>
+            <li>Polarità nucleare preservata</li>
+          </ul>
+          <strong>⚠️ Nota clinica:</strong> IM è pre-cancerosa ma p53 è ancora normale. Rischio dipende da estensione + H. pylori status.
+        </div>
+      </div>
+
+      <!-- LGD -->
+      <div class="card">
+        <h3>🔵 LGD (Low-Grade Dysplasia)</h3>
+        <div style="background: #dbeafe; padding: 12px; border-left: 4px solid #1e40af; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Wild-type (mosaico) OPPURE lieve accumulo (30-50% nuclei positivi)<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>Nuclei:</strong> moderatamente aumentati, crowding focale, N/C 1:1-2:1</li>
+            <li><strong>p53 pattern:</strong>
+              <ul>
+                <li>Prevalentemente <strong>wild-type mosaico</strong> (ancora eterogeneo)</li>
+                <li>Oppure <strong>lieve accumulo (30-50% nuclei 2+/3+)</strong> non diffuso</li>
+                <li><strong>MAI >80% uniformemente forte</strong> (quello è HGD/OE)</li>
+              </ul>
+            </li>
+            <li><strong>Localizzazione:</strong> nucleare, ma con qualche citoplasmatico</li>
+            <li><strong>Intensità:</strong> mix di debole (1+) e moderato (2+)</li>
+            <li><strong>Distribuzione:</strong> focale, non uniforme lungo la ghiandola</li>
+            <li><strong>Architettura:</strong> <strong>INTEGRA</strong> (NO interruzione basale)</li>
+            <li><strong>Stratificazione:</strong> parziale perdita di polarità</li>
+          </ul>
+          <strong>🎯 Come riconoscerlo:</strong> "Nuclei più grandi e affollati, ma p53 ancora non uniformemente forte. Architettura ghiandolare ancora integra."
+        </div>
+      </div>
+
+      <!-- HGD -->
+      <div class="card">
+        <h3>🟠 HGD (High-Grade Dysplasia)</h3>
+        <div style="background: #fed7aa; padding: 12px; border-left: 4px solid #9a3412; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Over-expression (>60-80% nuclei 2+/3+ diffusi) OPPURE pattern aberrante<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>Nuclei:</strong> marcatamente aumentati, pleomorfi, N/C >2:1, ipercromatici</li>
+            <li><strong>p53 pattern (criterio chiave):</strong>
+              <ul>
+                <li><strong>Over-expression diffuso:</strong> >60-80% nuclei positivi 2+/3+ in tutta la lesione</li>
+                <li><strong>Distribuzione:</strong> UNIFORME (contrasto con LGD mosaico)</li>
+                <li><strong>Intensità:</strong> prevalentemente moderato (2+) o forte (3+), non debole</li>
+                <li><strong>Localizzazione:</strong> nucleare (raramente citoplasmatico puro)</li>
+                <li>Oppure <strong>pattern aberrante:</strong> null, rim-like, speckled, esclusione nucleare</li>
+              </ul>
+            </li>
+            <li><strong>Architettura:</strong> <strong>INTERRUZIONE BASALE</strong> (criterio WHO 2022 chiave!)
+              <ul>
+                <li>Pattern cribriforme (micropapille fuse)</li>
+                <li>Fusione ghiandolare focale</li>
+                <li>Foci infiltranti superficiali (ma NO invasione sottomucosa = ancora HGD)</li>
+              </ul>
+            </li>
+            <li><strong>Stratificazione:</strong> completa perdita di polarità</li>
+            <li><strong>Mitosi:</strong> >5/10HPF, incluse figure atipiche</li>
+          </ul>
+          <strong>🎯 Come riconoscerlo:</strong> "Nuclei grandi pleomorfi, p53 UNIFORMEMENTE FORTE (>60%), architettura cribriformo/infiltrante (NO più integra)."
+        </div>
+      </div>
+
+      <!-- Carcinoma -->
+      <div class="card">
+        <h3>🔴 CARCINOMA</h3>
+        <div style="background: #fecaca; padding: 12px; border-left: 4px solid #991b1b; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Over-expression marcato (>80% nuclei 2+/3+) OPPURE pattern aberrante + INVASIONE SOTTOMUCOSA<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>Nuclei:</strong> molto aumentati, pleomorfi, ipercromatici, mitosi atipiche marcate</li>
+            <li><strong>p53 pattern:</strong>
+              <ul>
+                <li><strong>Over-expression massivo:</strong> >80% nuclei uniformemente 2+/3+ (pattern HGD + invasione)</li>
+                <li><strong>Pattern aberrante:</strong> null (0% nuclei), o citoplasmatico aberrante, o rim-like</li>
+                <li><strong>Intensità:</strong> forte (3+), diffusa</li>
+              </ul>
+            </li>
+            <li><strong>Architettura:</strong> infiltrante, solidi, cordoni ghiandolari irregolari</li>
+            <li><strong>⚠️ INVASIONE SOTTOMUCOSA CONFERMATA</strong> (criterio definitivo di carcinoma)</li>
+            <li><strong>Reazione desmoplastica:</strong> marcata</li>
+            <li><strong>Necrosi:</strong> focale</li>
+          </ul>
+          <strong>🎯 Come riconoscerlo:</strong> "HGD ma CON invasione sottomucosa. p53 massivamente positivo. È carcinoma: serve staging e chirurgia."
+        </div>
+      </div>
+
+      <!-- Summary table -->
+      <div class="card">
+        <h3>📊 Tabella riassuntiva: p53 pattern per grado</h3>
+        <table style="width: 100%; border-collapse: collapse; margin: 12px 0;">
+          <thead>
+            <tr style="background: #f8fafc;">
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Grado</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>p53 % positivi</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Distribuzione</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Pattern tipo</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Architettura</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #f0fdf4;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Normale/IM</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><10%</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Mosaico</strong> (sparse, eterogeneo)</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Wild-type</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Integra</td>
+            </tr>
+            <tr style="background: #dbeafe;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>LGD</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">10-50%</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Focale</strong> (non uniforme)</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Wild-type o lieve accumulo</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Integra</td>
+            </tr>
+            <tr style="background: #fed7aa;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>HGD</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">60-80%+</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Diffusa/uniforme</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Over-expression o aberrante</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Interruzione basale</strong> (cribriforme/infiltrante)</td>
+            </tr>
+            <tr style="background: #fecaca;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Carcinoma</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">80%+ (o 0% null)</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Diffusa</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Over-expression massivo o null</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Infiltrante + <strong>invasione sottomucosa</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Key takeaways -->
+      <div class="card">
+        <h3>🎯 Punti chiave da ricordare</h3>
+        <div class="criteria-list">
+          <h4>1. Wild-type vs Over-expression</h4>
+          <ul>
+            <li><strong>Wild-type (mosaico):</strong> nuclei positivi sparsi, eterogenei, <20-30%. Nuclei positivi e negativi mescolati.</li>
+            <li><strong>Over-expression:</strong> nuclei positivi uniformi e densi, >60-80%, tutta la lesione colorata. Non vedi nuclei negativi dentro la lesione displastica.</li>
+          </ul>
+
+          <h4>2. LGD è il confine difficile</h4>
+          <ul>
+            <li>Citologia atipia (nuclei affollati, ipercromatici)</li>
+            <li>p53 ancora mosaico O lieve accumulo focale (30-50%, non >80%)</li>
+            <li><strong>Architettura ancora integra</strong> (NO cribriforme/infiltrante)</li>
+            <li><strong>⚠️ Reproducibilità bassa (50-60%)</strong> → ripeti biopsia in 2-3 mesi se dubbio</li>
+          </ul>
+
+          <h4>3. HGD vs LGD: i discriminanti</h4>
+          <ul>
+            <li><strong>p53:</strong> >60-80% uniformemente forte (vs LGD <50% focale)</li>
+            <li><strong>Architettura:</strong> interruzione basale, cribriforme (vs LGD integra)</li>
+            <li><strong>Stratificazione:</strong> completa perdita (vs LGD parziale)</li>
+            <li><strong>Mitosi:</strong> >5/10HPF con figure atipiche (vs LGD <5, regolari)</li>
+          </ul>
+
+          <h4>4. Carcinoma vs HGD</h4>
+          <ul>
+            <li><strong>HGD:</strong> citologia/architettura HGD ma limitato alla mucosa (NO invasione sottomucosa)</li>
+            <li><strong>Carcinoma:</strong> HGD + <strong>invasione sottomucosa confermata</strong></li>
+            <li>p53 pattern simile (OE/null), ma l'invasione è il discriminante definitivo</li>
+          </ul>
+
+          <h4>5. Pattern aberranti specifici (meno frequenti ma importanti)</h4>
+          <ul>
+            <li><strong>Null (0% nuclei positivi):</strong> mutazione inattivante, raro in gastrica, prognosi cattiva</li>
+            <li><strong>Citoplasmatico puro:</strong> sequestro citoplasmatico, nuclei negativi, pattern aberrante definitivo</li>
+            <li><strong>Rim-like:</strong> positività periferica nucleare, aspetto caratteristico (mutazioni specifiche)</li>
+            <li>Se vedi questi: <strong>p53 aberrante confermato</strong>, non hai dubbi su OE vs WT</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Common mistakes -->
+      <div class="card">
+        <h3>❌ Errori comuni</h3>
+        <div class="alert alert-warning">
+          <strong>1. "È tutto positivo, quindi è carcinoma"</strong><br>
+          NO: devi distinguere <strong>distribuzione uniforme (HGD/carcinoma) vs mosaico (wild-type)</strong>. Non contare solo il % totale.
+        </div>
+        <div class="alert alert-warning">
+          <strong>2. "p53 debole in LGD vs forte in HGD"</strong><br>
+          NO: il discriminante è <strong>% dei nuclei positivi 2+/3+ (>60-80% = HGD) e distribuzione (uniforme vs focale)</strong>. L'intensità singola (1+ vs 2+) è meno importante.
+        </div>
+        <div class="alert alert-warning">
+          <strong>3. "Vedo cribriforme, quindi HGD"</strong><br>
+          NO: cribriforme + citologia bassa-media può ancora essere LGD atipica. Devi valutare INSIEME: nuclei pleomorfi + ipercromatici MARCATI + cribriforme + p53 >60-80% = HGD.
+        </div>
+        <div class="alert alert-warning">
+          <strong>4. "Se p53 è negativo (0%), è wild-type"</strong><br>
+          NO: p53 0% (null pattern) è un pattern ABERRANTE, non wild-type. Differenza: null = mutazione inattivante; WT mosaico = funzione normale. Controlla il controllo interno per escludere falso negativo.
+        </div>
+        <div class="alert alert-warning">
+          <strong>5. "Assenza p53 nella displasia è rara"</strong><br>
+          VERO: in gastrica il null pattern è raro (<5%). Se lo vedi, ripeti colorazione + controlla controllo interno. Se confermato, è aberrante definitivo.
+        </div>
+      </div>
+
+      <!-- Practice tips -->
+      <div class="card">
+        <h3>💡 Consigli pratici per il giovane collega</h3>
+        <div class="criteria-list">
+          <h4>Workflow di analisi p53 in displasia gastrica:</h4>
+          <ol>
+            <li><strong>Localizza l'area displastica:</strong> low power (4x-10x) per inquadrare morphologia anomala</li>
+            <li><strong>Valuta architettura:</strong> integra vs cribriforme/infiltrante → aiuta a discriminare LGD vs HGD</li>
+            <li><strong>Passa a 40x:</strong> conta nuclei positivi nella zona displastica (non tutta la slide, solo la displasia)</li>
+            <li><strong>Stima %:</strong> 0-20% = WT / 30-50% = accumulo lieve / 60-80%+ = OE</li>
+            <li><strong>Valuta distribuzione:</strong> sparsi/mosaico (WT) vs uniformi/densi (OE)?</li>
+            <li><strong>Pattern specifico?</strong> Null/rim-like/speckled → pattern aberrante definitivo</li>
+            <li><strong>Confronta con controllo interno:</strong> se controllo strong + displasia 0% positiva → null verosimile; se controllo weak → ripeti</li>
+            <li><strong>Correla con morfologia:</strong> WT + architettura integra + nuclei lievemente aumentati → LGD; OE + cribriforme + nuclei pleomorfi → HGD</li>
+          </ol>
+
+          <h4>A che grado di ingrandimento?</h4>
+          <ul>
+            <li><strong>4x-10x:</strong> inquadra la lesione, vedi se è focale o estesa</li>
+            <li><strong>20x:</strong> buon compromesso per conteggio; vedi la morfologia complessiva</li>
+            <li><strong>40x-100x:</strong> dettagli nucleari, distingui 1+ vs 2+ vs 3+, ma non usare solo quello (perdi il pattern distribuzione)</li>
+          </ul>
+
+          <h4>Quando ripetere p53?</h4>
+          <ul>
+            <li>Controllo interno assente o debole + displasia negativa → RIPETI</li>
+            <li>Risultato improbabile per contesto (es. HGD citologia ma p53 wild-type mosaico in <20%) → RIPETI</li>
+            <li>Caso dubbio (borderline LGD vs indefinita) → p53 AIUTA (se OE → HGD; se WT → LGD)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLONIC GUIDE SECTION -->
+    <div id="colonic-guide-section" class="form-section" style="display: none;">
+      <div class="card">
+        <h2>📚 Guida Visuale: p53 Patterns in Colonic Dysplasia (IBD & Sporadic)</h2>
+        <p class="tiny">Didattica per riconoscere i pattern p53 in colite ulcerosa e colon normale</p>
+      </div>
+
+      <!-- Normal colonic mucosa -->
+      <div class="card">
+        <h3>🟢 MUCOSA COLONICA NORMALE</h3>
+        <div style="background: #f0fdf4; padding: 12px; border-left: 4px solid #059669; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Negativo o wild-type (mosaico) nelle cellule differenziate<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li>Cripte ordinate, epitelio cilindrico semplice</li>
+            <li><strong>p53:</strong> <10% nuclei positivi se presenti, sparsi (wild-type mosaico)</li>
+            <li><strong>Localizzazione:</strong> nucleare, principalmente nelle cellule basali</li>
+            <li><strong>Intensità:</strong> debole (1+) o assente</li>
+            <li>Nuclei con normale N/C ratio, nessun pleomorfismo</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- IBD non-dysplastic inflamed mucosa -->
+      <div class="card">
+        <h3>🟡 MUCOSA INFIAMMATA (IBD ATTIVA - NON DISPLASTICA)</h3>
+        <div style="background: #fffbeb; padding: 12px; border-left: 4px solid #d97706; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Wild-type OPPURE lieve accumulo dovuto a stress infiammatorio (NON displasia)<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>⚠️ CONFUSIONE POSSIBILE!</strong> Infiammazione marcata può aumentare p53 per stress cellulare, non per mutazione</li>
+            <li>Infiltrato infiammatorio denso, ulcerazione focale</li>
+            <li><strong>p53:</strong> può arrivare a 30-40% a causa dello stress, NON per mutazione TP53</li>
+            <li><strong>Citologia:</strong> nuclei normali (NON pleomorfi, NON ipercromatici)</li>
+            <li><strong>Architettura:</strong> distorta da infiammazione, ma NON cribriforme/infiltrante</li>
+            <li><strong>Come distinguere da LGD?</strong> In LGD il nucleo è già atipico (pleomorfo, ipercromatico); qui i nuclei sono normali, è l'infiammazione che lo "accende"</li>
+          </ul>
+          <strong>⚠️ Nota clinica:</strong> Se IBD attiva + p53 accumulo, la causa è l'infiammazione, NON mutazione. Tratta l'IBD, ripeti biopsia dopo remissione.
+        </div>
+      </div>
+
+      <!-- LGD in IBD -->
+      <div class="card">
+        <h3>🔵 LGD (Low-Grade Dysplasia) - IBD & Sporadic</h3>
+        <div style="background: #dbeafe; padding: 12px; border-left: 4px solid #1e40af; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Wild-type (mosaico) OPPURE lieve accumulo 30-50% (MAI >60%)<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>Nuclei:</strong> moderatamente aumentati, crowding focale, N/C 1:1-2:1</li>
+            <li><strong>p53 pattern:</strong>
+              <ul>
+                <li>Prevalentemente <strong>wild-type mosaico</strong> (eterogeneo)</li>
+                <li>Oppure <strong>lieve accumulo 30-50%</strong> focale, non diffuso</li>
+                <li>MAI >60% uniformemente forte (quello è HGD)</li>
+              </ul>
+            </li>
+            <li><strong>Localizzazione:</strong> nucleare</li>
+            <li><strong>Architettura:</strong> distorta (crowding cripte) ma NO cribriforme/infiltrante</li>
+            <li><strong>Infiammazione associata:</strong> lieve-moderata (in IBD spesso presente)</li>
+          </ul>
+          <strong>🎯 Confine difficile:</strong> LGD vs Indefinite (borderline) - p53 wild-type aiuta → è LGD; se accumulo focale → considera indefinite.
+          <br>
+          <strong>📋 In IBD:</strong> ripeti biopsia in 2-3 mesi. Se confermato: surveillance endoscopica ogni 6-12 mesi.
+        </div>
+      </div>
+
+      <!-- HGD in IBD -->
+      <div class="card">
+        <h3>🟠 HGD (High-Grade Dysplasia) - IBD & Sporadic</h3>
+        <div style="background: #fed7aa; padding: 12px; border-left: 4px solid #9a3412; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Over-expression (>60-80% nuclei 2+/3+ diffusi) OPPURE pattern aberrante<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>Nuclei:</strong> marcatamente aumentati, pleomorfi, ipercromatici, N/C >2:1</li>
+            <li><strong>p53 pattern (criterio chiave):</strong>
+              <ul>
+                <li><strong>Over-expression diffuso:</strong> >60-80% nuclei positivi 2+/3+ in tutta la lesione</li>
+                <li><strong>Distribuzione:</strong> UNIFORME (densità nucleare diffusa)</li>
+                <li><strong>Intensità:</strong> moderato (2+) o forte (3+)</li>
+                <li>Oppure <strong>pattern aberrante:</strong> null, rim-like, citoplasmatico aberrante</li>
+              </ul>
+            </li>
+            <li><strong>Architettura:</strong> interruzione basale, cribriforme, micropapille</li>
+            <li><strong>Stratificazione:</strong> completa perdita</li>
+            <li><strong>Mitosi:</strong> >5/10HPF con figure atipiche</li>
+          </ul>
+          <strong>📋 Management:</strong>
+          <ul>
+            <li><strong>IBD-HGD:</strong> polipectomia/ESD se localizzato. Se multicentrica → COLECTOMIA. Follow-up endoscopico 6-12 mesi.</li>
+            <li><strong>Sporadic-HGD:</strong> polipectomia completa + margini negativi. Se margini positivi → resezione.</li>
+          </ul>
+          <strong>⚠️ Nota IBD:</strong> HGD in IBD cronaca è rara (1-3% anno) ma ad alto rischio progressione. Devi riferire subito al gastroenterologo.
+        </div>
+      </div>
+
+      <!-- Carcinoma in colon -->
+      <div class="card">
+        <h3>🔴 CARCINOMA - IBD & Sporadic</h3>
+        <div style="background: #fecaca; padding: 12px; border-left: 4px solid #991b1b; border-radius: 8px; margin: 12px 0;">
+          <strong>Pattern p53:</strong> Over-expression marcato >80% OPPURE null + INVASIONE SOTTOMUCOSA<br>
+          <strong>Descrizione istologica:</strong>
+          <ul>
+            <li><strong>Nuclei:</strong> molto aumentati, pleomorfi, ipercromatici</li>
+            <li><strong>p53:</strong> >80% nuclei 2+/3+ uniformemente OR 0% null con controllo interno strong</li>
+            <li><strong>Architettura:</strong> infiltrante, cordoni solidi irregolari</li>
+            <li><strong>⚠️ INVASIONE SOTTOMUCOSA CONFERMATA</strong> (T1b in TNM)</li>
+            <li><strong>Reazione desmoplastica:</strong> marcata</li>
+          </ul>
+          <strong>📋 Management URGENTE:</strong>
+          <ul>
+            <li>Staging TNM completo (imaging, colonscopia total body)</li>
+            <li>Chirurgia (emicolectomia standard o estesa se metastasi regionali)</li>
+            <li>Oncologia (adjuvant se T3+, N+, M+)</li>
+            <li>Follow-up post-operatorio</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Comparison table -->
+      <div class="card">
+        <h3>📊 Tabella riassuntiva: p53 in colon (IBD + Sporadic)</h3>
+        <table style="width: 100%; border-collapse: collapse; margin: 12px 0;">
+          <thead>
+            <tr style="background: #f8fafc;">
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Categoria</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>p53 %</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Distribuzione</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>Citologia</strong></th>
+              <th style="border: 1px solid #d1d5db; padding: 8px; text-align: left;"><strong>⚠️ Confusione possibile</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #f0fdf4;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Normale</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><10%</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Mosaico sparse</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Nuclei normali</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">—</td>
+            </tr>
+            <tr style="background: #fffbeb;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>IBD infiammata (no displasia)</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">20-40% (stress)</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Diffuso</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Nuclei NORMALI</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>⚠️ Può sembrare OE ma nuclei sono normali!</strong> Tratta IBD, ripeti dopo remissione</td>
+            </tr>
+            <tr style="background: #dbeafe;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>LGD</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">10-50%</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Focale</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Nuclei atipici (pleomorfi, ipercromatici)</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">vs indefinite (borderline)</td>
+            </tr>
+            <tr style="background: #fed7aa;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>HGD</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">60-80%+</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Diffusa/uniforme</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Nuclei marcatamente atipici</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Architettura cribriforme distingue da infiammazione</td>
+            </tr>
+            <tr style="background: #fecaca;">
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Carcinoma</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">80%+ o 0% null</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;">Diffusa</td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Nuclei molto atipici</strong></td>
+              <td style="border: 1px solid #d1d5db; padding: 8px;"><strong>Invasione sottomucosa</strong> = carcinoma (NON HGD)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Specific pitfalls in IBD -->
+      <div class="card">
+        <h3>❌ Errori comuni in displasia colonica (soprattutto IBD)</h3>
+        <div class="alert alert-warning">
+          <strong>1. "IBD infiammata attiva + p53 positivo in 30-40% → è LGD"</strong><br>
+          NO: controlla la CITOLOGIA. Se nuclei sono normali (non pleomorfi), è infiammazione, NON displasia. p53 è "acceso" dallo stress, non dalla mutazione. Tratta l'IBD, ripeti dopo remissione.
+        </div>
+        <div class="alert alert-warning">
+          <strong>2. "Vedo indefinite + p53 wild-type → è negativo"</strong><br>
+          NO: indefinite + WT è comunque borderline. Se endoscopia sospetta, continua surveillance. p53 WT aiuta a escludere HGD, ma indefinite rimane incerta.
+        </div>
+        <div class="alert alert-warning">
+          <strong>3. "IBD-HGD = colectomia sempre"</strong><br>
+          NO: se HGD è localizzato (singolo polipo), polipectomia/ESD è opzione. Colectomia se multicentrica o non resecabile. Decidere con gastroenterologo.
+        </div>
+        <div class="alert alert-warning">
+          <strong>4. "p53 null nel colon è raro, se lo vedo è falso negativo"</strong><br>
+          VERO che è raro, ma p53 null esiste anche in CRC. Se lo vedi, verifica controllo interno (deve essere strong). Se confermato, è aberrante definitivo.
+        </div>
+        <div class="alert alert-warning">
+          <strong>5. "LGD nel colon ha rischio basso, non mi preoccupo"</strong><br>
+          ATTENZIONE: LGD in IBD ha rischio 1-2% anno di progressione. In sporadic è basso, ma dipende dalla polipectomia. Segui le linee guida surveillance.
+        </div>
+      </div>
+
+        </div>
+      </div>
+
+      <!-- COLONIC GUIDE -->
+      <div id="colonic-guide-part" style="display: none;">
+        <h3>💡 Workflow di analisi p53 in displasia colonica</h3>
+        <div class="criteria-list">
+          <h4>Checklist:</h4>
+          <ol>
+            <li><strong>Contesto IBD?</strong> Se sì, è più complesso (infiammazione vs displasia). Se IBD attiva, ripeti biopsia dopo remissione.</li>
+            <li><strong>Localizza l'area dysplastica:</strong> spesso è focale (un polipo), non diffusa come in gastrica</li>
+            <li><strong>Valuta citologia:</strong> nuclei normali (infiammazione) vs atipici (displasia)?</li>
+            <li><strong>Valuta architettura:</strong> distorta semplice (indefinite/LGD) vs cribriforme (HGD)?</li>
+            <li><strong>Conta p53:</strong> <20% WT / 30-50% accumulo lieve / >60-80% OE</li>
+            <li><strong>Distribuzione:</strong> sparsi (WT) vs uniformi (OE)?</li>
+            <li><strong>Correla tutto:</strong> Citologia + architettura + p53 = grading finale</li>
+            <li><strong>Margini polipectomia?</strong> (Importante per sporadic HGD)</li>
+          </ol>
+
+          <h4>Se IBD + infiammazione marcata + p53 accumulo lieve:</h4>
+          <ul>
+            <li>Referire al gastroenterologo: "infiammazione attiva con stress cellulare, non displasia istologica certa"</li>
+            <li>Raccomandare: ripeti biopsia dopo 2-4 settimane di remissione infiammatoria</li>
+            <li>Se confermato HGD in biopsie seriali → allora intervieni</li>
+          </ul>
+
+          <h4>Se sporadic HGD in polipo:</h4>
+          <ul>
+            <li>Margini negativi → sorveglianza colonscopia 3-6 mesi, poi standard intervals</li>
+            <li>Margini positivi → resezione completa o escalation</li>
+            <li>Se sottomucosa invasa → carcinoma, non HGD → staging TNM</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
     <div class="card output-section" id="outputSection">
       <h2>Risultato interpretativo</h2>
       
@@ -738,23 +1665,52 @@ const PRESETS = {
   gastric_nodys: { 'gastric-morphPleomorphism': false, 'gastric-morphCrowding': false, 'gastric-architecture': 'intact', 'gastric-stratification': 'normal', 'gastric-ki67Level': 'low' },
   gastric_lgd: { 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': false, 'gastric-architecture': 'intact', 'gastric-stratification': 'partial', 'gastric-ki67Level': 'moderate' },
   gastric_hgd: { 'gastric-morphPleomorphism': true, 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': true, 'gastric-morphIrregular': true, 'gastric-morphMitoses': true, 'gastric-architecture': 'cribriform', 'gastric-stratification': 'complete', 'gastric-ki67Level': 'high' },
-  gastric_cancer: { 'gastric-morphPleomorphism': true, 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': true, 'gastric-morphMitoses': true, 'gastric-architecture': 'glandular', 'gastric-invasionDepth': 'submucosa', 'gastric-ki67Level': 'high' },
+  gastric_cancer: { 'gastric-morphPleomorphism': true, 'gastric-morphCrowding': true, 'gastric-morphHyperchromasia': true, 'gastric-morphMitoses': true, 'gastric-architecture': 'glandular', 'gastric-ki67Level': 'high' },
   colonic_nodys: { 'colonic-morphPleomorphism': false, 'colonic-morphCrowding': false, 'colonic-architecture': 'normal', 'colonic-stratification': 'normal', 'colonic-ki67Level': 'normal', 'colonic-p53Pattern': 'wildtype' },
   colonic_ind: { 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': false, 'colonic-architecture': 'distorted', 'colonic-stratification': 'partial', 'colonic-ki67Level': 'increased', 'colonic-inflammation': 'moderate' },
   colonic_lgd: { 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': false, 'colonic-morphMitoses': false, 'colonic-architecture': 'distorted', 'colonic-stratification': 'partial', 'colonic-ki67Level': 'increased', 'colonic-p53Pattern': 'wildtype' },
   colonic_hgd: { 'colonic-morphPleomorphism': true, 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': true, 'colonic-morphIrregular': true, 'colonic-morphMitoses': true, 'colonic-architecture': 'cribriform', 'colonic-stratification': 'complete', 'colonic-ki67Level': 'high', 'colonic-p53Pattern': 'overexpression', 'colonic-desmoplasia': 'moderate' },
-  colonic_cancer: { 'colonic-morphPleomorphism': true, 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': true, 'colonic-morphMitoses': true, 'colonic-architecture': 'glandular', 'colonic-invasionDepth': 'submucosa', 'colonic-desmoplasia': 'marked', 'colonic-ki67Level': 'high' }
+  colonic_cancer: { 'colonic-morphPleomorphism': true, 'colonic-morphCrowding': true, 'colonic-morphHyperchromasia': true, 'colonic-morphMitoses': true, 'colonic-architecture': 'glandular', 'colonic-invasionDepth': 'submucosa', 'colonic-desmoplasia': 'marked', 'colonic-ki67Level': 'high' },
+  esoph_nodys: { 'esoph-morphPleomorphism': false, 'esoph-morphCrowding': false, 'esoph-architecture': 'normal', 'esoph-stratification': 'normal', 'esoph-p53Pattern': 'wildtype' },
+  esoph_ind: { 'esoph-morphCrowding': true, 'esoph-morphHyperchromasia': false, 'esoph-architecture': 'distorted', 'esoph-stratification': 'partial' },
+  esoph_lgd: { 'esoph-morphCrowding': true, 'esoph-morphHyperchromasia': false, 'esoph-architecture': 'distorted', 'esoph-stratification': 'partial', 'esoph-p53Pattern': 'wildtype' },
+  esoph_hgd: { 'esoph-morphPleomorphism': true, 'esoph-morphCrowding': true, 'esoph-morphHyperchromasia': true, 'esoph-morphIrregular': true, 'esoph-morphMitoses': true, 'esoph-architecture': 'cribriform', 'esoph-stratification': 'complete', 'esoph-p53Pattern': 'overexpression' },
+  esoph_cancer: { 'esoph-morphPleomorphism': true, 'esoph-morphCrowding': true, 'esoph-morphHyperchromasia': true, 'esoph-morphMitoses': true, 'esoph-architecture': 'infiltrating', 'esoph-invasionDepth': 'submucosa' },
+  blad_normal: { 'blad-morphPleomorphism': false, 'blad-morphCrowding': false, 'blad-architecture': 'normal', 'blad-thickness': 'normal', 'blad-p53Pattern': 'wildtype' },
+  blad_lgd: { 'blad-morphCrowding': true, 'blad-morphHyperchromasia': false, 'blad-architecture': 'thickened', 'blad-thickness': 'increased', 'blad-p53Pattern': 'wildtype' },
+  blad_hgd: { 'blad-morphPleomorphism': true, 'blad-morphCrowding': true, 'blad-morphHyperchromasia': true, 'blad-morphMitoses': true, 'blad-architecture': 'disorganized', 'blad-thickness': 'dysplastic', 'blad-p53Pattern': 'overexpression' },
+  blad_cancer: { 'blad-morphPleomorphism': true, 'blad-morphCrowding': true, 'blad-morphMitoses': true, 'blad-architecture': 'invasive', 'blad-invasionDepth': 'lamina' },
+  lary_normal: { 'lary-morphPleomorphism': false, 'lary-morphCrowding': false, 'lary-thickness': 'normal', 'lary-maturation': 'normal', 'lary-p53Pattern': 'wildtype' },
+  lary_lgd: { 'lary-morphCrowding': true, 'lary-morphHyperchromasia': false, 'lary-thickness': 'acanthotic', 'lary-maturation': 'abnormal', 'lary-p53Pattern': 'wildtype' },
+  lary_hgd: { 'lary-morphPleomorphism': true, 'lary-morphCrowding': true, 'lary-morphHyperchromasia': true, 'lary-morphMitoses': true, 'lary-thickness': 'dysplastic', 'lary-maturation': 'complete', 'lary-p53Pattern': 'overexpression' },
+  lary_cancer: { 'lary-morphPleomorphism': true, 'lary-morphCrowding': true, 'lary-morphHyperchromasia': true, 'lary-morphMitoses': true, 'lary-thickness': 'dysplastic', 'lary-invasionDepth': 'superficial-lamina' }
 };
 
 // ============ MODE CONTROL ============
 function setMode(mode) {
   currentMode = mode;
   document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('p53-section').classList.remove('active');
-  document.getElementById('gastric-section').classList.remove('active');
-  document.getElementById(mode + '-section').classList.add('active');
+  if (event && event.target) event.target.classList.add('active');
+  
+  ['guide', 'neoplasia', 'dysplasia-menu', 'gastric', 'colonic', 'esophageal', 'bladder', 'laryngeal'].forEach(m => {
+    const elem = document.getElementById(m + '-section');
+    if (elem) elem.classList.remove('active');
+  });
+  
+  const elem = document.getElementById(mode + '-section');
+  if (elem) elem.classList.add('active');
   document.getElementById('outputSection').classList.remove('show');
+  
+  if (mode === 'guide') {
+    showGuidePart('gastric');
+  }
+}
+
+function showGuidePart(part) {
+  document.getElementById('gastric-guide-part').style.display = part === 'gastric' ? 'block' : 'none';
+  document.getElementById('colonic-guide-part').style.display = part === 'colonic' ? 'block' : 'none';
+  document.getElementById('btn-gastric-guide').classList.toggle('btn-secondary', part === 'colonic');
+  document.getElementById('btn-colonic-guide').classList.toggle('btn-secondary', part === 'gastric');
 }
 
 function loadPreset(presetName) {
@@ -834,8 +1790,6 @@ function analyzeGastric() {
     morphMitoses: document.getElementById('gastric-morphMitoses').checked,
     architecture: document.getElementById('gastric-architecture').value,
     stratification: document.getElementById('gastric-stratification').value,
-    invasionDepth: document.getElementById('gastric-invasionDepth').value,
-    stromalReaction: document.getElementById('gastric-stromalReaction').value,
     additionalNotes: document.getElementById('gastric-additionalNotes').value
   };
 
@@ -847,7 +1801,7 @@ function analyzeGastric() {
   if (data.invasionDepth === 'submucosa') {
     grade = 'cancer'; title = 'CARCINOMA ADENOCARCINOMA GASTRICO'; reason = 'Invasione sottomucosa confermata'; action = 'URGENTE: staging, chirurgia, oncologia';
   } else if (morphCount >= 3 && hasBasalDisruption && data.architecture !== 'intact') {
-    grade = 'hgd'; title = 'DISPLASIA AD ALTO GRADO (HGD)'; reason = 'Morfologia HGD + disrupzione basale'; action = 'ESD o chirurgia + follow-up endoscopico';
+    grade = 'hgd'; title = 'DISPLASIA AD ALTO GRADO (HGD)'; reason = 'Morfologia HGD + interruzione basale'; action = 'ESD o chirurgia + follow-up endoscopico';
   } else if (data.morphCrowding && data.architecture === 'intact' && !hasBasalDisruption) {
     grade = 'lgd'; title = 'DISPLASIA A BASSO GRADO (LGD)'; reason = 'Atipia lieve + architettura integra'; action = 'Ripetere biopsia in 2-3 mesi, surveillance';
   } else {
@@ -894,7 +1848,7 @@ function analyzeColonic() {
   // HGD (strict criteria: morph ≥3 + arch disruption)
   else if (morphCount >= 3 && hasArchDisruption) {
     grade = 'hgd'; title = 'DISPLASIA AD ALTO GRADO (HGD)'; 
-    reason = `Morfologia HGD (${morphCount}/5 criteri) + disrupzione basale/cribriformo`;
+    reason = `Morfologia HGD (${morphCount}/5 criteri) + interruzione basale/cribriforme`;
     if (data.ibdStatus !== 'no') {
       action = 'IBD-HGD: polipectomia/resezione se possibile; se non resecabile → considerare colectomia. Surveillance stretta post-intervento.';
     } else {
@@ -913,10 +1867,10 @@ function analyzeColonic() {
     }
     risk = 'Intermedio (1-5% progressione annuale, dipende IBD duration)';
   }
-  // LGD (basso grado: crowding + architettura distorta ma NO disrupzione basale)
+  // LGD (basso grado: crowding + architettura distorta ma NO interruzione basale)
   else if ((data.morphCrowding || morphCount >= 1) && data.architecture !== 'normal' && !hasArchDisruption && data.stratification !== 'complete') {
     grade = 'lgd'; title = 'DISPLASIA A BASSO GRADO (LGD)'; 
-    reason = `Atipia lieve (${morphCount}/5 criteri) + distorsione architetturale senza disrupzione basale`;
+    reason = `Atipia lieve (${morphCount}/5 criteri) + distorsione architetturale senza interruzione basale`;
     if (data.ibdStatus !== 'no') {
       action = 'IBD-LGD: surveillance endoscopica ogni 6-12 mesi con biopsie random; conferma istologica consigliata. Considerare p53.';
     } else {
@@ -976,7 +1930,7 @@ function generateP53Report(grade, title, reason, data, hScore) {
 function generateGastricReport(grade, title, reason, data, morphCount) {
   let report = `DISPLASIA GASTRICA - WHO 2022\n===================\n\n`;
   report += `Caso: ${data.caseId || 'N/A'}\nLocalizzazione: ${data.location}\nGrado: ${title}\n`;
-  report += `Criteri morfologici: ${morphCount}/5\nArchitettura: ${data.architecture}\nStratificazione: ${data.stratification}\nProfondità: ${data.invasionDepth}\n`;
+  report += `Criteri morfologici: ${morphCount}/5\nArchitettura: ${data.architecture}\nStratificazione: ${data.stratification}\nEstensione: ${data.extensionNumber}\n`;
   report += `\nMotivazione: ${reason}\n\nNOTE: ${data.additionalNotes || 'Nessuna'}`;
   
   document.getElementById('reportText').textContent = report;
@@ -989,6 +1943,77 @@ function generateColonicReport(grade, title, reason, data, morphCount, risk) {
   report += `Criteri morfologici: ${morphCount}/5\nArchitettura: ${data.architecture}\nStratificazione: ${data.stratification}\nProfondità: ${data.invasionDepth}\n`;
   report += `Desmoplasia: ${data.desmoplasia}\nMargini: ${data.margins}\n`;
   report += `\nMotivazione: ${reason}\nRisk stratification: ${risk}\n\nNOTE: ${data.additionalNotes || 'Nessuna'}`;
+  
+  document.getElementById('reportText').textContent = report;
+  document.getElementById('reportSection').style.display = 'block';
+}
+
+// ============ ESOPHAGEAL ANALYSIS ============
+function analyzeEsophageal() {
+  const morphCount = ['esoph-morphPleomorphism', 'esoph-morphCrowding', 'esoph-morphHyperchromasia', 'esoph-morphIrregular', 'esoph-morphMitoses'].filter(id => document.getElementById(id).checked).length;
+  const architecture = document.getElementById('esoph-architecture').value;
+  const invasionDepth = document.getElementById('esoph-invasionDepth').value;
+  
+  let grade = 'nodys', title = 'Negativo', reason = 'IM normale, citologia benigna', action = 'Surveillance endoscopica standard';
+  
+  if (invasionDepth === 'submucosa' || invasionDepth === 'muscularis') {
+    grade = 'cancer'; title = 'CARCINOMA ESOFAGEO'; reason = 'Invasione sottomucosa confermata'; action = 'URGENTE: staging, oncologia, possibile esofagectomia';
+  } else if (morphCount >= 4 && ['cribriform', 'infiltrating'].includes(architecture)) {
+    grade = 'hgd'; title = 'HGD (High-Grade Dysplasia)'; reason = `Morfologia HGD (${morphCount}/5) + architettura cribriforme`; action = 'Endosonografia, possibile EMR (endoscopic mucosal resection). Surveillance stretta.';
+  } else if (morphCount >= 2 && architecture === 'distorted') {
+    grade = 'lgd'; title = 'LGD (Low-Grade Dysplasia)'; reason = `Atipia lieve (${morphCount}/5), architettura distorta`; action = 'Surveillance endoscopica ogni 6-12 mesi + biopsie random.';
+  }
+  
+  updateOutput(grade, title, reason, action, { morphCount: morphCount, caseId: document.getElementById('esoph-caseId').value });
+  generateReport(grade, title, reason, 'esoph', morphCount);
+}
+
+// ============ BLADDER ANALYSIS ============
+function analyzeBladder() {
+  const morphCount = ['blad-morphPleomorphism', 'blad-morphCrowding', 'blad-morphHyperchromasia', 'blad-morphIrregular', 'blad-morphMitoses'].filter(id => document.getElementById(id).checked).length;
+  const architecture = document.getElementById('blad-architecture').value;
+  const invasionDepth = document.getElementById('blad-invasionDepth').value;
+  
+  let grade = 'nodys', title = 'Normale', reason = 'Urotelium normale, 3-6 strati, citologia benigna', action = 'Surveillance standard';
+  
+  if (invasionDepth === 'lamina' || invasionDepth === 'muscularis') {
+    grade = 'cancer'; title = 'CARCINOMA UROTELIALE INVASIVO'; reason = `Invasione lamina propria confermata (${invasionDepth})`; action = 'URGENTE: staging TUR-BT, cTUR-BT, imaging. Possibile cistectomia radicale vs chemioterapia neoadiuvante.';
+  } else if (morphCount >= 3 && architecture === 'disorganized') {
+    grade = 'hgd'; title = 'HGD Uroteliale'; reason = `Atipia marcata (${morphCount}/5), architettura disorganizzata`; action = 'Risk ultramicroscopico di carcinoma: cTUR-BT (complete TUR + layer marking). Surveillance stretta ogni 3 mesi.';
+  } else if (morphCount >= 2 && ['thickened', 'disorganized'].includes(architecture)) {
+    grade = 'lgd'; title = 'LGD Uroteliale'; reason = `Atipia lieve (${morphCount}/5), urotelium inspessito`; action = 'Surveillance TUR ogni 6-12 mesi. Risk progressione basso se solo LGD.';
+  }
+  
+  updateOutput(grade, title, reason, action, { morphCount: morphCount, caseId: document.getElementById('blad-caseId').value });
+  generateReport(grade, title, reason, 'blad', morphCount);
+}
+
+// ============ LARYNGEAL ANALYSIS ============
+function analyzeLaryngeal() {
+  const morphCount = ['lary-morphPleomorphism', 'lary-morphCrowding', 'lary-morphHyperchromasia', 'lary-morphIrregular', 'lary-morphMitoses'].filter(id => document.getElementById(id).checked).length;
+  const maturation = document.getElementById('lary-maturation').value;
+  const invasionDepth = document.getElementById('lary-invasionDepth').value;
+  
+  let grade = 'nodys', title = 'Normale', reason = 'Epitelio normale, maturazione preservata', action = 'Surveillance clinical (voce, asintomatico).';
+  
+  if (invasionDepth === 'deep-lamina' || invasionDepth === 'muscularis') {
+    grade = 'cancer'; title = 'CARCINOMA LARINGEO'; reason = `Invasione lamina propria profonda confermata (${invasionDepth})`; action = 'Staging endoscopico, imaging (CT/MRI). Opzioni: laser resection se T1a superficiale, vs radioterapia vs laryngectomia parziale.';
+  } else if (morphCount >= 3 && maturation === 'complete') {
+    grade = 'hgd'; title = 'HGD Laringeo'; reason = `Atipia marcata (${morphCount}/5), perdita completa maturazione`; action = 'Laser CO2 resection endoscopica. Surveillance ristretta (rigidoscopia ogni 2-3 mesi iniziale).';
+  } else if ((morphCount >= 2 && maturation === 'abnormal') || (morphCount >= 1 && maturation === 'abnormal')) {
+    grade = 'lgd'; title = 'LGD Laringeo'; reason = `Atipia lieve (${morphCount}/5), perdita focale maturazione`; action = 'Surveillance endoscopica ogni 3-6 mesi ± laser se lesione definita. Risk recurrence/progressione 10-40%.';
+  }
+  
+  updateOutput(grade, title, reason, action, { morphCount: morphCount, caseId: document.getElementById('lary-caseId').value });
+  generateReport(grade, title, reason, 'lary', morphCount);
+}
+
+// ============ SHARED REPORT ============
+function generateReport(grade, title, reason, organ, morphCount) {
+  const orgNames = { 'esoph': 'DISPLASIA ESOFAGEA', 'blad': 'DISPLASIA UROTELIALE', 'lary': 'DISPLASIA LARINGEA' };
+  let report = `${orgNames[organ]} - WHO CLASSIFICATION\n===================\n\n`;
+  report += `Grado: ${title}\nMotivazione: ${reason}\nCriteri morfologici: ${morphCount}\n\n`;
+  report += `v1.0: p53 in Displasia Epiteliale, pattern-based interpretation`;
   
   document.getElementById('reportText').textContent = report;
   document.getElementById('reportSection').style.display = 'block';
@@ -1008,9 +2033,12 @@ document.getElementById('copyReportBtn')?.addEventListener('click', function() {
 document.addEventListener('keydown', function(e) {
   if (e.ctrlKey && e.key === 'Enter') {
     e.preventDefault();
-    if (currentMode === 'p53') analyzeP53();
+    if (currentMode === 'neoplasia') analyzeP53();
     else if (currentMode === 'gastric') analyzeGastric();
     else if (currentMode === 'colonic') analyzeColonic();
+    else if (currentMode === 'esophageal') analyzeEsophageal();
+    else if (currentMode === 'bladder') analyzeBladder();
+    else if (currentMode === 'laryngeal') analyzeLaryngeal();
   }
 });
 </script>
