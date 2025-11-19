@@ -256,10 +256,10 @@
     <div class="card">
       <div class="card-header">
         <h1>p53 IHC - Quando richiederla e come interpretarla</h1>
-        <p class="subtitle">Tool diagnostico per decisione clinica e interpretazione pattern-based • v2.0</p>
+        <p class="subtitle">Tool diagnostico per decisione clinica e interpretazione pattern-based • v2.1 (con Ki67)</p>
       </div>
       <div class="alert alert-info">
-        <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff organo-specifici validati (Fassan 2014, WHO 2022, Köbel 2019).
+        <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff organo-specifici validati (Fassan 2014, WHO 2022, Köbel 2019). <strong>Nuovo:</strong> Integrazione Ki67 per zona grigia p53.
       </div>
     </div>
 
@@ -395,6 +395,20 @@
           </select>
         </div>
 
+        <h3>Ki67 (opzionale, aiuta se p53 zona grigia)</h3>
+        <div class="form-group">
+          <label>Ki67 proliferazione</label>
+          <select id="int-ki67">
+            <option value="unknown">Non eseguito</option>
+            <option value="basal">Basale (<10%)</option>
+            <option value="moderate">Moderato (10-30%, ai 2/3)</option>
+            <option value="high">Alto (>30%, esteso/diffuso)</option>
+          </select>
+          <div class="hint">
+            💡 <strong>Gastrico/Colon:</strong> >30% ai 2/3 favorisce displasia | <strong>Vescica:</strong> full-thickness favorisce displasia | <strong>Uso principale:</strong> disambigua p53 zona grigia (10-60%)
+          </div>
+        </div>
+
         <button class="btn" onclick="analyzeInterpretation()">📊 Analizza pattern p53</button>
         <button class="btn btn-secondary" onclick="resetInterpretation()">Reset</button>
       </div>
@@ -458,6 +472,56 @@
               <td>10-50%</td>
               <td><strong>&gt;50%</strong> full-thickness</td>
               <td>Basale vs full-thickness rilevante</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Ki67 - Cutoff per organo (supportivo se p53 zona grigia)</h3>
+        <table class="reference-table">
+          <thead>
+            <tr>
+              <th>Organo</th>
+              <th>Normale</th>
+              <th>LGD</th>
+              <th>HGD</th>
+              <th>Uso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Stomaco</strong></td>
+              <td>&lt;10% basale</td>
+              <td>10-30%</td>
+              <td><strong>&gt;30%</strong> ai 2/3 superficiali</td>
+              <td>Fassan 2014</td>
+            </tr>
+            <tr>
+              <td><strong>Colon</strong></td>
+              <td>Basale (cripta profonda)</td>
+              <td>Esteso ai 2/3 medi</td>
+              <td><strong>Diffuso full-thickness &gt;50%</strong></td>
+              <td>Displasia vs reattivo</td>
+            </tr>
+            <tr>
+              <td><strong>Vescica</strong></td>
+              <td>Superficiale</td>
+              <td>—</td>
+              <td><strong>Full-thickness</strong></td>
+              <td>Displasia uroteliale</td>
+            </tr>
+            <tr>
+              <td><strong>Esofago</strong></td>
+              <td>Basale</td>
+              <td>Basale-medio</td>
+              <td><strong>Full-thickness</strong></td>
+              <td>Barrett's dysplasia</td>
+            </tr>
+            <tr>
+              <td><strong>Laringe</strong></td>
+              <td>Basale</td>
+              <td>Basale-medio</td>
+              <td><strong>Full-thickness</strong></td>
+              <td>Maturazione pattern</td>
             </tr>
           </tbody>
         </table>
@@ -541,7 +605,7 @@
           • %: 10-60% (organo-dipendente)<br>
           • Intensità: moderato-forte ma non diffuso<br>
           • Significato: borderline, può essere stress cellulare O inizio displasia<br>
-          • Azione: ripeti biopsia, considera Ki67
+          • Azione: ripeti biopsia, <strong>considera Ki67</strong>
         </div>
 
         <div class="alert alert-danger">
@@ -747,7 +811,7 @@ function generateInterpretationGuidance(organ, doubt) {
       <strong>Cutoff ${ORGAN_NAMES[organ]}:</strong> Wild-type &lt;${cutoff.wt}% | Zona grigia ${cutoff.wt}-${cutoff.oe}% | Over-expression <strong>&gt;${cutoff.oe}%</strong> diffuso
       <br><br>
       <strong>Se p53 &lt;${cutoff.wt}%:</strong> Wild-type → ${doubt === 'reactive-vs-lgd' ? 'Probabile reattivo/rigenerativo' : 'Non supporta HGD'}<br>
-      <strong>Se p53 ${cutoff.wt}-${cutoff.oe}%:</strong> Zona grigia → ${doubt === 'reactive-vs-lgd' ? 'LGD borderline, ripeti biopsia' : 'LGD probabile'}<br>
+      <strong>Se p53 ${cutoff.wt}-${cutoff.oe}%:</strong> Zona grigia → ${doubt === 'reactive-vs-lgd' ? 'LGD borderline, <strong>considera Ki67</strong>, ripeti biopsia' : 'LGD probabile, <strong>considera Ki67</strong>'}<br>
       <strong>Se p53 &gt;${cutoff.oe}%:</strong> Over-expression → ${doubt === 'reactive-vs-lgd' ? 'Displasia confermata (LGD/HGD)' : 'HGD probabile'}
     </div>
   `;
@@ -772,7 +836,7 @@ function generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer) {
   
   if (doubt === 'reactive-vs-lgd') {
     alt += '<br><strong>AGGIUNGI (se disponibile):</strong><br>';
-    alt += '• Ki67 (se >30% nei 2/3 superficiali → favorisce displasia)<br>';
+    alt += '• <strong>Ki67</strong> (se >30% nei 2/3 superficiali → favorisce displasia)<br>';
     alt += '• Correlazione endoscopica (lesione visibile?)<br>';
   }
   
@@ -814,6 +878,7 @@ function analyzeInterpretation() {
   const distribution = document.getElementById('int-distribution').value;
   const control = document.getElementById('int-control').value;
   const special = document.getElementById('int-special').value;
+  const ki67 = document.getElementById('int-ki67').value;
   
   const cutoff = CUTOFFS[organ];
   
@@ -861,7 +926,7 @@ function analyzeInterpretation() {
     interpretation = `<strong>Accumulo lieve (zona grigia)</strong><br>${percent}% è nella zona grigia (${cutoff.wt}-${cutoff.oe}%).<br>`;
     interpretation += 'Sopra il wild-type ma sotto il cutoff over-expression.<br>';
     if (distribution === 'focal') interpretation += 'Distribuzione focale (non uniforme) favorisce LGD o stress cellulare.<br>';
-    interpretation += '<strong>Non diagnostico</strong> → Ripeti biopsia per conferma. Considera Ki67 se disponibile.';
+    interpretation += '<strong>Non diagnostico</strong> → Ripeti biopsia per conferma. <strong>Considera Ki67</strong> se disponibile.';
     confidence = 45;
     reportText = `p53: Accumulo lieve (${percent}% nuclei positivi, distribuzione ${distribution}). Zona grigia, non diagnostico per over-expression. ${distribution === 'focal' ? 'Compatibile con LGD borderline o stress cellulare.' : 'Ripeti biopsia consigliata.'}`;
   } else if (percent >= cutoff.oe && (distribution === 'focal' || intensity === '1')) {
@@ -870,7 +935,7 @@ function analyzeInterpretation() {
     interpretation = `<strong>Borderline over-expression</strong><br>${percent}% è sopra ${cutoff.oe}%, MA:<br>`;
     if (distribution === 'focal') interpretation += '• Distribuzione focale (non diffuso uniforme)<br>';
     if (intensity === '1') interpretation += '• Intensità prevalente debole (1+)<br>';
-    interpretation += '<strong>Pattern non classico</strong> → LGD probabile, HGD meno probabile. Ripeti biopsia.';
+    interpretation += '<strong>Pattern non classico</strong> → LGD probabile, HGD meno probabile. Ripeti biopsia. <strong>Considera Ki67</strong>.';
     confidence = 55;
     reportText = `p53: Borderline (${percent}% nuclei positivi, ma distribuzione ${distribution} e intensità ${intensity}+). Non pattern classico over-expression. LGD probabile, ripeti biopsia.`;
   } else {
@@ -879,6 +944,46 @@ function analyzeInterpretation() {
     interpretation = `<strong>Wild-type / Accumulo lieve</strong><br>${percent}% nuclei positivi.<br>Pattern non definitivo per over-expression. Compatibile con wild-type o accumulo lieve.`;
     confidence = 60;
     reportText = `p53: ${percent}% nuclei positivi, distribuzione ${distribution}. Pattern non definitivo, compatibile con wild-type o accumulo lieve.`;
+  }
+  
+  // ============ Ki67 INTEGRATION (NUOVO) ============
+  if (pattern === 'mild' && ki67 !== 'unknown') {
+    let ki67Message = '';
+    let confidenceBoost = 0;
+    
+    // Concordanti: p53 accumulo + Ki67 alto → displasia
+    if ((organ === 'gastric' || organ === 'colon') && ki67 === 'high' && percent >= 30) {
+      ki67Message = '<br><br>⚠️ <strong>Ki67 CONCORDANTE:</strong> >30% esteso favorisce <strong>DISPLASIA</strong> su base reattiva. Pattern p53 + Ki67 concordano.';
+      confidenceBoost = 20;
+      reportText += ` Ki67 >30% esteso (concordante), favorisce displasia.`;
+    } 
+    // Concordanti: p53 basso + Ki67 basale → reattivo
+    else if (ki67 === 'basal' && percent <= 30) {
+      ki67Message = '<br><br>✓ <strong>Ki67 CONCORDANTE:</strong> Basale <10% favorisce <strong>REATTIVO/rigenerativo</strong>. Pattern p53 + Ki67 concordano.';
+      confidenceBoost = 15;
+      reportText += ` Ki67 basale <10% (concordante), favorisce reattivo.`;
+    }
+    // Vescica: Ki67 full-thickness
+    else if (organ === 'bladder' && (ki67 === 'high' || ki67 === 'moderate')) {
+      ki67Message = '<br><br>⚠️ <strong>Ki67 supportivo:</strong> Full-thickness favorisce <strong>DISPLASIA</strong> uroteliale.';
+      confidenceBoost = 10;
+      reportText += ` Ki67 full-thickness, favorisce displasia uroteliale.`;
+    }
+    // DISCORDANTI: p53 alto + Ki67 basso O viceversa
+    else if ((ki67 === 'high' && percent < 20) || (ki67 === 'basal' && percent > 50)) {
+      ki67Message = '<br><br>⚠️ <strong>Ki67 DISCORDANTE:</strong> Pattern p53 e Ki67 non concordano (possibile stress/artefatto vs displasia iniziale). <strong>Ripeti biopsia</strong> consigliata per disambiguare.';
+      confidenceBoost = -10; // riduce confidence
+      reportText += ` Ki67 discordante con p53 (pattern non concordante), ripeti biopsia.`;
+    }
+    // Ki67 moderato: non diagnostico ma segnala
+    else if (ki67 === 'moderate') {
+      ki67Message = '<br><br>💡 <strong>Ki67 moderato (10-30%):</strong> Non diagnostico, compatibile con LGD borderline.';
+      confidenceBoost = 5;
+      reportText += ` Ki67 moderato (10-30%), compatibile con LGD borderline.`;
+    }
+    
+    interpretation += ki67Message;
+    confidence = Math.max(0, Math.min(100, confidence + confidenceBoost));
   }
   
   // Add organ-specific notes
@@ -957,6 +1062,7 @@ function resetInterpretation() {
   document.getElementById('int-distribution').selectedIndex = 2;
   document.getElementById('int-control').selectedIndex = 0;
   document.getElementById('int-special').selectedIndex = 0;
+  document.getElementById('int-ki67').selectedIndex = 0;
   document.getElementById('interpret-output').classList.remove('show');
 }
 
