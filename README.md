@@ -4,7 +4,7 @@
 
 🔗 **[Apri il tool](https://infingardo.github.io/calcolatore-p53/)**
 
-📖 **[Scarica "p53 for dummies" (PDF)](https://github.com/infingardo/p53-for-dummies/raw/main/p53_for_dummies.pdf)** - Manuale pratico per patologi (Bianchi F, 2025)
+📖 **[Scarica "p53 for dummies" (PDF)](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)** - Manuale pratico per patologi (Bianchi F, 2025)
 
 ---
 
@@ -139,7 +139,7 @@ Tool **standalone**, nessuna dipendenza, funziona **offline**.
 
 ## 📚 Bibliografia essenziale
 
-- **Bianchi F.** p53 for dummies. Manuale pratico per patologi. 2025 [[Scarica PDF](https://github.com/infingardo/p53-for-dummies/raw/main/p53_for_dummies.pdf)] [*Fonte primaria per trappole interpretative, workflow pratico*]
+- **Bianchi F.** p53 for dummies. Manuale pratico per patologi. 2025 [[Scarica PDF](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)] [*Fonte primaria per trappole interpretative, workflow pratico*]
 - **Fassan M, et al.** p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. *Mod Pathol* 2014;27:1409-1417 [*Cutoff gastrico, Ki67 integrazione*]
 - **Köbel M, Ronnett BM, Singh N, et al.** Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. *Int J Gynecol Pathol* 2019;38:S123-S131 [*Pattern-based standard*]
 - **Vermij L, et al.** p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. *Mod Pathol* 2022;35:1475-1483 [*Correlazione IIC/molecolare in carcinomi, 408 casi*]
