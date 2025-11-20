@@ -15,6 +15,8 @@ Questo tool aiuta il patologo a rispondere a due domande pratiche:
 1. **"Devo fare la p53 IHC?"** → Decision helper con calcolo utilità diagnostica
 2. **"Come interpreto il risultato?"** → Cutoff organo-specifici validati + pattern recognition
 
+**⚠️ Scope specifico:** DISPLASIE epiteliali (stomaco, colon, vescica, esofago, laringe). Per carcinomi sierosi e gliomi IDH-wt, p53 è obbligatorio ma utilizza logiche/cutoff diversi (vedi bibliografia specifica).
+
 ---
 
 ## 🔬 Organi supportati
@@ -141,10 +143,11 @@ Tool **standalone**, nessuna dipendenza, funziona **offline**.
 
 - **Bianchi F.** p53 for dummies. Manuale pratico per patologi. 2025 [[Scarica PDF](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)] [*Fonte primaria per trappole interpretative, workflow pratico*]
 - **Fassan M, et al.** p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. *Mod Pathol* 2014;27:1409-1417 [*Cutoff gastrico, Ki67 integrazione*]
-- **Köbel M, Ronnett BM, Singh N, et al.** Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. *Int J Gynecol Pathol* 2019;38:S123-S131 [*Pattern-based standard*]
+- **Köbel M, Ronnett BM, Singh N, et al.** Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. *Int J Gynecol Pathol* 2019;38:S123-S131 [*Pattern-based standard; carcinomi sierosi: >95% mutati, pattern OE/null obbligatorio*]
 - **Vermij L, et al.** p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. *Mod Pathol* 2022;35:1475-1483 [*Correlazione IIC/molecolare in carcinomi, 408 casi*]
 - **Osakabe M, et al.** The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. *Virchows Arch* 2025;486:333-341 [*Validazione colon-retto, 91.3% concordanza*]
 - **WHO Classification of Tumours Editorial Board.** Digestive System Tumours. 5th ed. Lyon: IARC, 2019/2022 [*Standard classificazione displasie*]
+- **WHO Classification of Tumours Editorial Board.** Central Nervous System Tumours. 5th ed. Lyon: IARC, 2021 [*Gliomi: p53 prognostico, integrazione con IDH/ATRX/Ki67*]
 - **Rugge M, et al.** MAPS II: Management of precancerous conditions and lesions in the stomach. *Gut* 2019;68:1743-1752 [*Management gastrico*]
 
 ---

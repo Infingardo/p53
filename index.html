@@ -552,24 +552,33 @@
         <p class="hint"><strong>⚠️ Nota Ki67:</strong> Per displasie gastriche/coliche, il <strong>pattern di distribuzione</strong> (basale vs esteso ai 2/3 vs full-thickness) è più importante della percentuale assoluta. Fassan 2014 enfatizza "estensione ai 2/3 superficiali" come criterio qualitativo chiave.</p>
 
         <h3>Quando fare la p53 - Decision matrix</h3>
+        <div class="alert alert-info" style="margin-bottom: 16px;">
+          <strong>⚠️ Scope di questo tool:</strong> DISPLASIE epiteliali (stomaco, colon, vescica, esofago, laringe).<br>
+          Per <strong>carcinomi sierosi</strong> (ovaio/endometrio) e <strong>gliomi IDH-wt</strong>, p53 è sempre obbligatorio ma utilizza pattern/cutoff diversi. Vedi Köbel 2019 (sierosi: >95% mutati, pattern OE/null) e WHO CNS 2021 (gliomi: p53 prognostico + IDH/ATRX).
+        </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 20px 0;">
           <div class="alert alert-success">
-            <h4 style="margin-top: 0;">🟢 SEMPRE indicata</h4>
+            <h4 style="margin-top: 0;">🟢 SEMPRE indicata (fuori scope tool)</h4>
             <ul style="margin: 8px 0; padding-left: 20px;">
-              <li>Carcinomi sierosi (ovaio, endometrio)</li>
-              <li>Displasia di Barrett (HGD o dubbio)</li>
-              <li>Carcinoma endometriale non convenzionale</li>
-              <li>Gliomi IDH-wt di alto grado</li>
+              <li>Carcinomi sierosi (ovaio/endometrio) - >95% mutati</li>
+              <li>Gliomi IDH-wt alto grado (prognostico)</li>
+            </ul>
+          </div>
+          
+          <div class="alert alert-success">
+            <h4 style="margin-top: 0;">🟢 SEMPRE indicata (in scope)</h4>
+            <ul style="margin: 8px 0; padding-left: 20px;">
+              <li>Displasia Barrett HGD o dubbio</li>
+              <li>Vescica HGD dubbio vs carcinoma</li>
             </ul>
           </div>
           
           <div class="alert alert-warning">
-            <h4 style="margin-top: 0;">🟡 UTILE in contesto specifico</h4>
+            <h4 style="margin-top: 0;">🟡 UTILE in contesto specifico (in scope)</h4>
             <ul style="margin: 8px 0; padding-left: 20px;">
               <li>Displasia gastrica borderline</li>
-              <li>Endometrio atipico (G3 o dubbio)</li>
-              <li>Neoplasie indifferenziate da caratterizzare</li>
-              <li>Sospetto Li-Fraumeni</li>
+              <li>Vescica: displasia uroteliale vs reattivo</li>
+              <li>Colon IBD: displasia vs indefinite (SE in remissione)</li>
             </ul>
           </div>
           
@@ -718,10 +727,11 @@
         <ul style="font-size: 0.9rem; line-height: 1.8;">
           <li><strong>Bianchi F.</strong> p53 for dummies. Manuale pratico per patologi. 2025 [<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" style="color: var(--primary);">Scarica PDF</a>] [<em>Fonte primaria per trappole interpretative, workflow pratico</em>]</li>
           <li><strong>Fassan M, et al.</strong> p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. <em>Mod Pathol</em> 2014;27:1409-1417 [<em>Cutoff gastrico, Ki67 integrazione, pattern distribuzione</em>]</li>
-          <li><strong>Köbel M, Ronnett BM, Singh N, et al.</strong> Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131 [<em>Pattern-based standard, citoplasmatico ~1% carcinomi</em>]</li>
+          <li><strong>Köbel M, Ronnett BM, Singh N, et al.</strong> Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131 [<em>Pattern-based standard; <strong>carcinomi sierosi</strong>: >95% mutati, pattern OE/null obbligatorio; citoplasmatico ~1%</em>]</li>
           <li><strong>Vermij L, et al.</strong> p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. <em>Mod Pathol</em> 2022;35:1475-1483 [<em>Correlazione IIC/molecolare in CARCINOMI endometriali, 408 casi</em>]</li>
           <li><strong>Osakabe M, et al.</strong> The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. <em>Virchows Arch</em> 2025;486:333-341 [<em>Validazione CARCINOMI colon-retto, 91.3% concordanza</em>]</li>
           <li><strong>WHO Classification of Tumours Editorial Board.</strong> Digestive System Tumours. 5th ed. Lyon: IARC, 2019/2022 [<em>Standard classificazione displasie</em>]</li>
+          <li><strong>WHO Classification of Tumours Editorial Board.</strong> Central Nervous System Tumours. 5th ed. Lyon: IARC, 2021 [<em><strong>Gliomi</strong>: p53 prognostico, integrazione con IDH/ATRX/Ki67 per grading</em>]</li>
           <li><strong>Rugge M, et al.</strong> MAPS II: Management of precancerous conditions and lesions in the stomach. <em>Gut</em> 2019;68:1743-1752 [<em>Management gastrico</em>]</li>
           <li><strong>de Haan LM, et al.</strong> Real-world routine diagnostic molecular analysis for TP53 mutational status is recommended over p53 immunohistochemistry in B-cell lymphomas. <em>Virchows Arch</em> 2024;485:643-654 [<em>Linfomi: preferire NGS</em>]</li>
           <li><strong>Ma Y, et al.</strong> Artificial intelligence in diagnostic pathology. <em>Diagn Pathol</em> 2023;18:109 [<em>AI overview</em>]</li>
