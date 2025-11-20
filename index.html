@@ -280,7 +280,10 @@
         <p class="subtitle">Tool diagnostico per patologi • v2.1 "p53 for dummies edition" con Ki67</p>
       </div>
       <div class="alert alert-info">
-        <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff organo-specifici validati. Basato su <strong>"p53 for dummies"</strong> (Bianchi 2025) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019).
+        <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff organo-specifici validati. Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/infingardo/p53-for-dummies" target="_blank" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019).
+      </div>
+      <div class="alert alert-warning">
+        <strong>⚠️ Disclaimer validazione:</strong> Tool basato su revisione sistematica della letteratura e best practices pubblicate (Fassan 2014, Köbel 2019, Osakabe 2024, WHO 2022). Non validato prospetticamente su casistica locale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
       </div>
     </div>
 
@@ -422,11 +425,11 @@
           <select id="int-ki67">
             <option value="unknown">Non eseguito</option>
             <option value="basal">Basale (<10%)</option>
-            <option value="moderate">Moderato (10-30%, ai 2/3)</option>
-            <option value="high">Alto (>30%, esteso/diffuso)</option>
+            <option value="moderate">Moderato (10-30%, esteso ai 2/3)</option>
+            <option value="high">Alto (>30%, esteso/full-thickness)</option>
           </select>
           <div class="hint">
-            💡 <strong>Gastrico/Colon:</strong> >30% ai 2/3 favorisce displasia | <strong>Vescica:</strong> full-thickness favorisce displasia | <strong>Uso principale:</strong> disambigua p53 zona grigia (10-60%)
+            💡 <strong>Gastrico/Colon:</strong> >30% esteso ai 2/3 superiori favorisce displasia (criterio: <em>distribuzione</em> non solo %) | <strong>Vescica:</strong> full-thickness favorisce displasia | <strong>Uso principale:</strong> disambigua p53 zona grigia (10-60%)
           </div>
         </div>
 
@@ -502,10 +505,10 @@
           <thead>
             <tr>
               <th>Organo</th>
-              <th>Normale</th>
+              <th>Normale/Reattivo</th>
               <th>LGD</th>
               <th>HGD</th>
-              <th>Uso</th>
+              <th>Criterio chiave</th>
             </tr>
           </thead>
           <tbody>
@@ -513,22 +516,22 @@
               <td><strong>Stomaco</strong></td>
               <td>&lt;10% basale</td>
               <td>10-30%</td>
-              <td><strong>&gt;30%</strong> ai 2/3 superficiali</td>
-              <td>Fassan 2014</td>
+              <td><strong>&gt;30%</strong> esteso ai 2/3 superiori</td>
+              <td><strong>DISTRIBUZIONE</strong> più che %</td>
             </tr>
             <tr>
               <td><strong>Colon</strong></td>
               <td>Basale (cripta profonda)</td>
               <td>Esteso ai 2/3 medi</td>
-              <td><strong>Diffuso full-thickness &gt;50%</strong></td>
-              <td>Displasia vs reattivo</td>
+              <td><strong>Full-thickness</strong> diffuso</td>
+              <td><strong>PATTERN</strong> (basale → superficiale)</td>
             </tr>
             <tr>
               <td><strong>Vescica</strong></td>
               <td>Superficiale</td>
               <td>—</td>
               <td><strong>Full-thickness</strong></td>
-              <td>Displasia uroteliale</td>
+              <td>Maturazione persa</td>
             </tr>
             <tr>
               <td><strong>Esofago</strong></td>
@@ -546,6 +549,7 @@
             </tr>
           </tbody>
         </table>
+        <p class="hint"><strong>⚠️ Nota Ki67:</strong> Per displasie gastriche/coliche, il <strong>pattern di distribuzione</strong> (basale vs esteso ai 2/3 vs full-thickness) è più importante della percentuale assoluta. Fassan 2014 enfatizza "estensione ai 2/3 superficiali" come criterio qualitativo chiave.</p>
 
         <h3>Quando fare la p53 - Decision matrix</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 20px 0;">
@@ -582,7 +586,7 @@
         </div>
 
         <h3>⚠️ Le 7 Trappole della p53 (da evitare)</h3>
-        <p class="hint" style="margin-bottom: 12px;"><em>Da "p53 for dummies" (Bianchi 2025, Cap. 8)</em></p>
+        <p class="hint" style="margin-bottom: 12px;"><em>Da "p53 for dummies" (<a href="https://github.com/infingardo/p53-for-dummies" target="_blank" style="color: var(--primary);">Bianchi 2025</a>, Cap. 8)</em></p>
         
         <div class="trap-box">
           <div class="trap-title">1. Falso overexpressed</div>
@@ -667,22 +671,25 @@
         </div>
 
         <div class="alert alert-danger">
-          <strong>🟣 Citoplasmatico (raro &lt;2%)</strong><br>
+          <strong>🟣 Citoplasmatico (raro)</strong><br>
           • Pattern: Positività citoplasmatica, nuclei negativi<br>
           • Meccanismo: Mutazioni NES o esoni 9-10 (sequestro citoplasmatico)<br>
           • Significato: Equivale a mutazione funzionale, prognosi simile a null<br>
-          • ⚠️ Non confondere con: artefatti (granulari) o colorazione aspecifica
+          • ⚠️ Non confondere con: artefatti (granulari) o colorazione aspecifica<br>
+          • Prevalenza: Raro nei carcinomi endometriali (~1%, Köbel 2019), dati scarsi per displasie
         </div>
 
         <h3>🔬 Discordanza immuno/molecolare</h3>
         <div class="alert alert-warning">
-          <strong>Definizione:</strong> Mancata corrispondenza tra pattern IIC e status molecolare TP53
+          <strong>Definizione:</strong> Mancata corrispondenza tra pattern IHC e status molecolare TP53
           <br><br>
-          <strong>Frequenze per sede (2024-2025):</strong><br>
-          • Endometrio: 8-12% (PORTEC-3 trial, Vermij 2022)<br>
-          • Colon-retto: 9-15% (Osakabe 2024)<br>
-          • Ovaio sieroso: 5-10%<br>
-          • Polmone: 12-18%
+          <strong>Frequenze per sede (principalmente da studi su CARCINOMI):</strong><br>
+          • Endometrio (carcinoma): 8-12% (PORTEC-3 trial, Vermij 2022)<br>
+          • Colon-retto (carcinoma): 9-15% (Osakabe 2024)<br>
+          • Ovaio sieroso (carcinoma): 5-10%<br>
+          • Polmone (carcinoma): 12-18%<br>
+          <br>
+          <strong>⚠️ Nota CRITICA:</strong> I dati sopra derivano da carcinomi. La discordanza nelle <strong>displasie epiteliali</strong> è probabilmente <strong>MINORE</strong> (~5% o meno), ma dati robusti scarseggiano. L'applicabilità ai sistemi "low mutational burden" come displasie gastriche/coliche è limitata.
           <br><br>
           <strong>⚠️ Quando sospettare discordanza:</strong><br>
           • Pattern borderline + clinica non congruente<br>
@@ -709,11 +716,11 @@
 
         <h3>Bibliografia essenziale</h3>
         <ul style="font-size: 0.9rem; line-height: 1.8;">
-          <li><strong>Bianchi F.</strong> p53 for dummies. Manuale pratico per patologi. 2025 [<em>Fonte primaria per trappole interpretative, workflow pratico</em>]</li>
-          <li><strong>Fassan M, et al.</strong> p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. <em>Mod Pathol</em> 2014;27:1409-1417 [<em>Cutoff gastrico, Ki67 integrazione</em>]</li>
-          <li><strong>Köbel M, Ronnett BM, Singh N, et al.</strong> Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131 [<em>Pattern-based standard</em>]</li>
-          <li><strong>Vermij L, et al.</strong> p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. <em>Mod Pathol</em> 2022;35:1475-1483 [<em>Correlazione IIC/molecolare, 408 casi</em>]</li>
-          <li><strong>Osakabe M, et al.</strong> The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. <em>Virchows Arch</em> 2025;486:333-341 [<em>Validazione colon-retto, 91.3% concordanza</em>]</li>
+          <li><strong>Bianchi F.</strong> p53 for dummies. Manuale pratico per patologi. 2025 [<a href="https://github.com/infingardo/p53-for-dummies" target="_blank" style="color: var(--primary);">GitHub</a>] [<em>Fonte primaria per trappole interpretative, workflow pratico</em>]</li>
+          <li><strong>Fassan M, et al.</strong> p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. <em>Mod Pathol</em> 2014;27:1409-1417 [<em>Cutoff gastrico, Ki67 integrazione, pattern distribuzione</em>]</li>
+          <li><strong>Köbel M, Ronnett BM, Singh N, et al.</strong> Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131 [<em>Pattern-based standard, citoplasmatico ~1% carcinomi</em>]</li>
+          <li><strong>Vermij L, et al.</strong> p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. <em>Mod Pathol</em> 2022;35:1475-1483 [<em>Correlazione IIC/molecolare in CARCINOMI endometriali, 408 casi</em>]</li>
+          <li><strong>Osakabe M, et al.</strong> The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. <em>Virchows Arch</em> 2025;486:333-341 [<em>Validazione CARCINOMI colon-retto, 91.3% concordanza</em>]</li>
           <li><strong>WHO Classification of Tumours Editorial Board.</strong> Digestive System Tumours. 5th ed. Lyon: IARC, 2019/2022 [<em>Standard classificazione displasie</em>]</li>
           <li><strong>Rugge M, et al.</strong> MAPS II: Management of precancerous conditions and lesions in the stomach. <em>Gut</em> 2019;68:1743-1752 [<em>Management gastrico</em>]</li>
           <li><strong>de Haan LM, et al.</strong> Real-world routine diagnostic molecular analysis for TP53 mutational status is recommended over p53 immunohistochemistry in B-cell lymphomas. <em>Virchows Arch</em> 2024;485:643-654 [<em>Linfomi: preferire NGS</em>]</li>
@@ -730,8 +737,9 @@
     <p><strong>p53 IHC Helper v2.1 "p53 for dummies edition"</strong></p>
     <p>Tool diagnostico per patologi</p>
     <p>Sviluppato da <strong>Filippo Bianchi</strong> (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)</p>
-    <p>Basato su <strong>"p53 for dummies"</strong> (Bianchi 2025) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019, Osakabe 2024)</p>
+    <p>Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/infingardo/p53-for-dummies" target="_blank" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019, Osakabe 2024)</p>
     <p class="hint" style="margin-top: 12px;">Per supporto decisionale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.</p>
+    <p class="hint"><strong>⚠️ Disclaimer:</strong> Tool basato su revisione sistematica della letteratura. Non validato prospetticamente su casistica locale.</p>
     <p class="hint">GitHub: <a href="https://github.com/infingardo" target="_blank" style="color: var(--primary);">infingardo</a></p>
   </div>
 
@@ -935,7 +943,7 @@ function generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer) {
   
   if (doubt === 'reactive-vs-lgd') {
     alt += '<br><strong>AGGIUNGI (se disponibile):</strong><br>';
-    alt += '• <strong>Ki67</strong> (se >30% nei 2/3 superficiali → favorisce displasia)<br>';
+    alt += '• <strong>Ki67</strong> (se >30% esteso ai 2/3 superficiali → favorisce displasia)<br>';
     alt += '• Correlazione endoscopica (lesione visibile?)<br>';
   }
   
@@ -1000,7 +1008,7 @@ function analyzeInterpretation() {
   } else if (special === 'cytoplasmic' && percent <= 20) {
     pattern = 'cyto';
     badge = 'null';
-    interpretation = `<strong>Pattern CITOPLASMATICO ABERRANTE (raro &lt;2%)</strong><br>
+    interpretation = `<strong>Pattern CITOPLASMATICO ABERRANTE (raro)</strong><br>
       Sequestro citoplasmatico con nuclei negativi/molto deboli.<br>
       <strong>Meccanismo:</strong> Mutazioni NES (Nuclear Export Signal) o esoni 9-10 che alterano la localizzazione nucleare.<br>
       <strong>Significato clinico:</strong> Equivale a mutazione funzionale TP53, prognosi simile a pattern null.<br>
@@ -1008,7 +1016,8 @@ function analyzeInterpretation() {
       ⚠️ <strong>Non confondere con:</strong><br>
       • Colorazione aspecifica (tipicamente granulare)<br>
       • Artefatti di fissazione (eterogenei)<br>
-      • Cross-reazioni (validare con controlli)`;
+      • Cross-reazioni (validare con controlli)<br><br>
+      <em>Nota: Pattern raro nei carcinomi endometriali (~1%, Köbel 2019); dati scarsi per displasie.</em>`;
     confidence = 85;
     reportText = `p53: Pattern citoplasmatico aberrante (sequestro citoplasmatico, nuclei negativi). Mutazioni NES o esoni 9-10. Pattern aberrante confermato, equivale a mutazione funzionale. Displasia confermata.`;
   } else if (percent < cutoff.wt) {
@@ -1060,9 +1069,9 @@ function analyzeInterpretation() {
     
     // Concordanti: p53 accumulo + Ki67 alto → displasia
     if ((organ === 'gastric' || organ === 'colon') && ki67 === 'high' && percent >= 30) {
-      ki67Message = '<br><br>⚠️ <strong>Ki67 CONCORDANTE:</strong> >30% esteso favorisce <strong>DISPLASIA</strong> su base reattiva. Pattern p53 + Ki67 concordano → aumenta probabilità displasia.';
+      ki67Message = '<br><br>⚠️ <strong>Ki67 CONCORDANTE:</strong> Ki67 alto esteso (>30% ai 2/3 superiori) favorisce <strong>DISPLASIA</strong> su base reattiva. Pattern p53 + Ki67 concordano → aumenta probabilità displasia. Ricorda: <strong>distribuzione</strong> Ki67 più importante della % (Fassan 2014).';
       confidenceBoost = 20;
-      reportText += ` Ki67 >30% esteso (concordante), favorisce displasia.`;
+      reportText += ` Ki67 alto esteso ai 2/3 superiori (concordante), favorisce displasia.`;
     } 
     // Concordanti: p53 basso + Ki67 basale → reattivo
     else if (ki67 === 'basal' && percent <= 30) {
@@ -1084,7 +1093,7 @@ function analyzeInterpretation() {
     }
     // Ki67 moderato: non diagnostico ma segnala
     else if (ki67 === 'moderate') {
-      ki67Message = '<br><br>💡 <strong>Ki67 moderato (10-30%):</strong> Non diagnostico, compatibile con LGD borderline.';
+      ki67Message = '<br><br>💡 <strong>Ki67 moderato (10-30%):</strong> Non diagnostico, compatibile con LGD borderline. Pattern distribuzione più importante della %.';
       confidenceBoost = 5;
       reportText += ` Ki67 moderato (10-30%), compatibile con LGD borderline.`;
     }
@@ -1107,7 +1116,7 @@ function analyzeInterpretation() {
   
   // Add discordance warning if pattern is ambiguous
   if (pattern === 'mild' && (percent >= 40 && percent <= 60)) {
-    organNotes += '<div class="alert alert-info"><strong>🔬 Discordanza possibile:</strong> Pattern borderline in zona grigia. Se clinica non concorda o necessario per terapie targeted, considera <strong>NGS TP53</strong> per conferma molecolare (discordanza immuno/molecolare 8-15% in questa fascia).</div>';
+    organNotes += '<div class="alert alert-info"><strong>🔬 Discordanza possibile:</strong> Pattern borderline in zona grigia. Se clinica non concorda o necessario per terapie targeted, considera <strong>NGS TP53</strong> per conferma molecolare. <em>Nota: Dati discordanza derivano principalmente da CARCINOMI (8-15%); nelle displasie è probabilmente minore (~5%).</em></div>';
   }
   
   // Build output with cutoff visualization
