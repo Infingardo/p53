@@ -1,4 +1,4 @@
-# p53 IHC - Quando richiederla e come interpretarla v2.1
+# p53 IHC - Quando richiederla e come interpretarla v2.1.1
 
 **Tool diagnostico per decisione clinica e interpretazione pattern-based in displasia epiteliale**
 
@@ -156,11 +156,20 @@ Tool **standalone**, nessuna dipendenza, funziona **offline**.
 
 **Tool per supporto diagnostico.** La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
 
-**Nota sulla validazione:** Questo tool è basato su revisione sistematica della letteratura e best practices pubblicate. Non è stato validato prospetticamente su casistica locale. I cutoff e le raccomandazioni derivano da studi validati (Fassan 2014, Köbel 2019, Osakabe 2024, WHO 2022).
+**Nota sulla validazione:** Questo tool è basato su revisione sistematica della letteratura e best practices pubblicate. Non è stato validato prospetticamente su casistica locale. I cutoff e le raccomandazioni derivano da studi validati (Fassan 2014, Köbel 2019, Osakabe 2025, WHO 2022).
 
 ---
 
 ## 🔄 Changelog
+
+### v2.1.1 (November 2025)
+- **BUGFIX:** Tab switching ora funziona correttamente (event parameter)
+- **BUGFIX:** Opzione "Indefinite per displasia" ora disponibile solo per Colon IBD
+- **BUGFIX:** Validazione pattern speciali (null richiede ≤5%, citoplasmatico ≤10%)
+- **BUGFIX:** Pattern citoplasmatico con % >10% ora classificato come "misto"
+- **BUGFIX:** Colon-IBD aggiunto come opzione in Tab 2 (interpretazione)
+- **FIX:** Osakabe 2024 → 2025 (anno corretto pubblicazione)
+- **FIX:** Soglia Ki67 concordanza ora usa cutoff organo-specifico (non hardcoded 30%)
 
 ### v2.1 (November 2025)
 - **NUOVO:** Integrazione Ki67 per disambiguare zona grigia p53
@@ -182,7 +191,7 @@ Tool **standalone**, nessuna dipendenza, funziona **offline**.
 
 ---
 
-**Versione:** 2.1  
+**Versione:** 2.1.1  
 **Autore:** Filippo Bianchi (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)  
 **License:** MIT  
 **Ultimo aggiornamento:** November 2025

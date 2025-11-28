@@ -277,22 +277,22 @@
     <div class="card">
       <div class="card-header">
         <h1>p53 IHC Helper - Quando richiederla e come interpretarla</h1>
-        <p class="subtitle">Tool diagnostico per patologi • v2.1 "p53 for dummies edition" con Ki67</p>
+        <p class="subtitle">Tool diagnostico per patologi • v2.1.1 "p53 for dummies edition" con Ki67</p>
       </div>
       <div class="alert alert-info">
         <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff organo-specifici validati. Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019).
       </div>
       <div class="alert alert-warning">
-        <strong>⚠️ Disclaimer validazione:</strong> Tool basato su revisione sistematica della letteratura e best practices pubblicate (Fassan 2014, Köbel 2019, Osakabe 2024, WHO 2022). Non validato prospetticamente su casistica locale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
+        <strong>⚠️ Disclaimer validazione:</strong> Tool basato su revisione sistematica della letteratura e best practices pubblicate (Fassan 2014, Köbel 2019, Osakabe 2025, WHO 2022). Non validato prospetticamente su casistica locale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
       </div>
     </div>
 
     <!-- Tabs -->
     <div class="card">
       <div class="tabs">
-        <button class="tab active" onclick="switchTab('decision')">🤔 Devo fare la p53?</button>
-        <button class="tab" onclick="switchTab('interpret')">🔬 Interpreto il risultato</button>
-        <button class="tab" onclick="switchTab('reference')">📚 Reference rapido</button>
+        <button class="tab active" data-tab="decision" onclick="switchTab('decision', this)">🤔 Devo fare la p53?</button>
+        <button class="tab" data-tab="interpret" onclick="switchTab('interpret', this)">🔬 Interpreto il risultato</button>
+        <button class="tab" data-tab="reference" onclick="switchTab('reference', this)">📚 Reference rapido</button>
       </div>
     </div>
 
@@ -304,7 +304,7 @@
         
         <div class="form-group">
           <label>Organo</label>
-          <select id="dec-organ">
+          <select id="dec-organ" onchange="updateDoubtOptions()">
             <option value="gastric">Stomaco (displasia gastrica)</option>
             <option value="colon">Colon (displasia colonica non-IBD)</option>
             <option value="colon-ibd">Colon IBD (colite ulcerosa/Crohn)</option>
@@ -320,7 +320,7 @@
             <option value="reactive-vs-lgd">Reattivo/rigenerativo vs Displasia (LGD)</option>
             <option value="lgd-vs-hgd">LGD vs HGD</option>
             <option value="hgd-vs-cancer">HGD vs Carcinoma</option>
-            <option value="indefinite">Indefinite per displasia (solo colon IBD)</option>
+            <!-- "indefinite" option will be added dynamically for colon-ibd only -->
           </select>
         </div>
 
@@ -366,7 +366,8 @@
           <label>Organo</label>
           <select id="int-organ">
             <option value="gastric">Stomaco</option>
-            <option value="colon">Colon</option>
+            <option value="colon">Colon (non-IBD)</option>
+            <option value="colon-ibd">Colon IBD</option>
             <option value="bladder">Vescica</option>
             <option value="esophagus">Esofago</option>
             <option value="larynx">Laringe</option>
@@ -375,7 +376,7 @@
 
         <div class="form-group">
           <label>% nuclei positivi (qualsiasi intensità)</label>
-          <input type="range" id="int-percent" min="0" max="100" value="50" oninput="updatePercentDisplay()" />
+          <input type="range" id="int-percent" min="0" max="100" value="50" oninput="updatePercentDisplay(); validateSpecialPatterns()" />
           <div style="text-align: center; font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-top: 8px;">
             <span id="percent-display">50</span>%
           </div>
@@ -411,12 +412,13 @@
 
         <div class="form-group">
           <label>Pattern speciale (opzionale)</label>
-          <select id="int-special">
+          <select id="int-special" onchange="validateSpecialPatterns()">
             <option value="none" selected>Nessuno</option>
             <option value="null">Null (0% nuclei con controllo forte)</option>
             <option value="cytoplasmic">Citoplasmatico puro (nuclei negativi)</option>
             <option value="rim">Rim-like periferico</option>
           </select>
+          <div id="special-warning" class="hint warning" style="display: none;"></div>
         </div>
 
         <h3>Ki67 (opzionale, aiuta se p53 zona grigia)</h3>
@@ -424,7 +426,7 @@
           <label>Ki67 proliferazione</label>
           <select id="int-ki67">
             <option value="unknown">Non eseguito</option>
-            <option value="basal">Basale (<10%)</option>
+            <option value="basal">Basale (<10%)}}</option>
             <option value="moderate">Moderato (10-30%, esteso ai 2/3)</option>
             <option value="high">Alto (>30%, esteso/full-thickness)</option>
           </select>
@@ -694,7 +696,7 @@
           <br><br>
           <strong>Frequenze per sede (principalmente da studi su CARCINOMI):</strong><br>
           • Endometrio (carcinoma): 8-12% (PORTEC-3 trial, Vermij 2022)<br>
-          • Colon-retto (carcinoma): 9-15% (Osakabe 2024)<br>
+          • Colon-retto (carcinoma): 9-15% (Osakabe 2025)<br>
           • Ovaio sieroso (carcinoma): 5-10%<br>
           • Polmone (carcinoma): 12-18%<br>
           <br>
@@ -744,10 +746,10 @@
 
   <!-- Footer -->
   <div class="footer">
-    <p><strong>p53 IHC Helper v2.1 "p53 for dummies edition"</strong></p>
+    <p><strong>p53 IHC Helper v2.1.1 "p53 for dummies edition"</strong></p>
     <p>Tool diagnostico per patologi</p>
     <p>Sviluppato da <strong>Filippo Bianchi</strong> (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)</p>
-    <p>Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019, Osakabe 2024)</p>
+    <p>Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019, Osakabe 2025)</p>
     <p class="hint" style="margin-top: 12px;">Per supporto decisionale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.</p>
     <p class="hint"><strong>⚠️ Disclaimer:</strong> Tool basato su revisione sistematica della letteratura. Non validato prospetticamente su casistica locale.</p>
     <p class="hint">GitHub: <a href="https://github.com/infingardo" target="_blank" style="color: var(--primary);">infingardo</a></p>
@@ -774,12 +776,62 @@ const ORGAN_NAMES = {
 };
 
 // ============ TAB SWITCHING ============
-function switchTab(tabName) {
+// FIX BUG #1: Passa l'elemento cliccato come parametro invece di usare event globale
+function switchTab(tabName, clickedElement) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   
-  event.target.classList.add('active');
+  // Usa l'elemento passato come parametro
+  clickedElement.classList.add('active');
   document.getElementById('tab-' + tabName).classList.add('active');
+}
+
+// ============ FIX BUG #3: Opzione "Indefinite" solo per colon-ibd ============
+function updateDoubtOptions() {
+  const organ = document.getElementById('dec-organ').value;
+  const doubtSelect = document.getElementById('dec-doubt');
+  const currentValue = doubtSelect.value;
+  
+  // Rimuovi opzione indefinite se presente
+  const indefiniteOption = doubtSelect.querySelector('option[value="indefinite"]');
+  if (indefiniteOption) {
+    indefiniteOption.remove();
+  }
+  
+  // Aggiungi solo se colon-ibd
+  if (organ === 'colon-ibd') {
+    const option = document.createElement('option');
+    option.value = 'indefinite';
+    option.textContent = 'Indefinite per displasia';
+    doubtSelect.appendChild(option);
+  }
+  
+  // Se era selezionato indefinite e ora non è più disponibile, reset a default
+  if (currentValue === 'indefinite' && organ !== 'colon-ibd') {
+    doubtSelect.value = 'reactive-vs-lgd';
+  }
+}
+
+// ============ FIX BUG #4: Validazione pattern speciali ============
+function validateSpecialPatterns() {
+  const special = document.getElementById('int-special').value;
+  const percent = parseInt(document.getElementById('int-percent').value);
+  const warningDiv = document.getElementById('special-warning');
+  
+  let warning = '';
+  
+  if (special === 'null' && percent > 5) {
+    warning = '⚠️ Pattern NULL = 0% nuclei positivi. Hai impostato ' + percent + '%. Correggi % a 0-5% oppure seleziona "Nessuno" come pattern speciale.';
+  } else if (special === 'cytoplasmic' && percent > 10) {
+    warning = '⚠️ Pattern citoplasmatico puro = nuclei negativi (0-10%). Hai impostato ' + percent + '%. Se c\'è positività nucleare significativa, è un pattern misto, non citoplasmatico puro.';
+  }
+  
+  if (warning) {
+    warningDiv.textContent = warning;
+    warningDiv.style.display = 'block';
+  } else {
+    warningDiv.style.display = 'none';
+  }
 }
 
 // ============ DECISION ANALYSIS ============
@@ -970,12 +1022,15 @@ function getStars(utility) {
 
 function goToInterpret(organ) {
   document.getElementById('int-organ').value = organ;
-  switchTab('interpret');
+  // FIX: trova il tab button corretto e passalo alla funzione
+  const interpretTab = document.querySelector('.tab[data-tab="interpret"]');
+  switchTab('interpret', interpretTab);
   document.getElementById('tab-interpret').scrollIntoView({ behavior: 'smooth' });
 }
 
 function resetDecision() {
   document.getElementById('dec-organ').selectedIndex = 0;
+  updateDoubtOptions(); // Reset doubt options based on organ
   document.getElementById('dec-doubt').selectedIndex = 0;
   document.querySelectorAll('input[name="cytology"]')[1].checked = true;
   document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => cb.checked = false);
@@ -997,13 +1052,24 @@ function analyzeInterpretation() {
   const special = document.getElementById('int-special').value;
   const ki67 = document.getElementById('int-ki67').value;
   
-  const cutoff = CUTOFFS[organ];
+  const cutoff = CUTOFFS[organ] || CUTOFFS['colon']; // fallback per colon-ibd
   
   // Determine pattern
   let pattern, badge, interpretation, confidence, reportText;
   
-  // Special patterns override
-  if (special === 'null' && control === 'strong') {
+  // FIX BUG #4: Validazione null con % > 5%
+  if (special === 'null' && percent > 5) {
+    pattern = 'ni';
+    badge = 'ni';
+    interpretation = `<strong>⚠️ DATI INCONGRUENTI</strong><br>
+      Hai selezionato pattern NULL ma % nuclei positivi = ${percent}%.<br>
+      Pattern NULL = <strong>0% nuclei positivi</strong> (max 5% per artefatti).<br><br>
+      <strong>Azione:</strong> Correggi % a 0-5% se pattern è realmente null, oppure rimuovi "pattern speciale" se c'è positività nucleare significativa.`;
+    confidence = 0;
+    reportText = `p53: DATI INCONGRUENTI - pattern null selezionato ma ${percent}% positivi. Verificare.`;
+  }
+  // Special patterns override - NULL valido
+  else if (special === 'null' && control === 'strong') {
     pattern = 'null';
     badge = 'null';
     interpretation = '<strong>Pattern NULL aberrante</strong><br>0% nuclei positivi con controllo interno forte = mutazione inattivante TP53.<br><strong>Displasia confermata</strong> (pattern aberrante definitivo).';
@@ -1015,11 +1081,13 @@ function analyzeInterpretation() {
     interpretation = '<strong>NON INTERPRETABILE</strong><br>⚠️ Controllo interno assente/debole: impossibile confermare pattern null.<br><strong>RIPETERE colorazione con controlli appropriati.</strong>';
     confidence = 0;
     reportText = `p53: Non interpretabile (controllo interno inadeguato). RIPETERE.`;
-  } else if (special === 'cytoplasmic' && percent <= 20) {
+  } 
+  // FIX BUG #2: Pattern citoplasmatico con soglia più stretta (<=10%) + gestione % > 10%
+  else if (special === 'cytoplasmic' && percent <= 10) {
     pattern = 'cyto';
     badge = 'null';
     interpretation = `<strong>Pattern CITOPLASMATICO ABERRANTE (raro)</strong><br>
-      Sequestro citoplasmatico con nuclei negativi/molto deboli.<br>
+      Sequestro citoplasmatico con nuclei negativi/molto deboli (${percent}%).<br>
       <strong>Meccanismo:</strong> Mutazioni NES (Nuclear Export Signal) o esoni 9-10 che alterano la localizzazione nucleare.<br>
       <strong>Significato clinico:</strong> Equivale a mutazione funzionale TP53, prognosi simile a pattern null.<br>
       <strong>Displasia confermata</strong> (pattern aberrante definitivo).<br><br>
@@ -1029,11 +1097,25 @@ function analyzeInterpretation() {
       • Cross-reazioni (validare con controlli)<br><br>
       <em>Nota: Pattern raro nei carcinomi endometriali (~1%, Köbel 2019); dati scarsi per displasie.</em>`;
     confidence = 85;
-    reportText = `p53: Pattern citoplasmatico aberrante (sequestro citoplasmatico, nuclei negativi). Mutazioni NES o esoni 9-10. Pattern aberrante confermato, equivale a mutazione funzionale. Displasia confermata.`;
-  } else if (percent < cutoff.wt) {
+    reportText = `p53: Pattern citoplasmatico aberrante (sequestro citoplasmatico, nuclei negativi/molto deboli ${percent}%). Mutazioni NES o esoni 9-10. Pattern aberrante confermato, equivale a mutazione funzionale. Displasia confermata.`;
+  }
+  // FIX BUG #2: Citoplasmatico selezionato ma % > 10% → pattern misto, non citoplasmatico puro
+  else if (special === 'cytoplasmic' && percent > 10) {
+    pattern = 'mild';
+    badge = 'mild';
+    interpretation = `<strong>Pattern MISTO (non citoplasmatico puro)</strong><br>
+      Hai selezionato "citoplasmatico" ma ${percent}% nuclei sono positivi.<br>
+      Pattern citoplasmatico puro = nuclei negativi (0-10%).<br><br>
+      <strong>Questo è un pattern misto:</strong> positività citoplasmatica + nucleare.<br>
+      Interpreta come <strong>zona grigia/borderline</strong>.<br><br>
+      <strong>Azione:</strong> Valuta se la positività nucleare è real (2+/3+) o artefatto. Se nuclei 2+/3+ diffusi, considera over-expression. <strong>Considera NGS TP53</strong> per chiarire.`;
+    confidence = 40;
+    reportText = `p53: Pattern misto citoplasmatico + nucleare (${percent}% nuclei positivi). Non pattern citoplasmatico puro. Zona grigia, considerare NGS TP53.`;
+  }
+  else if (percent < cutoff.wt) {
     pattern = 'wt';
     badge = 'wt';
-    interpretation = `<strong>Wild-type</strong><br>${percent}% è sotto il cutoff wild-type ${ORGAN_NAMES[organ]} (<${cutoff.wt}%).<br>`;
+    interpretation = `<strong>Wild-type</strong><br>${percent}% è sotto il cutoff wild-type ${ORGAN_NAMES[organ] || 'Colon'} (<${cutoff.wt}%).<br>`;
     if (distribution === 'mosaic') interpretation += 'Distribuzione mosaico conferma pattern wild-type.<br>';
     interpretation += '<strong>Funzione p53 normale</strong>, non supporta displasia di alto grado.';
     confidence = distribution === 'mosaic' ? 85 : 70;
@@ -1041,7 +1123,7 @@ function analyzeInterpretation() {
   } else if (percent >= cutoff.oe && distribution === 'diffuse' && (intensity === '2' || intensity === '3')) {
     pattern = 'oe';
     badge = 'oe';
-    interpretation = `<strong>Over-expression</strong><br>${percent}% è SOPRA il cutoff ${ORGAN_NAMES[organ]} (>${cutoff.oe}%).<br>`;
+    interpretation = `<strong>Over-expression</strong><br>${percent}% è SOPRA il cutoff ${ORGAN_NAMES[organ] || 'Colon'} (>${cutoff.oe}%).<br>`;
     interpretation += 'Distribuzione diffusa uniforme + intensità 2+/3+ forte.<br>';
     interpretation += '<strong>Pattern aberrante confermato</strong> → Displasia (HGD probabile se morfologia concorda).';
     confidence = 90;
@@ -1073,30 +1155,34 @@ function analyzeInterpretation() {
   }
   
   // ============ Ki67 INTEGRATION ============
+  // FIX miglioramento #7: Soglia Ki67 concordanza abbassata per zona grigia
   if (pattern === 'mild' && ki67 !== 'unknown') {
     let ki67Message = '';
     let confidenceBoost = 0;
     
+    // Usa soglia più bassa per zona grigia (>= cutoff.wt invece di >= 30)
+    const inGrayZone = percent >= cutoff.wt && percent < cutoff.oe;
+    
     // Concordanti: p53 accumulo + Ki67 alto → displasia
-    if ((organ === 'gastric' || organ === 'colon') && ki67 === 'high' && percent >= 30) {
+    if ((organ === 'gastric' || organ === 'colon' || organ === 'colon-ibd') && ki67 === 'high' && inGrayZone) {
       ki67Message = '<br><br>⚠️ <strong>Ki67 CONCORDANTE:</strong> Ki67 alto esteso (>30% ai 2/3 superiori) favorisce <strong>DISPLASIA</strong> su base reattiva. Pattern p53 + Ki67 concordano → aumenta probabilità displasia. Ricorda: <strong>distribuzione</strong> Ki67 più importante della % (Fassan 2014).';
       confidenceBoost = 20;
       reportText += ` Ki67 alto esteso ai 2/3 superiori (concordante), favorisce displasia.`;
     } 
     // Concordanti: p53 basso + Ki67 basale → reattivo
-    else if (ki67 === 'basal' && percent <= 30) {
+    else if (ki67 === 'basal' && percent <= cutoff.wt + 10) {
       ki67Message = '<br><br>✓ <strong>Ki67 CONCORDANTE:</strong> Basale <10% favorisce <strong>REATTIVO/rigenerativo</strong>. Pattern p53 + Ki67 concordano → aumenta probabilità reattivo.';
       confidenceBoost = 15;
       reportText += ` Ki67 basale <10% (concordante), favorisce reattivo.`;
     }
-    // Vescica: Ki67 full-thickness
-    else if (organ === 'bladder' && (ki67 === 'high' || ki67 === 'moderate')) {
-      ki67Message = '<br><br>⚠️ <strong>Ki67 supportivo:</strong> Full-thickness favorisce <strong>DISPLASIA</strong> uroteliale.';
+    // Vescica/Laringe/Esofago: Ki67 full-thickness
+    else if ((organ === 'bladder' || organ === 'larynx' || organ === 'esophagus') && (ki67 === 'high' || ki67 === 'moderate')) {
+      ki67Message = '<br><br>⚠️ <strong>Ki67 supportivo:</strong> Full-thickness/esteso favorisce <strong>DISPLASIA</strong>.';
       confidenceBoost = 10;
-      reportText += ` Ki67 full-thickness, favorisce displasia uroteliale.`;
+      reportText += ` Ki67 full-thickness/esteso, favorisce displasia.`;
     }
     // DISCORDANTI: p53 alto + Ki67 basso O viceversa
-    else if ((ki67 === 'high' && percent < 20) || (ki67 === 'basal' && percent > 50)) {
+    else if ((ki67 === 'high' && percent < cutoff.wt) || (ki67 === 'basal' && percent > cutoff.oe - 10)) {
       ki67Message = '<br><br>⚠️ <strong>Ki67 DISCORDANTE:</strong> Pattern p53 e Ki67 non concordano (possibile stress/artefatto vs displasia iniziale). <strong>Ripeti biopsia</strong> consigliata per disambiguare. Considera anche NGS se clinicamente rilevante.';
       confidenceBoost = -10; // riduce confidence
       reportText += ` Ki67 discordante con p53 (pattern non concordante), ripeti biopsia.`;
@@ -1114,7 +1200,7 @@ function analyzeInterpretation() {
   
   // Add organ-specific notes
   let organNotes = '';
-  if (organ === 'colon' && percent >= 20 && percent <= 50) {
+  if ((organ === 'colon' || organ === 'colon-ibd') && percent >= 20 && percent <= 50) {
     organNotes = '<div class="alert alert-warning"><strong>⚠️ Nota colon:</strong> Accumulo 20-50% in colon può essere dovuto a infiammazione attiva (stress cellulare) senza mutazione TP53. Verifica contesto clinico (IBD attiva?). Se IBD infiammata, ripeti dopo remissione.</div>';
   }
   if (organ === 'bladder' && percent > 50) {
@@ -1143,7 +1229,7 @@ function analyzeInterpretation() {
       </div>
       
       <div class="cutoff-visual">
-        <h3>Cutoff ${ORGAN_NAMES[organ]}</h3>
+        <h3>Cutoff ${ORGAN_NAMES[organ] || 'Colon'}</h3>
         <div class="cutoff-bar">
           <div class="cutoff-marker" style="left: ${markerPos}%;"></div>
         </div>
@@ -1194,11 +1280,13 @@ function resetInterpretation() {
   document.getElementById('int-control').selectedIndex = 0;
   document.getElementById('int-special').selectedIndex = 0;
   document.getElementById('int-ki67').selectedIndex = 0;
+  document.getElementById('special-warning').style.display = 'none';
   document.getElementById('interpret-output').classList.remove('show');
 }
 
 // Initialize
 updatePercentDisplay();
+updateDoubtOptions(); // Initialize doubt options based on default organ
 </script>
 </body>
 </html>
