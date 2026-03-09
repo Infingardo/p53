@@ -3,131 +3,67 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>p53 IHC Helper - Quando richiederla e come interpretarla v2.3.2</title>
+<title>p53 IHC Helper - Quando richiederla e come interpretarla v2.4.2</title>
 <style>
   :root { 
     --pad: 16px; --radius: 12px; --maxw: 900px; 
     --primary: #1e40af; --success: #059669; --warning: #d97706; 
     --danger: #dc2626; --info: #0891b2; --gray: #6b7280;
   }
-  
   * { box-sizing: border-box; }
-  
   body { 
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
     margin: 0; background: #f8fafc; color: #1e293b; line-height: 1.6; 
   }
-  
-  .wrap { 
-    max-width: var(--maxw); margin: 20px auto 60px; 
-    padding: 0 var(--pad); 
-  }
-  
+  .wrap { max-width: var(--maxw); margin: 20px auto 60px; padding: 0 var(--pad); }
   .card { 
     background: #fff; border-radius: var(--radius); 
     padding: var(--pad); box-shadow: 0 4px 16px rgba(0,0,0,0.08); 
     margin-bottom: 20px; border: 1px solid #e2e8f0; 
   }
-  
-  .card-header { 
-    border-bottom: 2px solid #e2e8f0; margin-bottom: var(--pad); 
-    padding-bottom: 12px; 
-  }
-  
-  h1 { 
-    font-size: 1.6rem; margin: 0; color: var(--primary); 
-    font-weight: 700; 
-  }
-  
-  h2 { 
-    font-size: 1.2rem; margin: 0 0 16px; color: #374151; 
-    font-weight: 600; 
-  }
-  
-  h3 { 
-    font-size: 1rem; margin: 16px 0 8px; color: #4b5563; 
-    font-weight: 600; 
-  }
-  
-  .subtitle { 
-    font-size: 0.9rem; color: var(--gray); margin-top: 8px; 
-  }
-  
-  .tabs { 
-    display: flex; gap: 8px; margin: 16px 0; border-bottom: 2px solid #e2e8f0; 
-    flex-wrap: wrap;
-  }
-  
+  .card-header { border-bottom: 2px solid #e2e8f0; margin-bottom: var(--pad); padding-bottom: 12px; }
+  h1 { font-size: 1.6rem; margin: 0; color: var(--primary); font-weight: 700; }
+  h2 { font-size: 1.2rem; margin: 0 0 16px; color: #374151; font-weight: 600; }
+  h3 { font-size: 1rem; margin: 16px 0 8px; color: #4b5563; font-weight: 600; }
+  .subtitle { font-size: 0.9rem; color: var(--gray); margin-top: 8px; }
+  .tabs { display: flex; gap: 8px; margin: 16px 0; border-bottom: 2px solid #e2e8f0; flex-wrap: wrap; }
   .tab { 
     padding: 12px 20px; border: 0; background: transparent; 
     cursor: pointer; font-weight: 600; font-size: 0.95rem; 
-    color: var(--gray); border-bottom: 3px solid transparent; 
-    transition: all 0.2s; 
+    color: var(--gray); border-bottom: 3px solid transparent; transition: all 0.2s; 
   }
-  
   .tab:hover { color: var(--primary); }
-  
-  .tab.active { 
-    color: var(--primary); border-bottom-color: var(--primary); 
-  }
-  
+  .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
-  
   .form-group { margin-bottom: 16px; }
-  
-  label { 
-    display: block; font-size: 0.9rem; font-weight: 500; 
-    margin-bottom: 6px; color: #374151; 
-  }
-  
+  label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 6px; color: #374151; }
   input[type="number"], input[type="range"], select, textarea { 
     width: 100%; padding: 10px 12px; border: 1.5px solid #d1d5db; 
     border-radius: 8px; font-size: 0.95rem; transition: border-color 0.2s; 
   }
-  
   input:focus, select:focus, textarea:focus { 
-    outline: none; border-color: var(--primary); 
-    box-shadow: 0 0 0 3px rgba(30,64,175,0.1); 
+    outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30,64,175,0.1); 
   }
-  
-  input[type="radio"], input[type="checkbox"] { 
-    width: auto; margin-right: 8px; 
-  }
-  
+  input[type="radio"], input[type="checkbox"] { width: auto; margin-right: 8px; }
   .radio-group label, .checkbox-group label { 
-    display: flex; align-items: center; margin: 8px 0; 
-    font-weight: 400; cursor: pointer; 
+    display: flex; align-items: center; margin: 8px 0; font-weight: 400; cursor: pointer; 
   }
-  
-  .hint { 
-    font-size: 0.82rem; color: var(--gray); margin-top: 4px; 
-  }
-  
+  .hint { font-size: 0.82rem; color: var(--gray); margin-top: 4px; }
   .hint.warning { color: var(--warning); font-weight: 500; }
-  
   .btn { 
-    display: inline-block; padding: 12px 24px; border-radius: 8px; 
-    border: 0; background: var(--primary); color: #fff; 
-    font-weight: 600; cursor: pointer; font-size: 0.95rem; 
-    transition: all 0.2s; margin-right: 8px; margin-bottom: 8px; 
+    display: inline-block; padding: 12px 24px; border-radius: 8px; border: 0; 
+    background: var(--primary); color: #fff; font-weight: 600; cursor: pointer; 
+    font-size: 0.95rem; transition: all 0.2s; margin-right: 8px; margin-bottom: 8px; 
   }
-  
-  .btn:hover { 
-    background: #1e3a8a; transform: translateY(-1px); 
-    box-shadow: 0 4px 12px rgba(30,64,175,0.3); 
-  }
-  
+  .btn:hover { background: #1e3a8a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(30,64,175,0.3); }
   .btn-secondary { background: var(--gray); }
   .btn-secondary:hover { background: #4b5563; }
-  
   .btn-small { padding: 8px 14px; font-size: 0.85rem; }
-  
   .badge { 
     display: inline-block; padding: 8px 14px; border-radius: 20px; 
     font-size: 0.9rem; font-weight: 600; border: 2px solid; 
   }
-  
   .badge-yes { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
   .badge-maybe { background: #fef3c7; color: #92400e; border-color: #fde68a; }
   .badge-no { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
@@ -136,112 +72,70 @@
   .badge-oe { background: #fed7aa; color: #9a3412; border-color: #fdba74; }
   .badge-null { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
   .badge-ni { background: #f3f4f6; color: #374151; border-color: #d1d5db; }
-  
-  .alert { 
-    padding: 14px 16px; border-radius: 8px; margin: 12px 0; 
-    border-left: 4px solid; 
-  }
-  
+  .alert { padding: 14px 16px; border-radius: 8px; margin: 12px 0; border-left: 4px solid; }
   .alert-success { background: #f0fdf4; border-color: var(--success); color: #15803d; }
   .alert-warning { background: #fffbeb; border-color: var(--warning); color: #a16207; }
   .alert-danger { background: #fef2f2; border-color: var(--danger); color: #b91c1c; }
   .alert-info { background: #f0f9ff; border-color: var(--info); color: #0c4a6e; }
-  
   .result-box { 
     background: #f8fafc; border: 2px solid #e2e8f0; 
     border-radius: var(--radius); padding: 20px; margin: 16px 0; 
   }
-  
   .cutoff-visual { 
     margin: 20px 0; padding: 16px; background: #f8fafc; 
     border-radius: 8px; border: 1px solid #e2e8f0; 
   }
-  
+  /* FIX v2.4.0: rimosso gradient statico — viene impostato via JS in base all'organo */
   .cutoff-bar { 
     position: relative; height: 40px; 
-    background: linear-gradient(to right, #d1fae5 0%, #d1fae5 15%, #fef3c7 15%, #fef3c7 65%, #fed7aa 65%, #fed7aa 100%); 
     border-radius: 8px; margin: 12px 0; border: 2px solid #cbd5e1; 
   }
-  
   .cutoff-marker { 
-    position: absolute; top: -8px; width: 3px; height: 56px; 
-    background: var(--danger); 
+    position: absolute; top: -8px; width: 3px; height: 56px; background: var(--danger); 
   }
-  
   .cutoff-marker::after { 
     content: '▼'; position: absolute; top: -20px; left: -6px; 
     font-size: 1.2rem; color: var(--danger); 
   }
-  
   .cutoff-labels { 
     display: flex; justify-content: space-between; font-size: 0.85rem; 
     color: var(--gray); margin-top: 8px; 
   }
-  
   .report-box { 
-    background: #1e293b; color: #e2e8f0; padding: 16px; 
-    border-radius: 8px; font-family: 'Courier New', monospace; 
-    font-size: 0.85rem; white-space: pre-wrap; margin: 16px 0; 
-    max-height: 400px; overflow-y: auto; 
+    background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; 
+    font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-wrap; 
+    margin: 16px 0; max-height: 400px; overflow-y: auto; 
   }
-  
-  .confidence-bar-wrap {
-    margin: 10px 0 4px;
+  .confidence-bar-wrap { margin: 10px 0 4px; }
+  .confidence-label { 
+    font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; 
+    display: flex; justify-content: space-between; align-items: center; 
   }
-  .confidence-label {
-    font-size: 0.9rem; font-weight: 600; margin-bottom: 6px;
-    display: flex; justify-content: space-between; align-items: center;
+  .confidence-dots { display: flex; gap: 5px; margin: 4px 0; }
+  .confidence-dot { 
+    width: 14px; height: 14px; border-radius: 50%; 
+    background: #e2e8f0; border: 2px solid #cbd5e1; 
   }
-  .confidence-dots {
-    display: flex; gap: 5px; margin: 4px 0;
-  }
-  .confidence-dot {
-    width: 14px; height: 14px; border-radius: 50%;
-    background: #e2e8f0; border: 2px solid #cbd5e1;
-  }
-  .confidence-dot.active {
-    border-color: transparent;
-  }
-  .confidence-note {
-    font-size: 0.78rem; color: var(--gray); margin-top: 4px; font-style: italic;
-  }
-  
-  .reference-table { 
-    width: 100%; border-collapse: collapse; margin: 16px 0; 
-    font-size: 0.9rem; 
-  }
-  
-  .reference-table th, .reference-table td { 
-    border: 1px solid #d1d5db; padding: 10px; text-align: left; 
-  }
-  
-  .reference-table th { 
-    background: #f8fafc; font-weight: 600; color: #374151; 
-  }
-  
+  .confidence-dot.active { border-color: transparent; }
+  .confidence-note { font-size: 0.78rem; color: var(--gray); margin-top: 4px; font-style: italic; }
+  .reference-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem; }
+  .reference-table th, .reference-table td { border: 1px solid #d1d5db; padding: 10px; text-align: left; }
+  .reference-table th { background: #f8fafc; font-weight: 600; color: #374151; }
   .reference-table tr:nth-child(even) { background: #f9fafb; }
-  
   .output-section { display: none; }
   .output-section.show { display: block; }
-  
-  .trap-box {
-    background: #fff; border-left: 4px solid var(--danger);
-    padding: 12px 16px; margin: 12px 0; border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  .trap-box { 
+    background: #fff; border-left: 4px solid var(--danger); 
+    padding: 12px 16px; margin: 12px 0; border-radius: 8px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
   }
-  
-  .trap-title {
-    font-weight: 600; color: var(--danger); margin-bottom: 6px;
-  }
-  
-  .footer {
+  .trap-title { font-weight: 600; color: var(--danger); margin-bottom: 6px; }
+  .footer { 
     text-align: center; padding: 30px 20px; color: var(--gray); 
     font-size: 0.85rem; border-top: 2px solid #e2e8f0; 
-    margin-top: 40px; background: #f8fafc;
+    margin-top: 40px; background: #f8fafc; 
   }
-  
   .footer strong { color: var(--primary); }
-  
   @media (max-width: 768px) {
     .wrap { padding: 0 12px; }
     .tabs { flex-direction: column; }
@@ -257,13 +151,14 @@
     <div class="card">
       <div class="card-header">
         <h1>p53 IHC Helper - Quando richiederla e come interpretarla</h1>
-        <p class="subtitle">Tool diagnostico per patologi • v2.3.2 "p53 for dummies edition" con Ki67</p>
+        <p class="subtitle">Tool diagnostico per patologi • v2.4.2 "p53 for dummies edition" con Ki67</p>
       </div>
       <div class="alert alert-info">
-        <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff organo-specifici validati. Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019).
+        <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff operativi organo-specifici. Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019).
       </div>
       <div class="alert alert-warning">
-        <strong>⚠️ Disclaimer validazione:</strong> Tool basato su revisione sistematica della letteratura e best practices pubblicate (Fassan 2014, Köbel 2019, Osakabe 2025, WHO 2022). Non validato prospetticamente su casistica locale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
+        <strong>⚠️ Disclaimer validazione:</strong> Tool basato su revisione sistematica della letteratura e best practices pubblicate (Fassan 2014, Köbel 2019, Osakabe 2025, WHO 2022). Non validato prospetticamente su casistica locale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.<br>
+        <strong>⚠️ Cutoff pragmatici:</strong> I cutoff numerici (in particolare per Barrett/Esofago e Colon-IBD) derivano da studi con popolazioni eterogenee e non sono universalmente standardizzati. Trattali come soglie orientative centro-specifiche, non come standard de jure.
       </div>
     </div>
 
@@ -318,7 +213,7 @@
             <label><input type="checkbox" id="ctx-inflammation" /> Infiammazione attiva marcata</label>
             <label><input type="checkbox" id="ctx-ulcer" /> Ulcerazione presente</label>
             <label><input type="checkbox" id="ctx-hpylori" /> H. pylori attivo (gastrico)</label>
-            <label><input type="checkbox" id="ctx-ibd" /> IBD attiva (colon)</label>
+            <label><input type="checkbox" id="ctx-ibd" /> Storia/contesto di IBD attiva</label>
             <label><input type="checkbox" id="ctx-posttreat" /> Post-terapia/radioterapia</label>
           </div>
         </div>
@@ -405,7 +300,7 @@
           <select id="int-special" onchange="validateSpecialPatterns()">
             <option value="none" selected>Nessuno</option>
             <option value="null">Null (0% nuclei con controllo forte)</option>
-            <option value="cytoplasmic">Citoplasmatico puro (nuclei negativi)</option>
+            <option value="cytoplasmic">Citoplasmatico (positività citoplasmatica prevalente ± nuclei variabili)</option>
             <option value="rim">Rim-like periferico (positività limitata alla membrana basale)</option>
           </select>
           <div id="special-warning" class="hint warning" style="display: none;"></div>
@@ -457,6 +352,9 @@
         <h2>📚 Reference rapido</h2>
         
         <h3>Cutoff p53 per organo (displasia epiteliale)</h3>
+        <div class="alert alert-warning" style="margin-bottom:8px;">
+          <strong>⚠️ Nota metodologica:</strong> I cutoff numerici derivano da studi con popolazioni e protocolli eterogenei. Il grado di validazione varia per organo: è robusto per stomaco e colon-retto (Fassan 2014, Osakabe 2025), più pragmatico per Barrett/esofago e laringe (criteri non ancora uniformati a livello internazionale). Trattali come soglie orientative, non come "legge mosaica".
+        </div>
         <table class="reference-table">
           <thead>
             <tr>
@@ -480,21 +378,21 @@
               <td>&lt;20%</td>
               <td>20-60%</td>
               <td><strong>&gt;60%</strong> diffuso</td>
-              <td>⚠️ IBD: 20-50% può essere stress</td>
+              <td>⚠️ IBD: 20-50% può essere stress. Osakabe 2025: cutoff missense 80% nei carcinomi</td>
             </tr>
             <tr>
               <td><strong>Vescica</strong></td>
               <td>&lt;10%</td>
               <td>10-50%</td>
               <td><strong>&gt;50%</strong> diffuso</td>
-              <td>Threshold più basso, OE frequente in HGD</td>
+              <td>⚠️ Ragionare per pannello: p53 + CK20 + CD44. Sensibilità p53 limitata</td>
             </tr>
             <tr>
               <td><strong>Esofago</strong></td>
               <td>&lt;10%</td>
               <td>10-60%</td>
               <td><strong>&gt;60%</strong> diffuso</td>
-              <td>Barrett's dysplasia</td>
+              <td>⚠️ Criteri Barrett non uniformati. Adjunct, non standalone</td>
             </tr>
             <tr>
               <td><strong>Laringe</strong></td>
@@ -537,7 +435,7 @@
               <td>Superficiale</td>
               <td>—</td>
               <td><strong>Full-thickness</strong></td>
-              <td>Maturazione persa</td>
+              <td>⚠️ Scarsa sensibilità in isolamento — usare nel pannello p53+CK20+CD44</td>
             </tr>
             <tr>
               <td><strong>Esofago</strong></td>
@@ -555,7 +453,16 @@
             </tr>
           </tbody>
         </table>
-        <p class="hint"><strong>⚠️ Nota Ki67:</strong> Per displasie gastriche/coliche, il <strong>pattern di distribuzione</strong> (basale vs esteso ai 2/3 vs full-thickness) è più importante della percentuale assoluta. Fassan 2014 enfatizza "estensione ai 2/3 superficiali" come criterio qualitativo chiave. <strong>In IBD attiva il Ki67 è fisiologicamente aumentato per il turnover aumentato: non usare come criterio di displasia in fase infiammatoria acuta.</strong></p>
+        <p class="hint"><strong>⚠️ Nota Ki67:</strong> Per displasie gastriche/coliche, il <strong>pattern di distribuzione</strong> (basale vs esteso ai 2/3 vs full-thickness) è più importante della percentuale assoluta. Fassan 2014 enfatizza "estensione ai 2/3 superficiali" come criterio qualitativo chiave. <strong>In IBD attiva il Ki67 è fisiologicamente aumentato: non usare come criterio di displasia in fase infiammatoria acuta.</strong></p>
+
+        <h3>Vescica — nota pannello IHC</h3>
+        <div class="alert alert-warning">
+          <strong>⚠️ p53 in vescica: ragionare per pannello</strong><br>
+          La forte positività diffusa di p53 può essere specifica contro reattività, ma la <strong>sensibilità è limitata</strong> e Ki67 da solo discrimina male CIS vs reattivo negli studi più recenti.<br>
+          <strong>Pannello consigliato:</strong> p53 + <strong>CK20</strong> (positività full-thickness in CIS) + <strong>CD44</strong> (perso nel CIS). Ki67 come supporto addizionale, non criterio autonomo.<br>
+          <strong>AMACR:</strong> Promettente nelle meta-analisi 2023 (sensibilità e specificità superiori in alcuni studi per displasia uroteliale di alto grado), ma non incluso nel pannello base di questo tool per semplicità operativa. Da considerare in casi dubbi non risolti dal pannello standard.<br>
+          In questo contesto, il tool riporta la valutazione p53 come componente del pannello, non come giudizio standalone.
+        </div>
 
         <h3>Quando fare la p53 - Decision matrix</h3>
         <div class="alert alert-info" style="margin-bottom: 16px;">
@@ -570,7 +477,6 @@
               <li>Gliomi IDH-wt alto grado (prognostico)</li>
             </ul>
           </div>
-          
           <div class="alert alert-success">
             <h4 style="margin-top: 0;">🟢 SEMPRE indicata (in scope)</h4>
             <ul style="margin: 8px 0; padding-left: 20px;">
@@ -578,16 +484,14 @@
               <li>Vescica HGD dubbio vs carcinoma</li>
             </ul>
           </div>
-          
           <div class="alert alert-warning">
             <h4 style="margin-top: 0;">🟡 UTILE in contesto specifico (in scope)</h4>
             <ul style="margin: 8px 0; padding-left: 20px;">
               <li>Displasia gastrica borderline</li>
-              <li>Vescica: displasia uroteliale vs reattivo</li>
+              <li>Vescica: displasia uroteliale vs reattivo (in pannello)</li>
               <li>Colon IBD: displasia vs indefinite (SE in remissione)</li>
             </ul>
           </div>
-          
           <div class="alert alert-danger">
             <h4 style="margin-top: 0;">🔴 NON indicata (quasi mai)</h4>
             <ul style="margin: 8px 0; padding-left: 20px;">
@@ -609,42 +513,36 @@
           <strong>Pattern:</strong> Positività diffusa ma eterogenea in intensità<br>
           <strong>Soluzione:</strong> Valuta contesto istologico - se c'è infiammazione, sospetta falso positivo
         </div>
-
         <div class="trap-box">
           <div class="trap-title">2. Null-type senza controlli</div>
           <strong>Scenario:</strong> Tutto negativo, nessun controllo interno<br>
           <strong>Errore:</strong> Interpretare come pattern null<br>
           <strong>Soluzione:</strong> <strong>RIPETERE</strong> la colorazione o dichiarare non valutabile
         </div>
-
         <div class="trap-box">
           <div class="trap-title">3. Rigenerazione post-chemio</div>
           <strong>Scenario:</strong> Epitelio in rigenerazione dopo trattamento<br>
           <strong>Pattern:</strong> Overexpression nelle cellule riparative<br>
           <strong>Soluzione:</strong> Data la biopsia rispetto ai trattamenti
         </div>
-
         <div class="trap-box">
           <div class="trap-title">4. Pattern mosaico (artefatti)</div>
           <strong>Scenario:</strong> Alternanza aree positive/negative<br>
           <strong>Interpretazione:</strong> Spesso wild-type con artefatti di fissazione<br>
           <strong>Soluzione:</strong> Concentrati sulle aree meglio conservate
         </div>
-
         <div class="trap-box">
           <div class="trap-title">5. Cellule apoptotiche</div>
           <strong>Scenario:</strong> Nuclei in apoptosi spesso p53-positivi<br>
           <strong>Pattern:</strong> Positività in cellule picnotiche<br>
           <strong>Soluzione:</strong> <strong>NON contarle</strong> nella valutazione
         </div>
-
         <div class="trap-box">
           <div class="trap-title">6. Clone anticorpale sbagliato</div>
           <strong>Scenario:</strong> Cloni non validati o diluizioni inappropriate<br>
           <strong>Risultato:</strong> Pattern inconsistenti<br>
           <strong>Soluzione:</strong> Usa cloni standardizzati (DO-7, BP53-11)
         </div>
-
         <div class="trap-box">
           <div class="trap-title">7. Overinterpretazione borderline (30-60%)</div>
           <strong>Scenario:</strong> Pattern intermedio<br>
@@ -660,7 +558,6 @@
           • Intensità: variabile, mix debole/moderato<br>
           • Significato: funzione p53 normale, displasia non confermata
         </div>
-
         <div class="alert alert-warning">
           <strong>🟡 Accumulo lieve (zona grigia)</strong><br>
           • Distribuzione: focale, non uniforme<br>
@@ -669,31 +566,27 @@
           • Significato: borderline, può essere stress cellulare O inizio displasia<br>
           • Azione: ripeti biopsia, <strong>considera Ki67</strong>
         </div>
-
         <div class="alert alert-danger">
           <strong>🟠 Over-expression (aberrante)</strong><br>
           • Distribuzione: diffuso uniforme, denso<br>
           • %: &gt;50-60% (organo-dipendente)<br>
           • Intensità: prevalentemente 2+/3+ forte<br>
-          • Significato: mutazione TP53 stabilizzante, displasia confermata
+          • Significato: mutazione TP53 stabilizzante — pattern aberrante di supporto per displasia nel contesto morfologico
         </div>
-
         <div class="alert alert-danger">
           <strong>🔴 Null (aberrante)</strong><br>
           • Pattern: 0% nuclei positivi + controllo interno FORTE<br>
-          • Significato: mutazione inattivante TP53, displasia confermata<br>
+          • Significato: mutazione inattivante TP53 — pattern aberrante di supporto per displasia nel contesto morfologico<br>
           • ⚠️ Se controllo debole/assente → RIPETERE
         </div>
-
         <div class="alert alert-danger">
           <strong>🟣 Citoplasmatico (raro)</strong><br>
-          • Pattern: Positività citoplasmatica, nuclei negativi<br>
+          • Pattern: Positività citoplasmatica prevalente ± staining nucleare variabile di simile intensità<br>
           • Meccanismo: Mutazioni NES o esoni 9-10 (sequestro citoplasmatico)<br>
-          • Significato: Equivale a mutazione funzionale, prognosi simile a null<br>
+          • Significato: Equivale a mutazione funzionale — pattern aberrante di supporto per displasia nel contesto morfologico<br>
           • ⚠️ Non confondere con: artefatti (granulari) o colorazione aspecifica<br>
-          • Prevalenza: Raro nei carcinomi endometriali (~1%, Köbel 2019), dati scarsi per displasie
+          • Prevalenza: Raro nei carcinomi endometriali (~1%, Köbel 2019), dati scarsi per displasie. Il pattern classico può accompagnarsi a variabile staining nucleare di simile intensità (non necessariamente zero assoluto)
         </div>
-
         <div class="alert alert-warning">
           <strong>🔵 Rim-like periferico</strong><br>
           • Pattern: Positività limitata alla membrana basale / cellule periferiche, centro negativo<br>
@@ -714,44 +607,35 @@
           • Ovaio sieroso (carcinoma): 5-10%<br>
           • Polmone (carcinoma): 12-18%<br>
           <br>
-          <strong>⚠️ Nota CRITICA:</strong> I dati sopra derivano da carcinomi. La discordanza nelle <strong>displasie epiteliali</strong> è probabilmente <strong>MINORE</strong> (~5% o meno), ma dati robusti scarseggiano. L'applicabilità ai sistemi "low mutational burden" come displasie gastriche/coliche è limitata.
-          <br><br>
-          <strong>⚠️ Quando sospettare discordanza:</strong><br>
-          • Pattern borderline + clinica non congruente<br>
-          • Istotipi rari (correlazione meno studiata)<br>
-          • Pazienti giovani con pattern suggestivo mutazione<br>
-          • Terapie targeted (conta status molecolare reale)
-          <br><br>
+          <strong>⚠️ Nota CRITICA:</strong> I dati sopra derivano da carcinomi. La discordanza nelle <strong>displasie epiteliali</strong> è probabilmente <strong>MINORE</strong> (~5% o meno), ma dati robusti scarseggiano.<br>
+          <br>
           <strong>✓ Strategia:</strong> Pattern p53 dubbio + Clinica incongruente → <strong>Considera NGS TP53</strong> per conferma molecolare
         </div>
 
         <h3>🤖 AI e p53: il futuro (2025)</h3>
         <div class="alert alert-info">
           <strong>Stato dell'arte:</strong><br>
-          • In alcuni studi, algoritmi CNN predicono pattern p53 da H&amp;E con accuratezza riportata &gt;85-90% (Ma 2023, Kobayashi 2022)<br>
-          • Alcuni sistemi commerciali offrono scoring p53 assistito (es. Visiopharm, Ventana); le approvazioni regolatorie variano per indicazione e paese — verificare aggiornamenti<br>
-          • Predizione pattern da H&E (utile in coliti croniche, displasie)<br>
-          • Drug discovery: AI identifica composti per riattivare mutanti specifici (es. Y220C)
-          <br><br>
-          <strong>Vantaggi:</strong> Standardizzazione, efficienza, oggettività, riduzione variabilità inter-osservatore<br>
-          <strong>Limitazioni:</strong> Costo implementazione, necessita training su dataset ampi, validazione clinica in corso
-          <br><br>
-          <strong>Futuro prossimo:</strong> Integrazione AI + dati molecolari + radiomici per stratificazione prognostica di precisione
+          • CNN predicono pattern p53 da H&amp;E con accuratezza riportata &gt;85-90% (Ma 2023, Kobayashi 2022)<br>
+          • Alcuni sistemi commerciali offrono scoring p53 assistito (Visiopharm, Ventana); validazione regolatoria in corso<br>
+          • Drug discovery: AI identifica composti per riattivare mutanti specifici (es. Y220C)<br>
+          <br>
+          <strong>Vantaggi:</strong> Standardizzazione, efficienza, riduzione variabilità inter-osservatore<br>
+          <strong>Limitazioni:</strong> Costo implementazione, training su dataset ampi, validazione clinica incompleta
         </div>
 
         <h3>Bibliografia essenziale</h3>
         <ul style="font-size: 0.9rem; line-height: 1.8;">
-          <li><strong>Bianchi F.</strong> p53 for dummies. Manuale pratico per patologi. 2025 [<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Scarica PDF</a>] [<em>Fonte primaria per trappole interpretative, workflow pratico</em>]</li>
-          <li><strong>Fassan M, et al.</strong> p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. <em>Mod Pathol</em> 2014;27:1409-1417 [<em>Cutoff gastrico, Ki67 integrazione, pattern distribuzione</em>]</li>
-          <li><strong>Köbel M, Ronnett BM, Singh N, et al.</strong> Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131 [<em>Pattern-based standard; <strong>carcinomi sierosi</strong>: &gt;95% mutati, pattern OE/null obbligatorio; citoplasmatico ~1%</em>]</li>
-          <li><strong>Vermij L, et al.</strong> p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. <em>Mod Pathol</em> 2022;35:1475-1483 [<em>Correlazione IIC/molecolare in CARCINOMI endometriali, 408 casi</em>]</li>
-          <li><strong>Osakabe M, et al.</strong> The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. <em>Virchows Arch</em> 2025;486:333-341 [<em>Validazione CARCINOMI colon-retto, 91.3% concordanza</em>]</li>
-          <li><strong>WHO Classification of Tumours Editorial Board.</strong> Digestive System Tumours. 5th ed. Lyon: IARC, 2019/2022 [<em>Standard classificazione displasie</em>]</li>
-          <li><strong>WHO Classification of Tumours Editorial Board.</strong> Central Nervous System Tumours. 5th ed. Lyon: IARC, 2021 [<em><strong>Gliomi</strong>: p53 prognostico, integrazione con IDH/ATRX/Ki67 per grading</em>]</li>
-          <li><strong>Rugge M, et al.</strong> MAPS II: Management of precancerous conditions and lesions in the stomach. <em>Gut</em> 2019;68:1743-1752 [<em>Management gastrico</em>]</li>
-          <li><strong>de Haan LM, et al.</strong> Real-world routine diagnostic molecular analysis for TP53 mutational status is recommended over p53 immunohistochemistry in B-cell lymphomas. <em>Virchows Arch</em> 2024;485:643-654 [<em>Linfomi: preferire NGS</em>]</li>
-          <li><strong>Ma Y, et al.</strong> Artificial intelligence in diagnostic pathology. <em>Diagn Pathol</em> 2023;18:109 [<em>AI overview</em>]</li>
-          <li><strong>Kobayashi S, et al.</strong> Artificial Intelligence Program to Predict p53 Mutations in Ulcerative Colitis-Associated Cancer or Dysplasia. <em>Am J Pathol</em> 2022;192:1121-1129 [<em>Primo algoritmo AI per predizione p53 da H&E</em>]</li>
+          <li><strong>Bianchi F.</strong> p53 for dummies. Manuale pratico per patologi. 2025 [<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Scarica PDF</a>]</li>
+          <li><strong>Fassan M, et al.</strong> p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. <em>Mod Pathol</em> 2014;27:1409-1417</li>
+          <li><strong>Köbel M, Ronnett BM, Singh N, et al.</strong> Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. <em>Int J Gynecol Pathol</em> 2019;38:S123-S131</li>
+          <li><strong>Vermij L, et al.</strong> p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. <em>Mod Pathol</em> 2022;35:1475-1483</li>
+          <li><strong>Osakabe M, et al.</strong> The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. <em>Virchows Arch</em> 2025;486:333-341 [<em>Concordanza 91.3%, cutoff missense 80% in carcinomi CRC</em>]</li>
+          <li><strong>WHO Classification of Tumours Editorial Board.</strong> Digestive System Tumours. 5th ed. Lyon: IARC, 2019/2022</li>
+          <li><strong>WHO Classification of Tumours Editorial Board.</strong> Central Nervous System Tumours. 5th ed. Lyon: IARC, 2021</li>
+          <li><strong>Rugge M, et al.</strong> MAPS II: Management of precancerous conditions and lesions in the stomach. <em>Gut</em> 2019;68:1743-1752</li>
+          <li><strong>de Haan LM, et al.</strong> Real-world routine diagnostic molecular analysis for TP53 mutational status is recommended over p53 immunohistochemistry in B-cell lymphomas. <em>Virchows Arch</em> 2024;485:643-654</li>
+          <li><strong>Ma Y, et al.</strong> Artificial intelligence in diagnostic pathology. <em>Diagn Pathol</em> 2023;18:109</li>
+          <li><strong>Kobayashi S, et al.</strong> Artificial Intelligence Program to Predict p53 Mutations in Ulcerative Colitis-Associated Cancer or Dysplasia. <em>Am J Pathol</em> 2022;192:1121-1129</li>
         </ul>
       </div>
     </div>
@@ -760,7 +644,7 @@
 
   <!-- Footer -->
   <div class="footer">
-    <p><strong>p53 IHC Helper v2.3.2 "p53 for dummies edition"</strong></p>
+    <p><strong>p53 IHC Helper v2.4.2 "p53 for dummies edition"</strong></p>
     <p>Tool diagnostico per patologi</p>
     <p>Sviluppato da <strong>Filippo Bianchi</strong> (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)</p>
     <p>Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019, Osakabe 2025)</p>
@@ -772,21 +656,17 @@
 <script>
 // ============ GLOBALS ============
 const CUTOFFS = {
-  gastric: { wt: 10, oe: 60 },
-  colon: { wt: 20, oe: 60 },
-  'colon-ibd': { wt: 20, oe: 60 },
-  bladder: { wt: 10, oe: 50 },
-  esophagus: { wt: 10, oe: 60 },
-  larynx: { wt: 10, oe: 50 }
+  gastric:    { wt: 10, oe: 60 },
+  colon:      { wt: 20, oe: 60 },
+  'colon-ibd':{ wt: 20, oe: 60 },
+  bladder:    { wt: 10, oe: 50 },
+  esophagus:  { wt: 10, oe: 60 },
+  larynx:     { wt: 10, oe: 50 }
 };
 
 const ORGAN_NAMES = {
-  gastric: 'Stomaco',
-  colon: 'Colon',
-  'colon-ibd': 'Colon IBD',
-  bladder: 'Vescica',
-  esophagus: 'Esofago',
-  larynx: 'Laringe'
+  gastric: 'Stomaco', colon: 'Colon', 'colon-ibd': 'Colon IBD',
+  bladder: 'Vescica', esophagus: 'Esofago', larynx: 'Laringe'
 };
 
 // ============ TAB SWITCHING ============
@@ -802,48 +682,44 @@ function updateDoubtOptions() {
   const organ = document.getElementById('dec-organ').value;
   const doubtSelect = document.getElementById('dec-doubt');
   const currentValue = doubtSelect.value;
-  
   const indefiniteOption = doubtSelect.querySelector('option[value="indefinite"]');
   if (indefiniteOption) indefiniteOption.remove();
-  
   if (organ === 'colon-ibd') {
     const option = document.createElement('option');
     option.value = 'indefinite';
     option.textContent = 'Indefinite per displasia';
     doubtSelect.appendChild(option);
   }
-  
   if (currentValue === 'indefinite' && organ !== 'colon-ibd') {
     doubtSelect.value = 'reactive-vs-lgd';
   }
 }
 
-// ============ SPECIAL PATTERN VALIDATION ============
+// ============ IBD TOGGLE ============
 function toggleIbdActive() {
   const organ = document.getElementById('int-organ').value;
   const group = document.getElementById('ibd-active-group');
   group.style.display = (organ === 'colon-ibd') ? 'block' : 'none';
   if (organ !== 'colon-ibd') {
     document.getElementById('int-ibd-active').checked = false;
-  document.getElementById('int-morpho').selectedIndex = 0;
   }
 }
 
+// ============ SPECIAL PATTERN VALIDATION ============
 function validateSpecialPatterns() {
   const special = document.getElementById('int-special').value;
   const percent = parseInt(document.getElementById('int-percent').value);
   const warningDiv = document.getElementById('special-warning');
-  
   let warning = '';
-  
   if (special === 'null' && percent > 5) {
     warning = '⚠️ Pattern NULL = 0% nuclei positivi. Hai impostato ' + percent + '%. Correggi % a 0-5% oppure seleziona "Nessuno" come pattern speciale.';
-  } else if (special === 'cytoplasmic' && percent > 10) {
-    warning = '⚠️ Pattern citoplasmatico puro = nuclei negativi (0-10%). Hai impostato ' + percent + '%. Se c\'è positività nucleare significativa, è un pattern misto, non citoplasmatico puro.';
+  } else if (special === 'cytoplasmic' && percent > 20) {
+    // FIX v2.4.0: soglia alzata a 20% (da 10%) per catturare pattern citoplasmatico
+    // con variabile staining nucleare di simile intensità (non necessariamente zero assoluto)
+    warning = '⚠️ Pattern citoplasmatico con ' + percent + '% nuclei positivi — potrebbe essere pattern misto. Se i nuclei positivi hanno intensità simile alla componente citoplasmatica, il pattern resta valido. Se i nuclei positivi sono 2+/3+ preponderanti, considera pattern misto o OE.';
   } else if (special === 'rim') {
     warning = '⚠️ Pattern rim-like: letteratura scarsa nelle displasie. Non usare come criterio diagnostico autonomo. Correla con morfologia EE e Ki67.';
   }
-  
   if (warning) {
     warningDiv.textContent = warning;
     warningDiv.style.display = 'block';
@@ -853,28 +729,17 @@ function validateSpecialPatterns() {
 }
 
 // ============ CONFIDENCE RENDERING ============
-// FIX: score orientativo con barra visuale + disclaimer esplicito
-// Non viene più mostrato come percentuale numerica secca
 function renderConfidence(score) {
-  // Barra proporzionale rimossa deliberatamente: evita lettura pseudo-bayesiana.
-  // Solo livello ordinale su 3 gradi + dot fissi per livello.
   const clampedScore = Math.max(0, Math.min(100, score));
   let label, color, activeDots;
-
-  if (clampedScore >= 75) {
-    label = 'Alta orientatività'; color = '#059669'; activeDots = 3;
-  } else if (clampedScore >= 45) {
-    label = 'Orientatività moderata'; color = '#d97706'; activeDots = 2;
-  } else {
-    label = 'Bassa orientatività'; color = '#dc2626'; activeDots = 1;
-  }
-
+  if (clampedScore >= 75) { label = 'Alta orientatività'; color = '#059669'; activeDots = 3; }
+  else if (clampedScore >= 45) { label = 'Orientatività moderata'; color = '#d97706'; activeDots = 2; }
+  else { label = 'Bassa orientatività'; color = '#dc2626'; activeDots = 1; }
   let dotsHtml = '';
   for (let i = 1; i <= 3; i++) {
     const active = i <= activeDots;
     dotsHtml += `<div class="confidence-dot${active ? ' active' : ''}" style="${active ? 'background:'+color+';' : ''}"></div>`;
   }
-
   return `
     <div class="confidence-bar-wrap">
       <div class="confidence-label">
@@ -882,8 +747,7 @@ function renderConfidence(score) {
         <div class="confidence-dots">${dotsHtml}</div>
       </div>
       <div class="confidence-note">⚠️ Stima euristica (3 livelli) — non è una probabilità statistica.</div>
-    </div>
-  `;
+    </div>`;
 }
 
 // ============ DECISION ANALYSIS ============
@@ -894,82 +758,61 @@ function analyzeDecision() {
   const inflammation = document.getElementById('ctx-inflammation').checked;
   const ulcer = document.getElementById('ctx-ulcer').checked;
   const hpylori = document.getElementById('ctx-hpylori').checked;
-  const ibd = document.getElementById('ctx-ibd').checked;
+  // FIX v2.4.0: IBD implicita per colon-ibd — non dipende solo dal checkbox
+  const ibd = document.getElementById('ctx-ibd').checked || organ === 'colon-ibd';
   const posttreat = document.getElementById('ctx-posttreat').checked;
 
   let utility = 50;
-  
   if (cytology === 'normal') utility -= 30;
   if (cytology === 'atypia') utility += 25;
-  
   if (inflammation && doubt === 'reactive-vs-lgd') utility -= 25;
   if (ulcer && doubt === 'reactive-vs-lgd') utility -= 20;
-  
   if (organ === 'bladder' && doubt === 'reactive-vs-lgd' && cytology === 'borderline') utility += 15;
   if ((organ === 'colon-ibd' || ibd) && inflammation) utility -= 30;
   if (organ === 'gastric' && hpylori && doubt === 'reactive-vs-lgd') utility -= 15;
-  
+  if (posttreat && doubt === 'reactive-vs-lgd') utility -= 20;
   if (doubt === 'lgd-vs-hgd') utility += 25;
   if (doubt === 'hgd-vs-cancer') utility += 20;
   if (doubt === 'indefinite' && ibd && inflammation) utility -= 35;
-  
   utility = Math.max(10, Math.min(90, utility));
-  
-  // GATING: IBD attiva → sempre 🔴 salvo sospetto carcinoma
   if ((organ === 'colon-ibd' || ibd) && inflammation && doubt !== 'hgd-vs-cancer') {
     utility = Math.min(utility, 30);
   }
 
   let badge, recommendation, reasoning, alternatives, interpretation;
-  
   if (utility >= 70) {
-    badge = 'yes';
-    recommendation = '🟢 p53 RACCOMANDATO';
+    badge = 'yes'; recommendation = '🟢 p53 RACCOMANDATO';
     reasoning = generateReasoningHigh(organ, doubt, cytology, inflammation, ibd, hpylori, utility);
     interpretation = generateInterpretationGuidance(organ, doubt);
     alternatives = '';
   } else if (utility >= 45) {
-    badge = 'maybe';
-    recommendation = '🟡 p53 OPZIONALE';
+    badge = 'maybe'; recommendation = '🟡 p53 OPZIONALE';
     reasoning = generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpylori, utility);
     interpretation = generateInterpretationGuidance(organ, doubt);
     alternatives = generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer);
   } else {
-    badge = 'no';
-    recommendation = '🔴 p53 NON RACCOMANDATO ORA';
+    badge = 'no'; recommendation = '🔴 p53 NON RACCOMANDATO ORA';
     reasoning = generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori, utility);
     interpretation = '';
     alternatives = generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer);
   }
-  
+
   let html = `
     <div class="result-box">
       <div style="margin-bottom: 16px;">
         <span class="badge badge-${badge}" style="font-size: 1.1rem; padding: 10px 18px;">${recommendation}</span>
         ${renderConfidence(utility)}
       </div>
-      
       <h3>Perché ${badge === 'yes' ? 'raccomandato' : badge === 'maybe' ? 'opzionale' : 'non raccomandato ora'}:</h3>
       ${reasoning}
-      
-      ${interpretation ? `
-      <h3>Se fai p53, come interpretare:</h3>
-      ${interpretation}
-      ` : ''}
-      
-      ${alternatives ? `
-      <h3>Alternativa consigliata:</h3>
-      ${alternatives}
-      ` : ''}
-      
+      ${interpretation ? `<h3>Se fai p53, come interpretare:</h3>${interpretation}` : ''}
+      ${alternatives ? `<h3>Alternativa consigliata:</h3>${alternatives}` : ''}
       ${badge === 'yes' || badge === 'maybe' ? `
       <div style="margin-top: 20px;">
         <button class="btn" onclick="goToInterpret('${organ}')">➡️ Ho fatto p53, interpreto il risultato</button>
-      </div>
-      ` : ''}
-    </div>
-  `;
-  
+      </div>` : ''}
+    </div>`;
+
   document.getElementById('decision-result').innerHTML = html;
   document.getElementById('decision-output').classList.add('show');
   document.getElementById('decision-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -980,7 +823,7 @@ function generateReasoningHigh(organ, doubt, cytology, inflammation, ibd, hpylor
   if (cytology === 'atypia') reasons += '<li>Citologia <strong>francamente atipica</strong> → alta probabilità displasia</li>';
   if (cytology === 'borderline' && !inflammation) reasons += '<li>Citologia borderline + <strong>no infiammazione attiva</strong> → contesto favorevole</li>';
   if (doubt === 'lgd-vs-hgd') reasons += '<li>Dubbio LGD vs HGD → p53 aberrante supporta displasia ad alto rischio; la separazione LGD/HGD resta morfologica</li>';
-  if (organ === 'bladder') reasons += '<li>Vescica: p53-OE frequente in HGD (40-60%), cutoff >50%</li>';
+  if (organ === 'bladder') reasons += '<li>Vescica: p53-OE frequente in HGD (40-60%). <strong>Considera pannello p53+CK20+CD44.</strong></li>';
   if (!ibd && organ.includes('colon')) reasons += '<li>Colon non-IBD → no falsi positivi da infiammazione</li>';
   reasons += `<li>Orientatività complessiva: <strong>${utility >= 70 ? 'Alta' : utility >= 45 ? 'Moderata' : 'Bassa'}</strong></li>`;
   reasons += '</ul>';
@@ -990,9 +833,11 @@ function generateReasoningHigh(organ, doubt, cytology, inflammation, ibd, hpylor
 function generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpylori, utility) {
   let reasons = '<ul>';
   if (inflammation) reasons += '<li>⚠️ Infiammazione attiva può dare <strong>accumulo p53 da stress</strong> (10-40%) senza mutazione</li>';
+  if (posttreat) reasons += '<li>⚠️ Post-terapia/radioterapia → epitelio rigenerante può dare accumulo p53 stress-dipendente (falso positivo frequente)</li>';
   if (hpylori && organ === 'gastric') reasons += '<li>⚠️ H. pylori attivo → rigenerazione marcata può aumentare p53</li>';
   if (ibd && inflammation) reasons += '<li>⚠️ IBD attiva → p53 20-50% frequente per stress, NON per mutazione TP53</li>';
   if (cytology === 'borderline') reasons += '<li>Citologia borderline → p53 può aiutare ma non sempre conclusivo</li>';
+  if (organ === 'esophagus') reasons += '<li>⚠️ Barrett: criteri di anomalia p53 non uniformati. Usare come adjunct morfologico, non standalone.</li>';
   reasons += `<li>Orientatività complessiva: <strong>${utility >= 70 ? 'Alta' : utility >= 45 ? 'Moderata' : 'Bassa'}</strong></li>`;
   reasons += '</ul>';
   return reasons;
@@ -1004,6 +849,7 @@ function generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori
   if (inflammation && doubt === 'reactive-vs-lgd') reasons += '<li>Infiammazione marcata + dubbio reattivo vs displasia → <strong>alto rischio falso positivo</strong></li>';
   if (ibd && inflammation) reasons += '<li>IBD attiva → p53 accumulo 20-50% comune per stress (non mutazione)</li>';
   if (hpylori && organ === 'gastric') reasons += '<li>H. pylori non eradicato → rigenerazione confonde il quadro</li>';
+  if (posttreat) reasons += '<li>Post-terapia/radioterapia → rigenerazione attiva, <strong>alto rischio falso positivo p53</strong> da stress</li>';
   reasons += `<li>Orientatività complessiva: <strong>${utility >= 70 ? 'Alta' : utility >= 45 ? 'Moderata' : 'Bassa'}</strong></li>`;
   reasons += '</ul>';
   return reasons;
@@ -1011,43 +857,53 @@ function generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori
 
 function generateInterpretationGuidance(organ, doubt) {
   const cutoff = CUTOFFS[organ];
+  let pannelloNote = '';
+  if (organ === 'bladder') {
+    pannelloNote = '<br>⚠️ <strong>Vescica:</strong> interpretare p53 nell\'ambito del pannello p53+CK20+CD44. Ki67 da solo ha scarsa sensibilità.';
+  }
   return `
     <div class="alert alert-info">
       <strong>Cutoff ${ORGAN_NAMES[organ]}:</strong> Wild-type &lt;${cutoff.wt}% | Zona grigia ${cutoff.wt}-${cutoff.oe}% | Over-expression <strong>&gt;${cutoff.oe}%</strong> diffuso
       <br><br>
       <strong>Se p53 &lt;${cutoff.wt}%:</strong> Wild-type → ${doubt === 'reactive-vs-lgd' ? 'Probabile reattivo/rigenerativo' : 'Non supporta HGD'}<br>
       <strong>Se p53 ${cutoff.wt}-${cutoff.oe}%:</strong> Zona grigia → ${doubt === 'reactive-vs-lgd' ? 'LGD borderline, <strong>considera Ki67</strong>, ripeti biopsia' : 'LGD probabile, <strong>considera Ki67</strong>'}<br>
-      <strong>Se p53 &gt;${cutoff.oe}%:</strong> Over-expression → ${doubt === 'reactive-vs-lgd' ? 'Displasia confermata (LGD/HGD)' : 'HGD probabile'}
-    </div>
-  `;
+      <strong>Se p53 &gt;${cutoff.oe}%:</strong> Over-expression → ${doubt === 'reactive-vs-lgd' ? 'Pattern aberrante compatibile con displasia LGD/HGD — correla con EE' : 'Pattern aberrante compatibile con HGD — correla con EE'}
+      ${pannelloNote}
+    </div>`;
 }
 
+// FIX v2.4.0: generateAlternatives restituisce stringa vuota se non c'è contenuto (no scatola gialla vuota)
 function generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer) {
-  let alt = '<div class="alert alert-warning">';
+  let content = '';
   if (hpylori && organ === 'gastric') {
-    alt += '<strong>✓ Eradica H. pylori PRIMA</strong><br>';
-    alt += '✓ Ripeti biopsia dopo 2-3 mesi<br>';
-    alt += '✓ Se persiste atipia → ALLORA fai p53<br>';
+    content += '<strong>✓ Eradica H. pylori PRIMA</strong><br>';
+    content += '✓ Ripeti biopsia dopo 2-3 mesi<br>';
+    content += '✓ Se persiste atipia → ALLORA fai p53<br>';
   } else if (ibd && inflammation) {
-    alt += '<strong>✓ Tratta IBD aggressivamente (remissione)</strong><br>';
-    alt += '✓ Ripeti biopsia dopo 2-4 settimane in fase quiescente<br>';
-    alt += '✓ SE persiste atipia in remissione → ALLORA fai p53 (più affidabile)<br>';
+    content += '<strong>✓ Tratta IBD aggressivamente (remissione)</strong><br>';
+    content += '✓ Ripeti biopsia dopo 2-4 settimane in fase quiescente<br>';
+    content += '✓ SE persiste atipia in remissione → ALLORA fai p53 (più affidabile)<br>';
   } else if (inflammation || ulcer) {
-    alt += '<strong>✓ Tratta infiammazione/ulcera</strong><br>';
-    alt += '✓ Ripeti biopsia dopo guarigione<br>';
-    alt += '✓ Se persiste atipia → considera p53<br>';
+    content += '<strong>✓ Tratta infiammazione/ulcera</strong><br>';
+    content += '✓ Ripeti biopsia dopo guarigione<br>';
+    content += '✓ Se persiste atipia → considera p53<br>';
   }
   if (doubt === 'reactive-vs-lgd') {
-    alt += '<br><strong>AGGIUNGI (se disponibile):</strong><br>';
-    alt += '• <strong>Ki67</strong> (se >30% esteso ai 2/3 superficiali → favorisce displasia)<br>';
-    alt += '• Correlazione endoscopica (lesione visibile?)<br>';
+    content += '<br><strong>AGGIUNGI (se disponibile):</strong><br>';
+    content += '• <strong>Ki67</strong> (se >30% esteso ai 2/3 superficiali → favorisce displasia)<br>';
+    content += '• Correlazione endoscopica (lesione visibile?)<br>';
+    if (organ === 'bladder') {
+      content += '• <strong>CK20 + CD44</strong> (pannello vescica — più affidabile di p53 in isolamento)<br>';
+    }
   }
-  alt += '</div>';
-  return alt;
+  if (!content) return '';
+  return '<div class="alert alert-warning">' + content + '</div>';
 }
 
+// FIX v2.4.0: aggiunto toggleIbdActive() dopo impostazione organo
 function goToInterpret(organ) {
   document.getElementById('int-organ').value = organ;
+  toggleIbdActive();
   const interpretTab = document.querySelector('.tab[data-tab="interpret"]');
   switchTab('interpret', interpretTab);
   document.getElementById('tab-interpret').scrollIntoView({ behavior: 'smooth' });
@@ -1058,14 +914,22 @@ function resetDecision() {
   updateDoubtOptions();
   document.getElementById('dec-doubt').selectedIndex = 0;
   document.querySelectorAll('input[name="cytology"]')[1].checked = true;
-  document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => cb.checked = false);
+  // FIX v2.4.2: scope limitato ai checkbox del tab decision (non tocca int-ibd-active)
+  ['ctx-inflammation','ctx-ulcer','ctx-hpylori','ctx-ibd','ctx-posttreat']
+    .forEach(id => { document.getElementById(id).checked = false; });
   document.getElementById('decision-output').classList.remove('show');
 }
 
 // ============ INTERPRETATION ANALYSIS ============
 function updatePercentDisplay() {
-  const val = document.getElementById('int-percent').value;
-  document.getElementById('percent-display').textContent = val;
+  document.getElementById('percent-display').textContent = document.getElementById('int-percent').value;
+}
+
+// FIX v2.4.0: barra cutoff dinamica — il gradient viene calcolato sui cutoff dell'organo
+function buildBarGradient(cutoff) {
+  const wt = cutoff.wt;
+  const oe = cutoff.oe;
+  return `background: linear-gradient(to right, #d1fae5 0%, #d1fae5 ${wt}%, #fef3c7 ${wt}%, #fef3c7 ${oe}%, #fed7aa ${oe}%, #fed7aa 100%);`;
 }
 
 function analyzeInterpretation() {
@@ -1079,11 +943,11 @@ function analyzeInterpretation() {
   const isIbd = (organ === 'colon-ibd');
   const morpho = document.getElementById('int-morpho').value;
   const ibdActive = isIbd && document.getElementById('int-ibd-active').checked;
-  
   const cutoff = CUTOFFS[organ] || CUTOFFS['colon'];
-  
+  const barGradient = buildBarGradient(cutoff);
+
   let pattern, badge, badgeLabel, interpretation, confidence, reportText;
-  
+
   // ---- Pattern speciali ----
   if (special === 'null' && percent > 5) {
     pattern = 'ni'; badge = 'ni'; badgeLabel = 'NON INTERPRETABILE';
@@ -1096,18 +960,18 @@ function analyzeInterpretation() {
   }
   else if (special === 'null' && control === 'strong') {
     pattern = 'null'; badge = 'null'; badgeLabel = 'ABERRANT — Null';
-    // Se percent 1-5%: accettabile per artefatti, ma segnala se distribuzione non mosaico
     let nullCaveats = '';
     if (percent >= 1 && percent <= 5) {
       if (intensity === '3') {
-        nullCaveats = '<br>⚠️ <strong>Nota:</strong> Presenza di 1-5% nuclei positivi con intensità 3+: verifica che siano cellule apoptotiche isolate (nuclei picnotici, eosinofili) o in necrosi superficiale (mucose ulcerate). Entrambe sono frequentemente p53 3+ e <strong>non vanno conteggiate</strong>. Se confermato → pattern null valido.';
+        nullCaveats = '<br>⚠️ <strong>Nota:</strong> 1-5% nuclei positivi con intensità 3+: verifica che siano cellule apoptotiche isolate o in necrosi superficiale. Se confermato → pattern null valido.';
       } else if (distribution !== 'mosaic') {
-        nullCaveats = '<br>⚠️ <strong>Nota:</strong> Presenza di 1-5% nuclei positivi con distribuzione non mosaico. Possibile artefatto isolato. Verifica morfologia (picnotici? apoptotici?). Se dubbia, considera ripetizione.';
+        nullCaveats = '<br>⚠️ <strong>Nota:</strong> 1-5% nuclei positivi con distribuzione non mosaico. Verifica morfologia (picnotici? apoptotici?). Se dubbia, considera ripetizione.';
       }
     }
-    interpretation = `<strong>Pattern NULL aberrante</strong><br>0% nuclei positivi con controllo interno forte = mutazione inattivante TP53.<br><strong>Displasia confermata</strong> (pattern aberrante definitivo).${nullCaveats}`;
+    // FIX v2.4.0: "Displasia confermata" → formulazione pattern-based
+    interpretation = `<strong>Pattern NULL aberrante</strong><br>0% nuclei positivi con controllo interno forte = mutazione inattivante TP53.<br><strong>Pattern aberrante compatibile con alterazione TP53; reperto di supporto in favore di displasia nel corretto contesto morfologico.</strong>${nullCaveats}`;
     confidence = (percent >= 1 && percent <= 5) ? (intensity === '3' || distribution !== 'mosaic' ? 65 : 90) : 90;
-    reportText = `p53: Pattern NULL aberrante (${percent}% nuclei positivi, controllo interno forte). Mutazione TP53 inattivante. Displasia confermata.${percent >= 1 && percent <= 5 ? ' Presenza di cellule isolate positive (1-5%): verificare apoptosi/artefatto.' : ''} Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    reportText = `p53: Pattern NULL aberrante (${percent}% nuclei positivi, controllo interno forte). Compatibile con mutazione TP53 inattivante. Pattern di supporto in favore di displasia nel corretto contesto morfologico — interpretazione non sostitutiva della morfologia H&E.${percent >= 1 && percent <= 5 ? ' Presenza di cellule isolate positive (1-5%): verificare apoptosi/artefatto.' : ''}`;
   }
   else if (special === 'null' && control === 'weak') {
     pattern = 'ni'; badge = 'ni'; badgeLabel = 'DUBBIO TECNICO';
@@ -1119,7 +983,7 @@ function analyzeInterpretation() {
       • Se il controllo è debole solo nelle cellule normali limitrofe ma il pattern della lesione è coerente → valutazione condizionata possibile<br>
       • In ogni caso: <strong>refertare con cautela esplicita</strong>`;
     confidence = 20;
-    reportText = `p53: Controllo interno debole — pattern null non pienamente confermato. Problema tecnico possibile. Valutare ripetizione. Interpretazione condizionata; non sostitutiva.`;
+    reportText = `p53: Controllo interno debole — pattern null non pienamente confermato. Problema tecnico possibile. Valutare ripetizione. Interpretazione condizionata e non sostitutiva della morfologia H&E.`;
   }
   else if (special === 'null' && control === 'absent') {
     pattern = 'ni'; badge = 'ni'; badgeLabel = 'NON INTERPRETABILE';
@@ -1127,26 +991,26 @@ function analyzeInterpretation() {
     confidence = 0;
     reportText = `p53: Non interpretabile — controllo interno assente. RIPETERE. Non refertare come pattern null.`;
   }
-  else if (special === 'cytoplasmic' && percent <= 10) {
+  // FIX v2.4.0: pattern citoplasmatico — soglia alzata a 20%, con nota su variabile staining nucleare
+  else if (special === 'cytoplasmic' && percent <= 20) {
     pattern = 'cyto'; badge = 'null'; badgeLabel = 'ABERRANT — Cyto';
     interpretation = `<strong>Pattern CITOPLASMATICO ABERRANTE (raro)</strong><br>
-      Sequestro citoplasmatico con nuclei negativi/molto deboli (${percent}%).<br>
+      Sequestro citoplasmatico con nuclei negativi o staining nucleare variabile di simile intensità (${percent}%).<br>
       <strong>Meccanismo:</strong> Mutazioni NES o esoni 9-10.<br>
-      <strong>Significato clinico:</strong> Equivale a mutazione funzionale TP53, prognosi simile a null.<br>
-      <strong>Displasia confermata</strong> (pattern aberrante definitivo).<br><br>
+      <strong>Significato clinico:</strong> Equivale a mutazione funzionale TP53.<br>
+      <strong>Pattern aberrante compatibile con alterazione TP53; reperto di supporto in favore di displasia nel corretto contesto morfologico.</strong><br><br>
       ⚠️ <strong>Non confondere con:</strong> artefatti (granulari), colorazione aspecifica, cross-reazioni.<br>
       <em>Pattern raro (~1% carcinomi endometriali, Köbel 2019); nelle displasie i dati sono limitati — interpretare con cautela e correlare strettamente con la morfologia EE.</em>`;
-    confidence = 85;
-    reportText = `p53: Pattern citoplasmatico aberrante (${percent}% nuclei positivi). Equivale a mutazione funzionale TP53. Displasia confermata. Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    confidence = 80;
+    reportText = `p53: Pattern citoplasmatico aberrante (${percent}% nuclei, positività citoplasmatica prevalente). Compatibile con mutazione funzionale TP53. Pattern di supporto in favore di displasia nel corretto contesto morfologico — interpretazione non sostitutiva della morfologia H&E.`;
   }
-  else if (special === 'cytoplasmic' && percent > 10) {
+  else if (special === 'cytoplasmic' && percent > 20) {
     pattern = 'mild'; badge = 'mild'; badgeLabel = 'GRAY-ZONE';
-    interpretation = `<strong>Pattern MISTO (non citoplasmatico puro)</strong><br>
-      Citoplasmatico selezionato ma ${percent}% nuclei positivi. Pattern citoplasmatico puro = nuclei negativi (0-10%).<br><br>
-      Interpreta come <strong>zona grigia/borderline</strong>. Valuta se positività nucleare è reale (2+/3+) o artefatto.<br>
-      Se nuclei 2+/3+ diffusi, considera over-expression. <strong>Considera NGS TP53</strong>.`;
+    interpretation = `<strong>Pattern MISTO (citoplasmatico + nucleare)</strong><br>
+      Citoplasmatico selezionato ma ${percent}% nuclei positivi.<br>
+      Se la componente nucleare è preponderante o fortemente diffusa, considera pattern misto o over-expression. <strong>Considera NGS TP53</strong>.`;
     confidence = 40;
-    reportText = `p53: Pattern misto citoplasmatico + nucleare (${percent}% nuclei positivi). Zona grigia, considerare NGS TP53. Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    reportText = `p53: Pattern misto citoplasmatico + nucleare (${percent}% nuclei positivi). Zona grigia, considerare NGS TP53. Interpretazione non sostitutiva della morfologia H&E.`;
   }
   // ---- Pattern rim-like ----
   else if (special === 'rim') {
@@ -1170,52 +1034,41 @@ function analyzeInterpretation() {
     interpretation = `<strong>Wild-type</strong><br>${percent}% sotto il cutoff wild-type ${ORGAN_NAMES[organ]} (&lt;${cutoff.wt}%).<br>`;
     if (distribution === 'mosaic') {
       interpretation += 'Distribuzione mosaico conferma pattern wild-type.<br>';
-      badgeLabel = 'WT-like';
-      confidence = 85;
+      badgeLabel = 'WT-like'; confidence = 85;
     } else if (distribution === 'diffuse' && intensity === '3') {
-      // WT numerico ma pattern atipico: pochi nuclei ma tutti 3+, diffusi
-      badgeLabel = 'WT-like (pattern atipico)';
-      confidence = 55;
+      badgeLabel = 'WT-like (pattern atipico)'; confidence = 55;
       interpretation += `⚠️ <strong>Pattern atipico:</strong> nuclei positivi pochi (${percent}%) ma intensità 3+ diffusa — incoerenza numero/pattern.<br>
-        Possibili cause: campionamento (lesione solo parzialmente inclusa?), fissazione non ottimale, early aberrant accumulation.<br>
+        Possibili cause: campionamento parziale, fissazione non ottimale, early aberrant accumulation.<br>
         <strong>Non cambia diagnosi ma segnala:</strong> correla con morfologia EE. Considera Ki67. Valuta ripetizione se clinica concorda.`;
     } else {
-      badgeLabel = 'WT-like';
-      confidence = 70;
+      badgeLabel = 'WT-like'; confidence = 70;
     }
-    interpretation += '<strong>Funzione p53 normale o non conclusiva per displasia di alto grado.</strong>';
-    reportText = `p53: Wild-type numerico (${percent}% nuclei positivi, distribuzione ${distribution}, intensità ${intensity}+).${distribution === 'diffuse' && intensity === '3' ? ' Attenzione: pattern atipico (pochi nuclei ma 3+ diffusi) — correlare con morfologia.' : ''} Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    interpretation += '<strong>Funzione p53 normale o non conclusiva per displasia.</strong>';
+    reportText = `p53: Wild-type numerico (${percent}% nuclei positivi, distribuzione ${distribution}, intensità ${intensity}+).${distribution === 'diffuse' && intensity === '3' ? ' Attenzione: pattern atipico (pochi nuclei ma 3+ diffusi) — correlare con morfologia.' : ''} Interpretazione non sostitutiva della morfologia H&E.`;
   }
   else if (percent >= cutoff.oe && distribution === 'diffuse' && intensity !== '1') {
     pattern = 'oe'; badge = 'oe'; badgeLabel = 'ABERRANT — OE';
     interpretation = `<strong>Over-expression</strong><br>${percent}% SOPRA il cutoff ${ORGAN_NAMES[organ]} (&gt;${cutoff.oe}%).<br>`;
     interpretation += 'Distribuzione diffusa uniforme + intensità 2+/3+ forte.<br>';
-    interpretation += '<strong>Pattern aberrante confermato</strong> → Supporta displasia; il grading LGD/HGD resta morfologico.';
+    // FIX v2.4.0: "Displasia confermata" → formulazione pattern-based
+    interpretation += '<strong>Pattern aberrante compatibile con alterazione TP53; reperto di supporto in favore di displasia nel corretto contesto morfologico. Il grading LGD/HGD resta morfologico.</strong>';
     confidence = 90;
-    reportText = `p53: Over-expression aberrante (${percent}% nuclei positivi 2+/3+, distribuzione diffusa uniforme). Displasia con p53 over-expression. Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    reportText = `p53: Over-expression aberrante (${percent}% nuclei positivi 2+/3+, distribuzione diffusa uniforme). Pattern compatibile con mutazione TP53 stabilizzante; reperto di supporto in favore di displasia nel corretto contesto morfologico. Interpretazione non sostitutiva della morfologia H&E.`;
   }
   else if (percent >= cutoff.wt && percent < cutoff.oe) {
-    // Sub-classificazione zona grigia per distribuzione/intensità
     let graySubtype = 'neutral';
     if (distribution === 'mosaic' || intensity === 'mixed' || intensity === '1') {
-      graySubtype = 'wt-like-stress';
-      badgeLabel = 'GRAY-ZONE (WT-like stress)';
-      confidence = 35;
+      graySubtype = 'wt-like-stress'; badgeLabel = 'GRAY-ZONE (WT-like stress)'; confidence = 35;
     } else if (distribution === 'diffuse' && intensity === '3') {
-      graySubtype = 'suspect-oe';
-      badgeLabel = 'GRAY-ZONE (sospetto OE)';
-      confidence = 60;
+      graySubtype = 'suspect-oe'; badgeLabel = 'GRAY-ZONE (sospetto OE)'; confidence = 60;
     } else {
-      badgeLabel = 'GRAY-ZONE';
-      confidence = 45;
+      badgeLabel = 'GRAY-ZONE'; confidence = 45;
     }
     pattern = 'mild'; badge = 'mild';
-    // 3B: variabilità di fissazione — trigger se mixed + diffuse
     if (distribution === 'diffuse' && intensity === 'mixed' && graySubtype !== 'wt-like-stress') {
       badgeLabel = 'GRAY-ZONE (variabilità pre-analitica?)';
       confidence = Math.max(30, confidence - 10);
     }
-    // 3B: IBD attiva in zona grigia → confidence abbassata di default (simmetria con TAB decision)
     if (ibdActive) {
       confidence = Math.max(20, confidence - 20);
       if (!badgeLabel.includes('IBD')) badgeLabel = 'GRAY-ZONE (IBD attiva — bassa affidabilità)';
@@ -1234,7 +1087,7 @@ function analyzeInterpretation() {
       if (distribution === 'focal') interpretation += 'Distribuzione focale favorisce LGD o stress cellulare.<br>';
       interpretation += '<strong>Non diagnostico</strong> → Valutazione multidisciplinare ± follow-up ravvicinato. <strong>Considera Ki67</strong>.';
     }
-    reportText = `p53: Accumulo lieve, zona grigia (${percent}% nuclei positivi, distribuzione ${distribution}, intensità ${intensity}+). Non diagnostico per over-expression. Valutazione multidisciplinare ± follow-up ravvicinato. Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    reportText = `p53: Accumulo lieve, zona grigia (${percent}% nuclei positivi, distribuzione ${distribution}, intensità ${intensity}+). Non diagnostico per over-expression. Valutazione multidisciplinare ± follow-up ravvicinato. Interpretazione non sostitutiva della morfologia H&E.`;
   }
   else if (percent >= cutoff.oe && (distribution === 'focal' || intensity === '1')) {
     pattern = 'mild'; badge = 'mild'; badgeLabel = 'GRAY-ZONE (borderline OE)';
@@ -1245,28 +1098,26 @@ function analyzeInterpretation() {
     if (intensity === '1') interpretation += '• Intensità prevalente debole (1+)<br>';
     interpretation += '<strong>Pattern non classico</strong> → LGD probabile, HGD meno probabile. Valutazione multidisciplinare ± rebiopsia se disponibile. <strong>Considera Ki67</strong>.';
     confidence = 55;
-    reportText = `p53: Borderline over-expression (${percent}% nuclei positivi, distribuzione ${distribution}, intensità ${intensity}+). Incoerenza possibile tra % e distribuzione focale — verifica denominatore. LGD probabile. Valutazione multidisciplinare ± follow-up ravvicinato. Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    reportText = `p53: Borderline over-expression (${percent}% nuclei positivi, distribuzione ${distribution}, intensità ${intensity}+). Incoerenza possibile tra % e distribuzione focale — verifica denominatore. LGD probabile. Valutazione multidisciplinare ± follow-up ravvicinato. Interpretazione non sostitutiva della morfologia H&E.`;
   }
   else {
     pattern = 'wt'; badge = 'wt'; badgeLabel = 'WT-like';
     interpretation = `<strong>Wild-type / Accumulo lieve</strong><br>${percent}% nuclei positivi. Pattern non definitivo per over-expression.`;
     confidence = 60;
-    reportText = `p53: ${percent}% nuclei positivi, distribuzione ${distribution}. Pattern non definitivo, compatibile con wild-type o accumulo lieve. Interpretazione supportiva nel contesto morfologico; non sostitutiva.`;
+    reportText = `p53: ${percent}% nuclei positivi, distribuzione ${distribution}. Pattern non definitivo, compatibile con wild-type o accumulo lieve. Interpretazione non sostitutiva della morfologia H&E.`;
   }
-  
+
   // ============ Ki67 INTEGRATION ============
   if (pattern === 'mild' && ki67 !== 'unknown') {
     const inGrayZone = percent >= cutoff.wt && percent < cutoff.oe;
     let ki67Message = '';
     let confidenceBoost = 0;
-    
-    // FIX: in IBD attiva Ki67 alto non è criterio per displasia
     if (ibdActive && ki67 === 'high') {
       ki67Message = `<br><br>⚠️ <strong>Ki67 ALTO IN IBD — ATTENZIONE:</strong> In colite infiammatoria attiva, il Ki67 è fisiologicamente aumentato per l'elevato turnover epiteliale. <strong>Non usare Ki67 elevato come criterio per displasia in fase infiammatoria acuta.</strong> Rivaluta dopo remissione.`;
       confidenceBoost = -10;
       reportText += ` Ki67 alto in IBD attiva: non diagnostico per displasia in fase infiammatoria.`;
     }
-    else if ((organ === 'gastric' || organ === 'colon') && ki67 === 'high' && inGrayZone) {
+    else if ((organ === 'gastric' || organ === 'colon' || organ === 'colon-ibd') && ki67 === 'high' && inGrayZone) {
       ki67Message = '<br><br>⚠️ <strong>Ki67 CONCORDANTE:</strong> Ki67 alto esteso (>30% ai 2/3 superiori) favorisce <strong>DISPLASIA</strong>. Pattern p53 + Ki67 concordano. Ricorda: <strong>distribuzione</strong> più importante della % (Fassan 2014).';
       confidenceBoost = 20;
       reportText += ` Ki67 alto esteso ai 2/3 superiori (concordante), favorisce displasia.`;
@@ -1277,7 +1128,8 @@ function analyzeInterpretation() {
       reportText += ` Ki67 basale <10% (concordante), favorisce reattivo.`;
     }
     else if ((organ === 'bladder' || organ === 'larynx' || organ === 'esophagus') && (ki67 === 'high' || ki67 === 'moderate')) {
-      ki67Message = '<br><br>⚠️ <strong>Ki67 supportivo:</strong> Full-thickness/esteso favorisce <strong>DISPLASIA</strong>.';
+      let pannelloKi67 = organ === 'bladder' ? ' ⚠️ In vescica valutare Ki67 nel pannello p53+CK20+CD44, non come criterio autonomo.' : '';
+      ki67Message = '<br><br>⚠️ <strong>Ki67 supportivo:</strong> Full-thickness/esteso favorisce <strong>DISPLASIA</strong>.' + pannelloKi67;
       confidenceBoost = 10;
       reportText += ` Ki67 full-thickness/esteso, favorisce displasia.`;
     }
@@ -1291,12 +1143,11 @@ function analyzeInterpretation() {
       confidenceBoost = 5;
       reportText += ` Ki67 moderato (10-30%), compatibile con LGD borderline.`;
     }
-    
     interpretation += ki67Message;
     confidence = Math.max(0, Math.min(100, confidence + confidenceBoost));
   }
-  
-  // ---- Concordanza morfologica H&E: modula confidence ----
+
+  // ---- Concordanza morfologica H&E ----
   let morphoNote = '';
   if (morpho === 'concordant') {
     confidence = Math.min(100, confidence + 15);
@@ -1313,28 +1164,30 @@ function analyzeInterpretation() {
   if ((organ === 'colon' || organ === 'colon-ibd') && percent >= 20 && percent <= 50) {
     organNotes = '<div class="alert alert-warning"><strong>⚠️ Nota colon:</strong> Accumulo 20-50% in colon può essere dovuto a infiammazione attiva (stress cellulare) senza mutazione TP53. Verifica contesto clinico (IBD attiva?). Se IBD infiammata, ripeti dopo remissione.</div>';
   }
-  if (organ === 'bladder' && percent > 50) {
-    organNotes = '<div class="alert alert-info"><strong>ℹ️ Nota vescica:</strong> OE riportata nel 40-60% delle HGD uroteliali (prevalenza, non soglia). Questo risultato è compatibile con displasia su base di iperplasia reattiva.</div>';
+  if (organ === 'bladder') {
+    organNotes = '<div class="alert alert-info"><strong>ℹ️ Nota vescica:</strong> p53 in vescica va interpretata nel pannello p53+CK20+CD44. OE riportata nel 40-60% delle HGD uroteliali — ma sensibilità limitata. Ki67 aggiunge poco in isolamento.</div>';
   }
   if (organ === 'gastric' && percent >= 10 && percent <= 50) {
     organNotes = '<div class="alert alert-warning"><strong>⚠️ Nota gastrico:</strong> Zona grigia 10-50%. Se H. pylori presente, può essere accumulo da rigenerazione. Eradica e ripeti biopsia.</div>';
   }
+  if (organ === 'esophagus') {
+    organNotes += '<div class="alert alert-warning"><strong>⚠️ Nota Barrett:</strong> I criteri per definire un pattern anomalo in BE non sono ancora universalmente standardizzati. Usare p53 come adjunct morfologico: riduce le categorie "indefinite" e migliora la concordanza inter-patologo, ma non è autonomamente diagnostica.</div>';
+  }
   if (pattern === 'mild' && (percent >= 40 && percent <= 60)) {
     organNotes += '<div class="alert alert-info"><strong>🔬 Discordanza possibile:</strong> Pattern borderline in zona grigia. Se clinica non concorda o necessario per terapie targeted, considera <strong>NGS TP53</strong>. <em>Dati discordanza da carcinomi (8-15%); nelle displasie probabilmente minore (~5%).</em></div>';
   }
-  
+
   const markerPos = Math.max(0, Math.min(99, percent));
-  
+
   let html = `
     <div class="result-box">
       <div style="margin-bottom: 16px;">
         <span class="badge badge-${badge}" style="font-size: 1.1rem; padding: 10px 18px;">${badgeLabel}</span>
         ${renderConfidence(confidence)}
       </div>
-      
       <div class="cutoff-visual">
         <h3>Cutoff ${ORGAN_NAMES[organ] || 'Colon'}</h3>
-        <div class="cutoff-bar">
+        <div class="cutoff-bar" style="${barGradient}">
           <div class="cutoff-marker" style="left: ${markerPos}%;" title="${percent}% nuclei positivi"></div>
         </div>
         <div class="cutoff-labels">
@@ -1346,21 +1199,15 @@ function analyzeInterpretation() {
           Il tuo risultato: <strong style="color: var(--danger);">${percent}%</strong>
         </div>
       </div>
-      
       <h3>Interpretazione</h3>
-      <div class="alert alert-info">
-        ${interpretation}
-      </div>
-      
+      <div class="alert alert-info">${interpretation}</div>
       ${morphoNote}
       ${organNotes}
-      
       <h3>Testo per referto</h3>
       <div class="report-box" id="report-text">${reportText}</div>
       <button class="btn" onclick="copyReport(event)">📋 Copia testo referto</button>
-    </div>
-  `;
-  
+    </div>`;
+
   document.getElementById('interpret-result').innerHTML = html;
   document.getElementById('interpret-output').classList.add('show');
   document.getElementById('interpret-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });

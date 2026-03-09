@@ -1,31 +1,31 @@
-# p53 IHC - Quando richiederla e come interpretarla v2.1.1
+# p53 IHC Helper - Quando richiederla e come interpretarla v2.4.2
 
-**Tool diagnostico per decisione clinica e interpretazione pattern-based in displasia epiteliale**
+**Tool diagnostico per supporto decisionale in displasia epiteliale — interpretazione pattern-based**
 
 🔗 **[Apri il tool](https://infingardo.github.io/calcolatore-p53/)**
 
-📖 **[Scarica "p53 for dummies" (PDF)](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)** - Manuale pratico per patologi (Bianchi F, 2025)
+📖 **[Scarica "p53 for dummies" (PDF)](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)** — Manuale pratico per patologi (Bianchi F, 2025)
 
 ---
 
 ## 🎯 Scopo
 
-Questo tool aiuta il patologo a rispondere a due domande pratiche:
+Supporto al patologo per due domande pratiche:
 
-1. **"Devo fare la p53 IHC?"** → Decision helper con calcolo utilità diagnostica
-2. **"Come interpreto il risultato?"** → Cutoff organo-specifici validati + pattern recognition
+1. **"Devo fare la p53 IHC?"** → Decision helper con calcolo orientativo di utilità diagnostica
+2. **"Come interpreto il risultato?"** → Cutoff operativi organo-specifici + pattern recognition
 
-**⚠️ Scope specifico:** DISPLASIE epiteliali (stomaco, colon, vescica, esofago, laringe). Per carcinomi sierosi e gliomi IDH-wt, p53 è obbligatorio ma utilizza logiche/cutoff diversi (vedi bibliografia specifica).
+**⚠️ Scope:** DISPLASIE epiteliali (stomaco, colon, vescica, esofago, laringe). Per carcinomi sierosi e gliomi IDH-wt, p53 è obbligatoria ma con logica/cutoff diversi (vedi bibliografia).
 
 ---
 
 ## 🔬 Organi supportati
 
-- **Stomaco** (displasia gastrica)
-- **Colon** (displasia colonica + IBD-associated)
-- **Vescica** (displasia uroteliale)
-- **Esofago** (Barrett's)
-- **Laringe** (displasia laringea)
+- Stomaco (displasia gastrica)
+- Colon (displasia colonica + IBD-associated)
+- Vescica (displasia uroteliale)
+- Esofago (Barrett's)
+- Laringe (displasia laringea)
 
 ---
 
@@ -33,165 +33,145 @@ Questo tool aiuta il patologo a rispondere a due domande pratiche:
 
 ### 🤔 Tab 1: "Devo fare la p53?"
 
-**Input:**
-- Organo + dubbio diagnostico (reattivo vs LGD, LGD vs HGD, etc.)
-- Citologia nucleare (normale/borderline/atipia)
-- Contesto clinico (infiammazione, H. pylori, IBD, etc.)
+**Input:** organo, dubbio diagnostico, citologia nucleare, contesto clinico (infiammazione, H. pylori, IBD, post-terapia)
 
 **Output:**
-- Raccomandazione (🟢 SÌ / 🟡 OPZIONALE / 🔴 NO)
-- Calcolo utilità diagnostica (%)
-- Guida interpretativa anticipata per ogni scenario
-- Context-aware warnings (IBD attiva, H. pylori, etc.)
+- Raccomandazione: 🟢 SÌ / 🟡 OPZIONALE / 🔴 NO
+- Orientatività (3 livelli euristici, non probabilità statistica)
+- Ragionamento trasparente per scenario
+- Guida interpretativa anticipata
+- Alternativa consigliata (eradica H. pylori, tratta IBD, ripeti biopsia)
 
 **Esempi:**
-- *Vescica, iperplasia vs LGD, nuclei borderline, no infiammazione* → 🟢 **p53 RACCOMANDATO (75%)**
-- *Colon IBD attiva, indefinite, nuclei borderline, infiammazione marcata* → 🔴 **p53 NON RACCOMANDATO ORA (20%)**
-- *Stomaco, H. pylori+, reattivo vs LGD, nuclei borderline* → 🟡 **p53 OPZIONALE (50%)** - eradica prima
+- *Vescica, reattivo vs LGD, nuclei borderline, no infiammazione* → 🟢 **RACCOMANDATO**
+- *Colon IBD attiva, indefinite, nuclei borderline* → 🔴 **NON RACCOMANDATO ORA**
+- *Stomaco, H. pylori+, reattivo vs LGD, nuclei borderline* → 🟡 **OPZIONALE** — eradica prima
 
 ---
 
 ### 🔬 Tab 2: "Interpreto il risultato"
 
-**Input:**
-- Organo
-- % nuclei positivi (slider 0-100%)
-- Intensità (1+/2+/3+/misto)
-- Distribuzione (mosaico/focale/diffuso)
-- Controllo interno (forte/debole/assente)
-- Pattern speciale (null/citoplasmatico/rim-like)
-- **Ki67** (opzionale, per disambiguare zona grigia)
+**Input:** organo, % nuclei positivi, intensità, distribuzione, controllo interno, pattern speciale, Ki67 (opzionale), morfologia EE
 
 **Output:**
-- Pattern grading (Wild-type / Accumulo lieve / Over-expression / Null / NI)
-- **Visualizzazione grafica** con cutoff organo-specifico
-- Interpretazione correlata al dubbio iniziale
-- **Integrazione Ki67** (se disponibile)
-- Testo referto copiabile
-- Confidence score (0-100%)
+- Pattern grading: Wild-type / Accumulo lieve / Over-expression / Null / Citoplasmatico
+- Visualizzazione grafica cutoff **organo-specifica** (dinamica via JS)
+- Testo referto copiabile con formulazione pattern-based
+- Integrazione Ki67 (zona grigia)
+- Nota morfologia EE (gold standard dichiarato)
+- Note organo-specifiche (pannello vescica, caveat Barrett, IBD attiva)
 
-**Cutoff organo-specifici validati:**
+**Cutoff operativi organo-specifici:**
 
-| Organo | Wild-type | Zona grigia | Over-expression |
-|--------|-----------|-------------|-----------------|
-| Stomaco | <10% | 10-60% | **>60%** diffuso |
-| Colon | <20% | 20-60% | **>60%** diffuso |
-| Vescica | <10% | 10-50% | **>50%** diffuso |
-| Esofago | <10% | 10-60% | **>60%** diffuso |
-| Laringe | <10% | 10-50% | **>50%** full-thickness |
+| Organo | Wild-type | Zona grigia | Over-expression | Note |
+|--------|-----------|-------------|-----------------|------|
+| Stomaco | <10% | 10-60% | >60% diffuso | Fassan 2014, WHO 2022 |
+| Colon | <20% | 20-60% | >60% diffuso | IBD: 20-50% può essere stress |
+| Vescica | <10% | 10-50% | >50% diffuso | Pannello p53+CK20+CD44 |
+| Esofago | <10% | 10-60% | >60% diffuso | Criteri Barrett non uniformati |
+| Laringe | <10% | 10-50% | >50% full-thickness | |
 
-**Ki67 - Criteri supportivi (zona grigia p53):**
-
-| Organo | Normale | Favorisce displasia |
-|--------|---------|---------------------|
-| Stomaco | <10% basale | **>30% esteso ai 2/3 superiori** |
-| Colon | Basale (cripta profonda) | **Estensione ai 2/3 medi-superficiali** |
-| Vescica | Superficiale | **Full-thickness** |
-| Esofago/Laringe | Basale | **Full-thickness** |
+**⚠️ Nota metodologica cutoff:** Il grado di validazione varia per organo. Stomaco e colon-retto hanno la base di evidenza più robusta (Fassan 2014, Osakabe 2025). Barrett/esofago e laringe hanno cutoff operativi pragmatici, non ancora standardizzati a livello internazionale. Osakabe 2025 riporta 91.3% concordanza IHC/NGS nei carcinomi colorettali con cutoff missense OE a >80% — i cutoff di questo tool per le displasie restano conservativi e orientativi.
 
 ---
 
 ### 📚 Tab 3: "Reference rapido"
 
-- Tabelle cutoff tutti gli organi
+- Tabelle cutoff tutti gli organi con note metodologiche
 - Decision matrix (quando fare p53)
-- Pattern recognition rapido (WT/OE/null/citoplasmatico)
-- Ki67 integrazione
+- Pattern recognition rapido (WT / OE / null / citoplasmatico / rim-like)
+- Nota pannello vescica con AMACR (meta-analisi 2023)
+- Ki67 integrazione organo-specifica
 - Le 7 trappole della p53
 - Discordanza immuno/molecolare
+- AI e p53 (stato 2025)
 - Bibliografia essenziale
 
 ---
 
 ## 🚀 Uso
 
-1. Apri il tool (link sopra)
-2. **Tab 1** → Decidi se fare p53 (inserisci scenario clinico)
-3. **Tab 2** → Interpreta il risultato (dopo aver fatto p53)
-4. **Tab 3** → Consulta reference al bisogno
+1. Apri il tool
+2. **Tab 1** → Decidi se fare p53
+3. **Tab 2** → Interpreta il risultato
+4. **Tab 3** → Reference al bisogno
 
-Tool **standalone**, nessuna dipendenza, funziona **offline**.
+Tool **standalone**, nessuna dipendenza esterna, funziona **offline**.
 
 ---
 
 ## 💡 Use case tipici
 
-### Caso 1: Vescica - iperplasia vs LGD
-*Hai dubbio tra iperplasia reattiva e displasia uroteliale*
+### Caso 1: Vescica — iperplasia vs LGD
+1. **Tab 1:** vescica + reattivo vs LGD + nuclei borderline → 🟢 RACCOMANDATO
+2. p53: 55% diffuso 2+/3+
+3. **Tab 2:** Over-expression (>50% cutoff vescica) → pattern aberrante, interpreto nel pannello p53+CK20+CD44
+4. Copia referto
 
-1. **Tab 1:** Inserisci vescica + "reattivo vs LGD" + nuclei borderline → Output: 🟢 **p53 RACCOMANDATO (75%)**
-2. Ordini p53 → risultato: 55% nuclei positivi 2+/3+, diffuso
-3. **Tab 2:** Inserisci i dati → Output: 🟠 **Over-expression** (>50% cutoff vescica) → "Displasia confermata su base di iperplasia reattiva"
-4. Copi il testo referto → fatto!
+### Caso 2: Colon IBD — indefinite
+1. **Tab 1:** colon-IBD + indefinite + IBD attiva → 🔴 NON RACCOMANDATO ORA
+2. Tratto IBD → remissione → biopsia → se atipia persiste → Tab 2
 
-### Caso 2: Colon IBD - indefinite per displasia
-*IBD attiva, atipia borderline, vuoi sapere se p53 aiuta*
-
-1. **Tab 1:** Inserisci colon IBD + "indefinite" + nuclei borderline + IBD attiva → Output: 🔴 **p53 NON RACCOMANDATO ORA (20%)** - "Infiammazione può dare accumulo stress, ripeti dopo remissione"
-2. Non ordini p53 → tratti IBD → ripeti biopsia
-3. Se dopo remissione persiste atipia → **ALLORA** fai p53
-
-### Caso 3: Stomaco - zona grigia p53 + Ki67 alto
-*p53 35% focale, dubbio se displasia o stress*
-
-1. **Tab 2:** Inserisci p53 35% + Ki67 >30% esteso → Output: "Accumulo lieve MA Ki67 concordante favorisce displasia"
-2. Diagnosi: LGD probabile, follow-up stretto
+### Caso 3: Stomaco zona grigia + Ki67
+1. **Tab 2:** p53 35% focale + Ki67 >30% esteso → accumulo lieve MA Ki67 concordante → LGD probabile, follow-up stretto
 
 ---
 
 ## 📚 Bibliografia essenziale
 
-- **Bianchi F.** p53 for dummies. Manuale pratico per patologi. 2025 [[Scarica PDF](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)] [*Fonte primaria per trappole interpretative, workflow pratico*]
-- **Fassan M, et al.** p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. *Mod Pathol* 2014;27:1409-1417 [*Cutoff gastrico, Ki67 integrazione*]
-- **Köbel M, Ronnett BM, Singh N, et al.** Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. *Int J Gynecol Pathol* 2019;38:S123-S131 [*Pattern-based standard; carcinomi sierosi: >95% mutati, pattern OE/null obbligatorio*]
-- **Vermij L, et al.** p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. *Mod Pathol* 2022;35:1475-1483 [*Correlazione IIC/molecolare in carcinomi, 408 casi*]
-- **Osakabe M, et al.** The pattern-based interpretation of p53 immunohistochemical expression as a surrogate marker for TP53 mutations in colorectal cancer. *Virchows Arch* 2025;486:333-341 [*Validazione colon-retto, 91.3% concordanza*]
-- **WHO Classification of Tumours Editorial Board.** Digestive System Tumours. 5th ed. Lyon: IARC, 2019/2022 [*Standard classificazione displasie*]
-- **WHO Classification of Tumours Editorial Board.** Central Nervous System Tumours. 5th ed. Lyon: IARC, 2021 [*Gliomi: p53 prognostico, integrazione con IDH/ATRX/Ki67*]
-- **Rugge M, et al.** MAPS II: Management of precancerous conditions and lesions in the stomach. *Gut* 2019;68:1743-1752 [*Management gastrico*]
+- **Bianchi F.** p53 for dummies. Manuale pratico per patologi. 2025 [[PDF](https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf)]
+- **Fassan M, et al.** p53 and Ki67 expression profiles identify clinically relevant gastric dysplasia. *Mod Pathol* 2014;27:1409-1417
+- **Köbel M, et al.** Interpretation of P53 Immunohistochemistry in Endometrial Carcinomas: Toward Increased Reproducibility. *Int J Gynecol Pathol* 2019;38:S123-S131
+- **Vermij L, et al.** p53 immunohistochemistry in endometrial cancer: clinical and molecular correlates in the PORTEC-3 trial. *Mod Pathol* 2022;35:1475-1483
+- **Osakabe M, et al.** The pattern-based interpretation of p53 IHC as a surrogate marker for TP53 mutations in colorectal cancer. *Virchows Arch* 2025;486:333-341 [concordanza 91.3%, cutoff missense OE >80% in CRC]
+- **WHO Classification of Tumours.** Digestive System Tumours. 5th ed. IARC, 2019/2022
+- **WHO Classification of Tumours.** Central Nervous System Tumours. 5th ed. IARC, 2021
+- **Rugge M, et al.** MAPS II. *Gut* 2019;68:1743-1752
+- **de Haan LM, et al.** Real-world TP53 mutational analysis in B-cell lymphomas. *Virchows Arch* 2024;485:643-654
+- **Ma Y, et al.** Artificial intelligence in diagnostic pathology. *Diagn Pathol* 2023;18:109
+- **Kobayashi S, et al.** AI Program to Predict p53 Mutations in UC-Associated Cancer or Dysplasia. *Am J Pathol* 2022;192:1121-1129
 
 ---
 
 ## ⚠️ Disclaimer
 
-**Tool per supporto diagnostico.** La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
+Tool per supporto decisionale. La diagnosi finale rimane responsabilità del patologo con correlazione clinico-patologica completa.
 
-**Nota sulla validazione:** Questo tool è basato su revisione sistematica della letteratura e best practices pubblicate. Non è stato validato prospetticamente su casistica locale. I cutoff e le raccomandazioni derivano da studi validati (Fassan 2014, Köbel 2019, Osakabe 2025, WHO 2022).
+Non validato prospetticamente su casistica locale. Cutoff operativi derivati da revisione sistematica della letteratura (Fassan 2014, Köbel 2019, Osakabe 2025, WHO 2022).
 
 ---
 
 ## 🔄 Changelog
 
-### v2.1.1 (November 2025)
-- **BUGFIX:** Tab switching ora funziona correttamente (event parameter)
-- **BUGFIX:** Opzione "Indefinite per displasia" ora disponibile solo per Colon IBD
-- **BUGFIX:** Validazione pattern speciali (null richiede ≤5%, citoplasmatico ≤10%)
-- **BUGFIX:** Pattern citoplasmatico con % >10% ora classificato come "misto"
-- **BUGFIX:** Colon-IBD aggiunto come opzione in Tab 2 (interpretazione)
-- **FIX:** Osakabe 2024 → 2025 (anno corretto pubblicazione)
-- **FIX:** Soglia Ki67 concordanza ora usa cutoff organo-specifico (non hardcoded 30%)
+### v2.4.2 (2025)
+- **FIX:** `resetDecision()` ora opera solo sui checkbox del Tab 1 — non azzera più `int-ibd-active` nel Tab 2
+- **FIX:** `posttreat` (post-terapia/radioterapia) ora attivo nella logica decisionale: abbassa utility in `reactive-vs-lgd` e compare nel reasoning
+- **FIX:** Etichetta dropdown "citoplasmatico" uniformata alla reference: "positività citoplasmatica prevalente ± nuclei variabili"
 
-### v2.1 (November 2025)
-- **NUOVO:** Integrazione Ki67 per disambiguare zona grigia p53
-- Ki67 cutoff organo-specifici (Fassan 2014, WHO 2022)
-- Pattern concordanti/discordanti p53+Ki67
-- Sezione discordanza immuno/molecolare aggiornata
-- Disclaimer validazione esplicito
-- Link a "p53 for dummies" (Bianchi 2025)
+### v2.4.1 (2025)
+- **FIX:** "cutoff organo-specifici validati" → "cutoff operativi organo-specifici" (header e disclaimer)
+- **FIX:** Etichetta `ctx-ibd` corretta: "Storia/contesto di IBD attiva"
+- **FIX:** `toggleIbdActive()` non resetta più il giudizio morfologico EE al cambio organo
+- **FIX:** Ramo cytoplasmic >20%: rimossa deduzione di intensità relativa non raccolta dall'input
+- **ADD:** Nota AMACR nella sezione pannello vescica (meta-analisi 2023)
 
-### v2.0 (November 2025)
-- Tool completamente rifatto
-- Focus su "quando richiedere p53" (decision tree)
-- Interpretazione con cutoff organo-specifici validati
-- Rimosso: vecchio tool grading displasia/carcinomi (inutilizzato)
+### v2.4.0 (2025)
+- **FIX:** Barra cutoff organo-specifica (gradient dinamico via JS — non più statico al 65% per tutti)
+- **FIX:** `goToInterpret()` chiama `toggleIbdActive()` — IBD group visibile arrivando da Tab 1
+- **FIX:** `generateAlternatives()` non restituisce più box giallo vuoto
+- **FIX:** IBD implicita per `colon-ibd` — comportamento coerente indipendentemente dal checkbox
+- **FIX:** Pattern citoplasmatico: soglia alzata a 20%, ammesso staining nucleare variabile
+- **FIX:** Output referto: "Displasia confermata" → formulazione pattern-based in tutti i rami aberranti
+- **ADD:** Disclamer cutoff pragmatici in header e reference
+- **ADD:** Pannello vescica p53+CK20+CD44 con nota su Ki67 defilato
+- **ADD:** Caveat Barrett (criteri non uniformati) nella nota organo
+- **ADD:** Nota Osakabe concordanza e cutoff missense >80% nella tabella reference
 
-### v1.0 (November 2025)
-- Tool displasia + carcinomi
-- Guida visuale pattern p53
+### v2.3.2 e precedenti
+→ Vedi archivio repository
 
 ---
 
-**Versione:** 2.1.1  
-**Autore:** Filippo Bianchi (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)  
-**License:** MIT  
-**Ultimo aggiornamento:** November 2025
+**Versione:** 2.4.2
+**Autore:** Filippo Bianchi (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)
+**License:** MIT
