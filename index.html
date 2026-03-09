@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>p53 IHC Helper - Quando richiederla e come interpretarla v2.4.2</title>
+<title>p53 IHC Helper - Quando richiederla e come interpretarla v2.4.3</title>
 <style>
   :root { 
     --pad: 16px; --radius: 12px; --maxw: 900px; 
@@ -151,7 +151,7 @@
     <div class="card">
       <div class="card-header">
         <h1>p53 IHC Helper - Quando richiederla e come interpretarla</h1>
-        <p class="subtitle">Tool diagnostico per patologi • v2.4.2 "p53 for dummies edition" con Ki67</p>
+        <p class="subtitle">Tool diagnostico per patologi • v2.4.3 "p53 for dummies edition" con Ki67</p>
       </div>
       <div class="alert alert-info">
         <strong>Uso:</strong> Supporto decisionale per richiesta p53 in displasia epiteliale + interpretazione risultati con cutoff operativi organo-specifici. Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019).
@@ -644,7 +644,7 @@
 
   <!-- Footer -->
   <div class="footer">
-    <p><strong>p53 IHC Helper v2.4.2 "p53 for dummies edition"</strong></p>
+    <p><strong>p53 IHC Helper v2.4.3 "p53 for dummies edition"</strong></p>
     <p>Tool diagnostico per patologi</p>
     <p>Sviluppato da <strong>Filippo Bianchi</strong> (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)</p>
     <p>Basato su <strong>"p53 for dummies"</strong> (<a href="https://github.com/Infingardo/p53/blob/main/p53%20for%20dummies.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">Bianchi 2025</a>) e letteratura validata (WHO 2022, Fassan 2014, Köbel 2019, Osakabe 2025)</p>
@@ -695,7 +695,7 @@ function updateDoubtOptions() {
   }
 }
 
-// ============ IBD TOGGLE ============
+// v2.4.1: non resetta int-morpho al cambio organo
 function toggleIbdActive() {
   const organ = document.getElementById('int-organ').value;
   const group = document.getElementById('ibd-active-group');
@@ -787,14 +787,14 @@ function analyzeDecision() {
     alternatives = '';
   } else if (utility >= 45) {
     badge = 'maybe'; recommendation = '🟡 p53 OPZIONALE';
-    reasoning = generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpylori, utility);
+    reasoning = generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpylori, posttreat, utility);
     interpretation = generateInterpretationGuidance(organ, doubt);
-    alternatives = generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer);
+    alternatives = generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer, posttreat);
   } else {
     badge = 'no'; recommendation = '🔴 p53 NON RACCOMANDATO ORA';
-    reasoning = generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori, utility);
+    reasoning = generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori, posttreat, utility);
     interpretation = '';
-    alternatives = generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer);
+    alternatives = generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer, posttreat);
   }
 
   let html = `
@@ -830,7 +830,7 @@ function generateReasoningHigh(organ, doubt, cytology, inflammation, ibd, hpylor
   return reasons;
 }
 
-function generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpylori, utility) {
+function generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpylori, posttreat, utility) {
   let reasons = '<ul>';
   if (inflammation) reasons += '<li>⚠️ Infiammazione attiva può dare <strong>accumulo p53 da stress</strong> (10-40%) senza mutazione</li>';
   if (posttreat) reasons += '<li>⚠️ Post-terapia/radioterapia → epitelio rigenerante può dare accumulo p53 stress-dipendente (falso positivo frequente)</li>';
@@ -843,7 +843,7 @@ function generateReasoningMedium(organ, doubt, cytology, inflammation, ibd, hpyl
   return reasons;
 }
 
-function generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori, utility) {
+function generateReasoningLow(organ, doubt, cytology, inflammation, ibd, hpylori, posttreat, utility) {
   let reasons = '<ul>';
   if (cytology === 'normal') reasons += '<li>Citologia <strong>normale</strong> → p53 sarà probabilmente wild-type, non discriminante</li>';
   if (inflammation && doubt === 'reactive-vs-lgd') reasons += '<li>Infiammazione marcata + dubbio reattivo vs displasia → <strong>alto rischio falso positivo</strong></li>';
@@ -873,9 +873,13 @@ function generateInterpretationGuidance(organ, doubt) {
 }
 
 // FIX v2.4.0: generateAlternatives restituisce stringa vuota se non c'è contenuto (no scatola gialla vuota)
-function generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer) {
+function generateAlternatives(organ, doubt, inflammation, ibd, hpylori, ulcer, posttreat) {
   let content = '';
-  if (hpylori && organ === 'gastric') {
+  if (posttreat && doubt === 'reactive-vs-lgd') {
+    content += '<strong>✓ Attendere stabilizzazione post-trattamento</strong><br>';
+    content += '✓ Rebiopsiare dopo adeguato intervallo dalla fine della terapia<br>';
+    content += '✓ p53 ha alto rischio di falso positivo in epitelio rigenerante post-radio/chemio<br>';
+  } else if (hpylori && organ === 'gastric') {
     content += '<strong>✓ Eradica H. pylori PRIMA</strong><br>';
     content += '✓ Ripeti biopsia dopo 2-3 mesi<br>';
     content += '✓ Se persiste atipia → ALLORA fai p53<br>';
@@ -914,7 +918,7 @@ function resetDecision() {
   updateDoubtOptions();
   document.getElementById('dec-doubt').selectedIndex = 0;
   document.querySelectorAll('input[name="cytology"]')[1].checked = true;
-  // FIX v2.4.2: scope limitato ai checkbox del tab decision (non tocca int-ibd-active)
+  // v2.4.2: scope limitato agli ID del Tab 1 — non tocca int-ibd-active nel Tab 2
   ['ctx-inflammation','ctx-ulcer','ctx-hpylori','ctx-ibd','ctx-posttreat']
     .forEach(id => { document.getElementById(id).checked = false; });
   document.getElementById('decision-output').classList.remove('show');
