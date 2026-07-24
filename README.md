@@ -172,6 +172,6 @@ Non validato prospetticamente su casistica locale. Cutoff operativi derivati da 
 
 ---
 
-**Versione:** 2.4.2
+**Versione:** 2.4.3 "p53 for dummies edition" (con Ki67)
 **Autore:** Filippo Bianchi (SC Anatomia Patologica, ASST Fatebenefratelli-Sacco, Milano)
 **License:** MIT
