@@ -1,4 +1,4 @@
-# p53 IHC Helper - Quando richiederla e come interpretarla v2.4.2
+# p53 IHC Helper - Quando richiederla e come interpretarla v2.4.3
 
 **Tool diagnostico per supporto decisionale in displasia epiteliale — interpretazione pattern-based**
 
